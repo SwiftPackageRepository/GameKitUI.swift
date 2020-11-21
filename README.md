@@ -1,2 +1,2 @@
 # GameKitUI.swift
- GameKit (GameCenter) for SwiftUI
+ GameKit (GameCenter) helper for SwfitUI
