@@ -13,7 +13,7 @@ let package = Package(
     products: [
         .library(
             name: "GameKitUI",
-            targets: ["GameKitUI"]),
+            targets: ["GameKitUI"])
     ],
     dependencies: [
     ],
@@ -23,6 +23,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "GameKitUITests",
-            dependencies: ["GameKitUI"]),
+            dependencies: ["GameKitUI"])
     ]
 )

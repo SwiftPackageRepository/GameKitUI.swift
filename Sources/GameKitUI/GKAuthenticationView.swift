@@ -32,7 +32,8 @@ public struct GKAuthenticationView: UIViewControllerRepresentable {
     public let failed: ((Error) -> Void)
     public let authenticated: ((String) -> Void)
 
-    public func makeUIViewController(context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
+    public func makeUIViewController(
+        context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
         let authenticationViewController = GKAuthenticationViewController { (state) in
             self.state(state)
         } failed: { (error) in
@@ -43,7 +44,9 @@ public struct GKAuthenticationView: UIViewControllerRepresentable {
         return authenticationViewController
     }
 
-    public func updateUIViewController(_ uiViewController: GKAuthenticationViewController, context: UIViewControllerRepresentableContext<GKAuthenticationView>) {
+    public func updateUIViewController(
+        _ uiViewController: GKAuthenticationViewController,
+        context: UIViewControllerRepresentableContext<GKAuthenticationView>) {
     }
 }
 
@@ -60,26 +63,26 @@ public class GKAuthenticationViewController: UIViewController {
         self.failed = failed
         self.authenticated = authenticated
         super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        // Setup internal observer for GameKit authentication changes
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(GKAuthenticationViewController.authenticationChanged),
             name: Notification.Name.GKPlayerAuthenticationDidChangeNotificationName,
             object: nil
         )
-        self.authenticate()
     }
 
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.authenticate()
     }
 
     @objc fileprivate func authenticationChanged() {
