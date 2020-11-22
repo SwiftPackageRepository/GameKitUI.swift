@@ -28,9 +28,9 @@ extension GKAuthenticationError: LocalizedError {
 
 public struct GKAuthenticationView: UIViewControllerRepresentable {
 
-    public let state: ((GKAuthenticationState) -> ())
-    public let failed: ((Error) -> ())
-    public let authenticated: ((String) -> ())
+    public let state: ((GKAuthenticationState) -> Void)
+    public let failed: ((Error) -> Void)
+    public let authenticated: ((String) -> Void)
 
     public func makeUIViewController(context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
         let authenticationViewController = GKAuthenticationViewController { (state) in
@@ -68,10 +68,12 @@ public class GKAuthenticationViewController: UIViewController {
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(GKAuthenticationViewController.authenticationChanged),
-                                               name: Notification.Name.GKPlayerAuthenticationDidChangeNotificationName,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(GKAuthenticationViewController.authenticationChanged),
+            name: Notification.Name.GKPlayerAuthenticationDidChangeNotificationName,
+            object: nil
+        )
         self.authenticate()
     }
 
@@ -91,7 +93,7 @@ public class GKAuthenticationViewController: UIViewController {
 
     private func authenticate() {
 
-        GKLocalPlayer.local.authenticateHandler = { vc, error in
+        GKLocalPlayer.local.authenticateHandler = { viewController, error in
 
             if GKLocalPlayer.local.isAuthenticated {
                 return
@@ -106,17 +108,17 @@ public class GKAuthenticationViewController: UIViewController {
 
             self.stateChanged(.started)
 
-            guard let vc = vc else { return }
+            guard let viewController = viewController else { return }
 
-            self.addChild(vc)
-            vc.view.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(vc.view)
+            self.addChild(viewController)
+            viewController.view.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(viewController.view)
 
             NSLayoutConstraint.activate([
-                vc.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
-                vc.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
-                vc.view.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
-                vc.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+                viewController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+                viewController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+                viewController.view.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+                viewController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
             ])
         }
     }
