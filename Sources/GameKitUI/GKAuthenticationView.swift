@@ -3,7 +3,6 @@
 /// 
 /// Created by Sascha Müllner on 21.11.20.
 
-import OSLog
 import Foundation
 import GameKit
 import SwiftUI

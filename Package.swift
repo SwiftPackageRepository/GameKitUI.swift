@@ -22,7 +22,7 @@ let package = Package(
             name: "GameKitUI",
             dependencies: []),
         .testTarget(
-            name: "GameKitUI.Tests",
+            name: "GameKitUITests",
             dependencies: ["GameKitUI"]),
     ]
 )
