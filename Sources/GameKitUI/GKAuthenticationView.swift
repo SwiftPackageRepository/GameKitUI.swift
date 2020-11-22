@@ -28,14 +28,22 @@ extension GKAuthenticationError: LocalizedError {
 
 public struct GKAuthenticationView: UIViewControllerRepresentable {
 
-    public let state: ((GKAuthenticationState) -> Void)
-    public let failed: ((Error) -> Void)
-    public let authenticated: ((String) -> Void)
+    private let stateChanged: ((GKAuthenticationState) -> Void)
+    private let failed: ((Error) -> Void)
+    private let authenticated: ((String) -> Void)
+
+    public init(stateChanged: @escaping ((GKAuthenticationState) -> Void),
+                failed: @escaping ((Error) -> Void),
+                authenticated: @escaping ((String) -> Void)) {
+        self.stateChanged = stateChanged
+        self.failed = failed
+        self.authenticated = authenticated
+    }
 
     public func makeUIViewController(
         context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
         let authenticationViewController = GKAuthenticationViewController { (state) in
-            self.state(state)
+            self.stateChanged(state)
         } failed: { (error) in
             self.failed(error)
         } authenticated: { (playerName) in
