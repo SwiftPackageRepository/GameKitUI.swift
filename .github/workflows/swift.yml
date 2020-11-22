@@ -10,6 +10,10 @@ jobs:
   build:
 
     runs-on: macos-latest
+    
+    strategy:
+      matrix:
+        destination: ['platform=iOS Simulator,OS=13.1,name=iPhone 8', 'platform=iOS Simulator,OS=13.1,name=iPhone 9']
 
     steps:
     - uses: actions/checkout@v2
