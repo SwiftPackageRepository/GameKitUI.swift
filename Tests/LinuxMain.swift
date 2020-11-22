@@ -1,6 +1,6 @@
 import XCTest
 
-import GameKitUI_Tests
+import GameKitUITests
 
 var tests = [XCTestCaseEntry]()
 tests += GameKitUI_Tests.allTests()
