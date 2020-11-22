@@ -5,7 +5,7 @@
 GameKitUI is **created and maintaned with ❥** by Sascha Muellner.
 
 ---
-![Swift](https://github.com/SwiftPackageRepository/GameKitUI.swift/workflows/Swift/badge.svg)
+[![Swift](https://github.com/SwiftPackageRepository/GameKitUI.swift/workflows/Swift/badge.svg)](https://github.com/SwiftPackageRepository/GameKitUI.swift/actions?query=workflow%3ASwift)
 [![codecov](https://codecov.io/gh/SwiftPackageRepository/GameKitUI.swift/branch/main/graph/badge.svg)](https://codecov.io/gh/SwiftPackageRepository/GameKitUI.swift)
 ![Platforms](https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS-lightgrey.svg)
 [![Version](https://img.shields.io/cocoapods/v/GameKitUI.svg?style=flat)](https://cocoapods.org/pods/GameKitUI)
