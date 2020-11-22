@@ -6,10 +6,10 @@ GameKitUI is **created and maintaned with ❥** by Sascha Muellner.
 
 ---
 ![Swift](https://github.com/SwiftPackageRepository/GameKitUI.swift/workflows/Swift/badge.svg)
-[![codecov](https://codecov.io/gh/SwiftPackageRepository/GameKitUI.swift/branch/master/graph/badge.svg)](https://codecov.io/gh/SwiftPackageRepository/GameKitUI.swift)
+[![codecov](https://codecov.io/gh/SwiftPackageRepository/GameKitUI.swift/branch/main/graph/badge.svg)](https://codecov.io/gh/SwiftPackageRepository/GameKitUI.swift)
 ![Platforms](https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS-lightgrey.svg)
 [![Version](https://img.shields.io/cocoapods/v/GameKitUI.svg?style=flat)](https://cocoapods.org/pods/GameKitUI)
-[![License](https://img.shields.io/cocoapods/l/GameKitUI.svg?style=flat)](https://github.com/SwiftPackageRepository/GameKitUI.swift/blob/master/LICENSE)
+[![License](https://img.shields.io/cocoapods/l/GameKitUI.svg?style=flat)](https://github.com/SwiftPackageRepository/GameKitUI.swift/blob/main/LICENSE)
 [![Swift Version](https://img.shields.io/badge/swift-5.1-orange.svg?style=flat)](https://developer.apple.com/swift)
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat)](https://github.com/apple/swift-package-manager)
 [![README](https://img.shields.io/badge/-README-lightgrey)](https://SwiftPackageRepository.github.io/GameKitUI.swift)
