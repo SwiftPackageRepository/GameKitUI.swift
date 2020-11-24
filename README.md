@@ -32,11 +32,96 @@ Using SPM add the following to your dependencies
 
 ``` 'GameKitUI', 'master', 'https://github.com/smuellner/GameKitUI.swift.git' ```
 
-### CocoaPods
-Using CocoaPods add the following to your Podfile:
-
-```pod 'GameKitUI', '~> 1.0.0'```
-
-
 ## How to use?
+
+### GameCenter Authentication
+
+To authenticate the player with GameCenter just show the authentication view **GKAuthenticationView**. 
+
+```swift
+import SwiftUI
+import GameKitUI
+
+struct ContentView: View {
+	var body: some View {
+		GKAuthenticationView { (state) in
+			switch state {
+			    case .started:
+			    	print("Authentication Started")
+			    	break
+			    case .failed:
+			    	print("Failed")
+			    	break
+			    case .deauthenticated:
+					print("Deauthenticated")
+			      	break
+			    case .succeeded:
+			    	break
+			}
+		} failed: { (error) in
+			print("Failed: \(error.localizedDescription)")
+		} authenticated: { (playerName) in
+			print("Hello \(playerName)")
+		}
+	}
+}
+```
+
+### GameKit MatchMaker
+
+Match making for a live match can be initiated via the **GKMatchMakerView**. 
+
+```swift
+import SwiftUI
+import GameKitUI
+
+struct ContentView: View {
+	var body: some View {
+		GKMatchMakerView(
+                    minPlayers: 2,
+                    maxPlayers: 4,
+                    inviteMessage: "Let us play together!"
+                ) {
+                    print("Player Canceled")
+                } failed: { (error) in
+                    print("Match Making Failed: \(error.localizedDescription)")
+                } started: { (match) in
+                    print("Match Started")
+                }
+	}
+}
+```
+
+
+### GameKit TurnBasedMatchmaker
+
+To start a turn based match use **GKTurnBasedMatchmakerView**. 
+
+```swift
+import SwiftUI
+import GameKitUI
+
+struct ContentView: View {
+	var body: some View {
+		GKTurnBasedMatchmakerView(
+                    minPlayers: 2,
+                    maxPlayers: 4,
+                    inviteMessage: "Let us play together!"
+                ) {
+                    print("Player Canceled")
+                } failed: { (error) in
+                    print("Match Making Failed: \(error.localizedDescription)")
+                } started: { (match) in
+                    print("Match Started")
+                }
+	}
+}
+```
+
+## Documentation
++ [Apple Documentation GameKit](https://developer.apple.com/documentation/gamekit/)
++ [raywenderlich.com: Game Center for iOS: Building a Turn-Based Game](https://www.raywenderlich.com/7544-game-center-for-ios-building-a-turn-based-game)
++ [raywenderlich.com: Game Center Tutorial: How To Make A Simple Multiplayer Game with Sprite Kit: Part 1/2](https://www.raywenderlich.com/7544-game-center-for-ios-building-a-turn-based-game)
++ [Medium: GameKit Real Time Multiplayer Tutorial](https://link.medium.com/Mwg3mSi4Ebb)
+
 

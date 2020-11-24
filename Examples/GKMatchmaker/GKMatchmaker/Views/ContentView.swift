@@ -49,7 +49,7 @@ struct ContentView: View {
                     GKMatchMakerView(
                         minPlayers: 2,
                         maxPlayers: 4,
-                        inviteMessage: "Letus play together!"
+                        inviteMessage: "Let us play together!"
                     ) {
                         self.viewModel.showModal = false
                         self.viewModel.currentState = "Player Canceled"
