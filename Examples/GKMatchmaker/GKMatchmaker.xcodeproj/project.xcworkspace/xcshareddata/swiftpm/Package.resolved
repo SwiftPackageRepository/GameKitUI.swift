@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "GameKitUI.swift",
+        "repositoryURL": "https://github.com/SwiftPackageRepository/GameKitUI.swift.git",
+        "state": {
+          "branch": "main",
+          "revision": "e1abe2c25df1436336e813722296b5d68300c343",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

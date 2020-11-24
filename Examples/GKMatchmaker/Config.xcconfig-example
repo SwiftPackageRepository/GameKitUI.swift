@@ -1,0 +1,11 @@
+/////
+/// Config.xcconfig
+/// GKMatchmaker
+/// 
+/// Created by Sascha Müllner on 24.11.20.
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+XCCONFIG_DEVELOPMENT_TEAM = // YOUR DEVELOPMENT TEAM ID
+XCCONFIG_BUNDLE_ID = // A BUNDLE ID WITH SUPPORT FOR THE GAMECENTER CAPABILITY
