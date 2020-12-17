@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "GameKitUI.swift",
+    name: "GameKitUI",
     platforms: [ .iOS(SupportedPlatform.IOSVersion.v13),
                  .macOS(SupportedPlatform.MacOSVersion.v10_15),
                  .tvOS(SupportedPlatform.TVOSVersion.v13),
