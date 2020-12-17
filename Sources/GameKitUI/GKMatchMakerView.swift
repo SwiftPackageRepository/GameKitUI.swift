@@ -29,12 +29,45 @@ import GameKit
 import SwiftUI
 
 public struct GKMatchMakerView: UIViewControllerRepresentable {
-    
+
     private let matchRequest: GKMatchRequest
+    private var matchmakingMode: Any? = nil
     private let canceled: () -> Void
     private let failed: (Error) -> Void
     private let started: (GKMatch) -> Void
-    
+
+    @available(iOS 14.0, *)
+    public init(matchRequest: GKMatchRequest,
+                matchmakingMode: GKMatchmakingMode,
+                canceled: @escaping () -> Void,
+                failed: @escaping (Error) -> Void,
+                started: @escaping (GKMatch) -> Void) {
+        self.matchRequest = matchRequest
+        self.matchmakingMode = matchmakingMode
+        self.canceled = canceled
+        self.failed = failed
+        self.started = started
+    }
+
+    @available(iOS 14.0, *)
+    public init(minPlayers: Int,
+                maxPlayers: Int,
+                inviteMessage: String,
+                matchmakingMode: GKMatchmakingMode,
+                canceled: @escaping () -> Void,
+                failed: @escaping (Error) -> Void,
+                started: @escaping (GKMatch) -> Void) {
+        let matchRequest = GKMatchRequest()
+        matchRequest.minPlayers = minPlayers
+        matchRequest.maxPlayers = maxPlayers
+        matchRequest.inviteMessage = inviteMessage
+        self.matchRequest = matchRequest
+        self.matchmakingMode = matchmakingMode
+        self.canceled = canceled
+        self.failed = failed
+        self.started = started
+    }
+
     public init(matchRequest: GKMatchRequest,
                 canceled: @escaping () -> Void,
                 failed: @escaping (Error) -> Void,
@@ -44,7 +77,7 @@ public struct GKMatchMakerView: UIViewControllerRepresentable {
         self.failed = failed
         self.started = started
     }
-    
+
     public init(minPlayers: Int,
                 maxPlayers: Int,
                 inviteMessage: String,
@@ -60,9 +93,33 @@ public struct GKMatchMakerView: UIViewControllerRepresentable {
         self.failed = failed
         self.started = started
     }
-    
+
     public func makeUIViewController(
         context: UIViewControllerRepresentableContext<GKMatchMakerView>) -> MatchmakerViewController {
+        if #available(iOS 14.0, *) {
+            return self.makeMatchmakerViewControllerForiOS14AndHigher()
+        } else {
+            return self.makeMatchmakerViewController()
+        }
+    }
+
+    @available(iOS 14.0, *)
+    internal func makeMatchmakerViewControllerForiOS14AndHigher() -> MatchmakerViewController {
+        guard let matchmakingMode = self.matchmakingMode as? GKMatchmakingMode else {
+            return self.makeMatchmakerViewController()
+        }
+        return MatchmakerViewController(
+            matchRequest: self.matchRequest,
+            matchmakingMode: matchmakingMode) {
+            self.canceled()
+        } failed: { (error) in
+            self.failed(error)
+        } started: { (match) in
+            self.started(match)
+        }
+    }
+
+    internal func makeMatchmakerViewController() -> MatchmakerViewController {
         return MatchmakerViewController(
             matchRequest: self.matchRequest) {
             self.canceled()
@@ -72,7 +129,7 @@ public struct GKMatchMakerView: UIViewControllerRepresentable {
             self.started(match)
         }
     }
-    
+
     public func updateUIViewController(
         _ uiViewController: MatchmakerViewController,
         context: UIViewControllerRepresentableContext<GKMatchMakerView>) {
@@ -82,10 +139,25 @@ public struct GKMatchMakerView: UIViewControllerRepresentable {
 public class MatchmakerViewController: UIViewController, GKMatchmakerViewControllerDelegate, GKMatchDelegate {
     
     private let matchRequest: GKMatchRequest
+    private var matchmakingMode: Any? = nil
     private let canceled: () -> Void
     private let failed: (Error) -> Void
     private let started: (GKMatch) -> Void
-    
+
+    @available(iOS 14.0, *)
+    public init(matchRequest: GKMatchRequest,
+                matchmakingMode: GKMatchmakingMode,
+                canceled: @escaping () -> Void,
+                failed: @escaping (Error) -> Void,
+                started: @escaping (GKMatch) -> Void) {
+        self.matchRequest = matchRequest
+        self.matchmakingMode = matchmakingMode
+        self.canceled = canceled
+        self.failed = failed
+        self.started = started
+        super.init(nibName: nil, bundle: nil)
+    }
+
     public init(matchRequest: GKMatchRequest,
                 canceled: @escaping () -> Void,
                 failed: @escaping (Error) -> Void,
@@ -105,6 +177,11 @@ public class MatchmakerViewController: UIViewController, GKMatchmakerViewControl
         super.viewWillAppear(animated)
         if let viewController = GKMatchmakerViewController(matchRequest: self.matchRequest) {
             viewController.matchmakerDelegate = self
+
+            if #available(iOS 14, *) {
+                viewController.matchmakingMode = self.matchmakingMode as? GKMatchmakingMode ?? .default
+            }
+
             self.addChild(viewController)
             viewController.view.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(viewController.view)
