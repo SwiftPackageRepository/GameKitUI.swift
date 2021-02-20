@@ -197,17 +197,26 @@ public class MatchmakerViewController: UIViewController, GKMatchmakerViewControl
     }
     
     public func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
-        viewController.dismiss(animated: true, completion: nil)
-        self.canceled()
+        viewController.dismiss(
+            animated: true,
+            completion: {
+                self.canceled()
+        })
     }
     
     public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
-        viewController.dismiss(animated: true, completion: nil)
-        self.failed(error)
+        viewController.dismiss(
+            animated: true,
+            completion: {
+                self.failed(error)
+        })
     }
 
     public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
-        viewController.dismiss(animated: true, completion: nil)
-        self.started(match)
+        viewController.dismiss(
+            animated: true,
+            completion: {
+                self.started(match)
+        })
     }
 }

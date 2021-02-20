@@ -7,17 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		151CAA8125E03D44002A7FDC /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 151CAA8025E03D44002A7FDC /* GameKitUI */; };
+		152E326925E03D0F0058A96B /* GameKitUI.swift in Resources */ = {isa = PBXBuildFile; fileRef = 152E326825E03D0E0058A96B /* GameKitUI.swift */; };
 		1589C0B9256C77AF0013C860 /* GKMatchmakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1589C0B8256C77AF0013C860 /* GKMatchmakerApp.swift */; };
 		1589C0BB256C77AF0013C860 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1589C0BA256C77AF0013C860 /* ContentView.swift */; };
 		1589C0BD256C77B10013C860 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1589C0BC256C77B10013C860 /* Assets.xcassets */; };
 		1589C0C0256C77B10013C860 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1589C0BF256C77B10013C860 /* Preview Assets.xcassets */; };
-		1589C0CA256C78170013C860 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1589C0C9256C78170013C860 /* GameKitUI */; };
 		1589C0CF256C78570013C860 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1589C0CE256C78570013C860 /* ContentViewModel.swift */; };
 		1589C0D4256C7A960013C860 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1589C0D3256C7A960013C860 /* GameKit.framework */; };
 		1589C0DB256C80700013C860 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1589C0DA256C80700013C860 /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		152E326825E03D0E0058A96B /* GameKitUI.swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GameKitUI.swift; path = ../..; sourceTree = "<group>"; };
 		1589C0B5256C77AF0013C860 /* GKMatchmaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKMatchmaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1589C0B8256C77AF0013C860 /* GKMatchmakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GKMatchmakerApp.swift; sourceTree = "<group>"; };
 		1589C0BA256C77AF0013C860 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,8 +36,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1589C0CA256C78170013C860 /* GameKitUI in Frameworks */,
 				1589C0D4256C7A960013C860 /* GameKit.framework in Frameworks */,
+				151CAA8125E03D44002A7FDC /* GameKitUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +47,7 @@
 		1589C0AC256C77AF0013C860 = {
 			isa = PBXGroup;
 			children = (
+				152E326825E03D0E0058A96B /* GameKitUI.swift */,
 				1589C0DA256C80700013C860 /* Config.xcconfig */,
 				1589C0B7256C77AF0013C860 /* GKMatchmaker */,
 				1589C0B6256C77AF0013C860 /* Products */,
@@ -122,7 +125,7 @@
 			);
 			name = GKMatchmaker;
 			packageProductDependencies = (
-				1589C0C9256C78170013C860 /* GameKitUI */,
+				151CAA8025E03D44002A7FDC /* GameKitUI */,
 			);
 			productName = GKMatchmaker;
 			productReference = 1589C0B5256C77AF0013C860 /* GKMatchmaker.app */;
@@ -152,7 +155,6 @@
 			);
 			mainGroup = 1589C0AC256C77AF0013C860;
 			packageReferences = (
-				1589C0C8256C78170013C860 /* XCRemoteSwiftPackageReference "GameKitUI.swift" */,
 			);
 			productRefGroup = 1589C0B6256C77AF0013C860 /* Products */;
 			projectDirPath = "";
@@ -170,6 +172,7 @@
 			files = (
 				1589C0C0256C77B10013C860 /* Preview Assets.xcassets in Resources */,
 				1589C0DB256C80700013C860 /* Config.xcconfig in Resources */,
+				152E326925E03D0F0058A96B /* GameKitUI.swift in Resources */,
 				1589C0BD256C77B10013C860 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,21 +380,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		1589C0C8256C78170013C860 /* XCRemoteSwiftPackageReference "GameKitUI.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftPackageRepository/GameKitUI.swift.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		1589C0C9256C78170013C860 /* GameKitUI */ = {
+		151CAA8025E03D44002A7FDC /* GameKitUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1589C0C8256C78170013C860 /* XCRemoteSwiftPackageReference "GameKitUI.swift" */;
 			productName = GameKitUI;
 		};
 /* End XCSwiftPackageProductDependency section */
