@@ -1,15 +1,16 @@
-/////
-/// ContentViewModel.swift
-/// GKMatchmaker
-/// 
+///
+/// MatchMakingViewModel.swift
+/// MatchMaking
+///
 /// Created by Sascha Müllner on 24.11.20.
+
 
 import Foundation
 import Combine
 
-class ContentViewModel: ObservableObject {
+class MatchMakingViewModel: ObservableObject {
 
-    @Published public var activeSheet :ContentViewSheet = .authentication
+    @Published public var activeSheet :MatchMakingViewSheet = .authentication
     @Published public var showModal = false
     @Published public var showAlert = false
     @Published public var alertTitle: String = ""
@@ -34,13 +35,13 @@ class ContentViewModel: ObservableObject {
         self.activeSheet = .authentication
     }
 
-    public func showMatchMaker() {
+    public func showMatchMakerModal() {
         self.showModal = true
         self.activeSheet = .matchmaker
     }
 }
 
-public enum ContentViewSheet {
+public enum MatchMakingViewSheet {
     case authentication
     case matchmaker
 }
