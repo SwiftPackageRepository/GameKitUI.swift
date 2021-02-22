@@ -16,6 +16,8 @@
 		151CAAD125E39928002A7FDC /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 151CAAD025E39928002A7FDC /* Config.xcconfig */; };
 		151CAAD225E39928002A7FDC /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 151CAAD025E39928002A7FDC /* Config.xcconfig */; };
 		151CAAD725E399D6002A7FDC /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CAAD625E399D6002A7FDC /* GameKit.framework */; };
+		151F91ED25E42EC60015DD88 /* PrimaryButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91EC25E42EC60015DD88 /* PrimaryButtonModifier.swift */; };
+		151F91EE25E42EC60015DD88 /* PrimaryButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91EC25E42EC60015DD88 /* PrimaryButtonModifier.swift */; };
 		15A6F7D725E39B7D00FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D625E39B7D00FE5387 /* GameKitUI */; };
 		15A6F7D925E39B8300FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D825E39B8300FE5387 /* GameKitUI */; };
 		15A6F7DB25E39B8F00FE5387 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A6F7DA25E39B8F00FE5387 /* GameKit.framework */; };
@@ -39,6 +41,7 @@
 		151CAAD025E39928002A7FDC /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		151CAAD625E399D6002A7FDC /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
 		151CAAD825E399DF002A7FDC /* GameKitUI.swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GameKitUI.swift; path = ../..; sourceTree = "<group>"; };
+		151F91EC25E42EC60015DD88 /* PrimaryButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonModifier.swift; sourceTree = "<group>"; };
 		15A6F7DA25E39B8F00FE5387 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		15A6F7DF25E39BC100FE5387 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMakingViewModel.swift; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */,
+				151F91E825E42DE30015DD88 /* Modifiers */,
 				15A6F7E025E39BC100FE5387 /* ViewModels */,
 				15A6F7DE25E39BC100FE5387 /* Views */,
 				151CAA8D25E39837002A7FDC /* Assets.xcassets */,
@@ -124,6 +128,14 @@
 				151CAAD625E399D6002A7FDC /* GameKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		151F91E825E42DE30015DD88 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				151F91EC25E42EC60015DD88 /* PrimaryButtonModifier.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 		15A6F7DE25E39BC100FE5387 /* Views */ = {
@@ -284,6 +296,7 @@
 				1507A0C625E419E5006DDBFC /* SinglePlayerView.swift in Sources */,
 				15A6F7F625E39E5300FE5387 /* MatchMakingView.swift in Sources */,
 				15A6F7E225E39BC100FE5387 /* ContentView.swift in Sources */,
+				151F91ED25E42EC60015DD88 /* PrimaryButtonModifier.swift in Sources */,
 				1507A0BD25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */,
 				15A6F7F125E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */,
 			);
@@ -296,6 +309,7 @@
 				1507A0C725E419E5006DDBFC /* SinglePlayerView.swift in Sources */,
 				15A6F7F725E39E5300FE5387 /* MatchMakingView.swift in Sources */,
 				15A6F7E325E39BC100FE5387 /* ContentView.swift in Sources */,
+				151F91EE25E42EC60015DD88 /* PrimaryButtonModifier.swift in Sources */,
 				1507A0BE25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */,
 				15A6F7F225E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */,
 			);

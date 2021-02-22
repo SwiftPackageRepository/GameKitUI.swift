@@ -1,6 +1,6 @@
 ///
-/// MatchMakingView.swift
-/// MatchMaking
+/// GKMatchMakerView.swift
+/// GKMatchMaker
 ///
 /// Created by Sascha Müllner on 24.11.20.
 
@@ -19,10 +19,16 @@ struct MatchMakingView: View {
                 Text(self.viewModel.currentState)
                     .font(.body)
                     .padding(8)
+                Button() {
+                    self.viewModel.showAuthenticationModal()
+                } label: {
+                    Text("Authenticate")
+                        .primaryButtonStyle()
+                }
+                
             }
+            .navigationBarTitle(Text("GameKit Matchmaker"))
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .navigationBarTitle(Text("GameKit Matchmaker"))
         .onAppear() {
             self.viewModel.load()
         }

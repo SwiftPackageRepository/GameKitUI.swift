@@ -1,6 +1,6 @@
 ///
-/// MatchMakingViewModel.swift
-/// MatchMaking
+/// GKMatchMakerViewModel.swift
+/// GKMatchMaker
 ///
 /// Created by Sascha Müllner on 24.11.20.
 

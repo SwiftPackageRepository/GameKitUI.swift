@@ -16,6 +16,7 @@ struct SinglePlayerView: View {
                     .font(.body)
                     .padding(8)
             }
+            .navigationBarTitle(Text("Single Player"))
         }
     }
 }
