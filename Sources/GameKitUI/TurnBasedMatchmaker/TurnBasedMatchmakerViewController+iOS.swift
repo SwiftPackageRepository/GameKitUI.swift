@@ -21,15 +21,14 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.11.20.
-/// Modfied by Sascha Müllner on 17.12.20.
+/// Created by Sascha Müllner on 23.02.21.
 
 import Foundation
 import GameKit
 import SwiftUI
 
-public struct GKTurnBasedMatchmakerView: UIViewControllerRepresentable {
-    
+public class TurnBasedMatchmakerViewController: UIViewController, GKTurnBasedMatchmakerViewControllerDelegate, GKMatchDelegate {
+
     private let matchRequest: GKMatchRequest
     private let canceled: () -> Void
     private let failed: (Error) -> Void
@@ -43,38 +42,44 @@ public struct GKTurnBasedMatchmakerView: UIViewControllerRepresentable {
         self.canceled = canceled
         self.failed = failed
         self.started = started
+        super.init(nibName: nil, bundle: nil)
     }
     
-    public init(minPlayers: Int,
-                maxPlayers: Int,
-                inviteMessage: String,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKTurnBasedMatch) -> Void) {
-        let matchRequest = GKMatchRequest()
-        matchRequest.minPlayers = minPlayers
-        matchRequest.maxPlayers = maxPlayers
-        matchRequest.inviteMessage = inviteMessage
-        self.matchRequest = matchRequest
-        self.canceled = canceled
-        self.failed = failed
-        self.started = started
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    
-    public func makeUIViewController(
-        context: UIViewControllerRepresentableContext<GKTurnBasedMatchmakerView>) -> TurnBasedMatchmakerViewController {
-        return TurnBasedMatchmakerViewController(
-            matchRequest: self.matchRequest) {
-            self.canceled()
-        } failed: { (error) in
-            self.failed(error)
-        } started: { (match) in
-            self.started(match)
-        }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let viewController = GKTurnBasedMatchmakerViewController(matchRequest: self.matchRequest)
+        viewController.turnBasedMatchmakerDelegate = self
+        self.add(viewController)
     }
-    
-    public func updateUIViewController(
-        _ uiViewController: TurnBasedMatchmakerViewController,
-        context: UIViewControllerRepresentableContext<GKTurnBasedMatchmakerView>) {
+
+    public func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController) {
+        viewController.dismiss(
+            animated: true,
+            completion: {
+                self.canceled()
+                viewController.remove()
+        })
+    }
+
+    public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: Error) {
+        viewController.dismiss(
+            animated: true,
+            completion: {
+                self.failed(error)
+                viewController.remove()
+        })
+    }
+
+    public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFind match: GKTurnBasedMatch) {
+        viewController.dismiss(
+            animated: true,
+            completion: {
+                self.started(match)
+                viewController.remove()
+        })
     }
 }

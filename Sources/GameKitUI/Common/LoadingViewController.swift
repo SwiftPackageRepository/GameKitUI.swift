@@ -20,37 +20,24 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
-/// 
-/// Created by Sascha Müllner on 21.11.20.
-/// Modfied by Sascha Müllner on 17.12.20. 
+///
+/// Created by Sascha Müllner on 23.02.21.
 
-import Foundation
-import GameKit
 import SwiftUI
 
-public struct GKAuthenticationView: UIViewControllerRepresentable {
+class LoadingViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-    private let failed: ((Error) -> Void)
-    private let authenticated: ((GKPlayer) -> Void)
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        view.addSubview(spinner)
 
-    public init(failed: @escaping ((Error) -> Void),
-                authenticated: @escaping ((GKPlayer) -> Void)) {
-        self.failed = failed
-        self.authenticated = authenticated
-    }
-
-    public func makeUIViewController(
-        context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
-        let authenticationViewController = GKAuthenticationViewController { (failed) in
-            self.failed(failed)
-        } authenticated: { (player) in
-            self.authenticated(player)
-        }
-        return authenticationViewController
-    }
-
-    public func updateUIViewController(
-        _ uiViewController: GKAuthenticationViewController,
-        context: UIViewControllerRepresentableContext<GKAuthenticationView>) {
+        // Center our spinner both horizontally & vertically
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 }

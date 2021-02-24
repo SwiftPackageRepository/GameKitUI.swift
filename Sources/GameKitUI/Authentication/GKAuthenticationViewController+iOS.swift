@@ -20,37 +20,48 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
-/// 
-/// Created by Sascha Müllner on 21.11.20.
-/// Modfied by Sascha Müllner on 17.12.20. 
+///
+/// Created by Sascha Müllner on 23.02.21.
 
 import Foundation
 import GameKit
 import SwiftUI
 
-public struct GKAuthenticationView: UIViewControllerRepresentable {
+public class GKAuthenticationViewController: UIViewController {
 
-    private let failed: ((Error) -> Void)
-    private let authenticated: ((GKPlayer) -> Void)
+    let failed: (Error) -> Void
+    let authenticated: (GKLocalPlayer) -> Void
+    private let _loadingViewController = LoadingViewController()
 
-    public init(failed: @escaping ((Error) -> Void),
-                authenticated: @escaping ((GKPlayer) -> Void)) {
+    public init(failed: @escaping (Error) -> Void,
+                authenticated: @escaping (GKLocalPlayer) -> Void) {
         self.failed = failed
         self.authenticated = authenticated
+        super.init(nibName: nil, bundle: nil)
     }
 
-    public func makeUIViewController(
-        context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
-        let authenticationViewController = GKAuthenticationViewController { (failed) in
-            self.failed(failed)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.add(_loadingViewController)
+        GKAuthentication.shared.authenticate { (authenticationViewController) in
+            self.add(authenticationViewController)
+        } failed: { (error) in
+            print(error.localizedDescription)
+            self.failed(error)
         } authenticated: { (player) in
+            print("Hello \(player.displayName)")
             self.authenticated(player)
         }
-        return authenticationViewController
     }
-
-    public func updateUIViewController(
-        _ uiViewController: GKAuthenticationViewController,
-        context: UIViewControllerRepresentableContext<GKAuthenticationView>) {
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        self.removeAll()
     }
 }

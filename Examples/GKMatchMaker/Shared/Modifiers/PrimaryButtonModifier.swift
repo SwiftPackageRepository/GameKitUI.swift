@@ -11,9 +11,9 @@ struct PrimaryButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         return content
             .font(.title)
-            .padding(40)
+            .padding(32)
             .background(Color("ButtonColor"))
-            .cornerRadius(40)
+            .cornerRadius(32)
             .foregroundColor(Color("ButtonTextColor"))
     }
 }

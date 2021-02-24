@@ -12,17 +12,17 @@ struct ContentView: View {
             ZStack {
                 Color("BackgroundColor").edgesIgnoringSafeArea(.all)
                 VStack(alignment: .center, spacing: 32) {
-                    NavigationLink(destination: SinglePlayerView()) {
-                        Text("Single Player")
+                    NavigationLink(destination: AuthenticationView()) {
+                        Text("Authentication")
                             .primaryButtonStyle()
                     }
                     NavigationLink(destination: MatchMakingView()) {
-                        Text("Multi Player")
+                        Text("Match Making (Sheet)")
                             .primaryButtonStyle()
                     }
                 }
             }
-            .navigationBarTitle(Text("Match Making"))
+            .navigationBarTitle(Text("GameKit"))
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
