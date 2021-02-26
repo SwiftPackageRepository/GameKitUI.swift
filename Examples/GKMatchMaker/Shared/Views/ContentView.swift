@@ -5,8 +5,11 @@
 /// Created by Sascha Müllner on 24.11.20.
 
 import SwiftUI
+import GameKit
+import GameKitUI
 
 struct ContentView: View {
+    
     var body: some View {
         NavigationView {
             ZStack {

@@ -27,7 +27,7 @@ import Foundation
 import GameKit
 import SwiftUI
 
-final class GKAuthentication: NSObject, GKLocalPlayerListener {
+public final class GKAuthentication: NSObject, GKLocalPlayerListener {
 
     public static let shared = GKAuthentication()
     
@@ -85,11 +85,5 @@ final class GKAuthentication: NSObject, GKLocalPlayerListener {
             }
             authenticationViewController(viewController!)
         }
-    }
-    
-    func player(_ player: GKPlayer,
-                didAccept invite: GKInvite) {
-        print(invite)
-        
     }
 }

@@ -6,22 +6,28 @@
 
 
 import Foundation
-import Combine
+import SwiftUI
+import GameKit
 
 class MatchMakingViewModel: ObservableObject {
-
-    @Published public var activeSheet :MatchMakingViewSheet = .authentication
+    
     @Published public var showModal = false
     @Published public var showAlert = false
+    @Published public var showMatch = false
     @Published public var alertTitle: String = ""
     @Published public var alertMessage: String = ""
     @Published public var currentState: String = "Loading GameKit..."
+    @Published public var match: GKMatch? {
+        didSet {
+            self.showMatch = self.match != nil
+        }
+    }
 
     public init() {
     }
     
     public func load() {
-        self.showAuthenticationModal()
+        self.showMatchMakerModal()
     }
 
     public func showAlert(title: String, message: String) {
@@ -30,18 +36,7 @@ class MatchMakingViewModel: ObservableObject {
         self.alertMessage = message
     }
 
-    public func showAuthenticationModal() {
-        self.showModal = true
-        self.activeSheet = .authentication
-    }
-
     public func showMatchMakerModal() {
         self.showModal = true
-        self.activeSheet = .matchmaker
     }
-}
-
-public enum MatchMakingViewSheet {
-    case authentication
-    case matchmaker
 }

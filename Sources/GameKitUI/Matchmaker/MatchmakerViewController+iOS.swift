@@ -27,7 +27,7 @@ import Foundation
 import GameKit
 import SwiftUI
 
-public class MatchmakerViewController: UIViewController, GKMatchDelegate {
+public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLocalPlayerListener {
     
     private let matchRequest: GKMatchRequest
     private var matchmakingMode: Any? = nil
@@ -47,6 +47,7 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate {
         self.failed = failed
         self.started = started
         super.init(nibName: nil, bundle: nil)
+        GKLocalPlayer.local.register(self)
     }
 
     public init(matchRequest: GKMatchRequest,
@@ -58,6 +59,7 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate {
         self.failed = failed
         self.started = started
         super.init(nibName: nil, bundle: nil)
+        GKLocalPlayer.local.register(self)
     }
     
     required init?(coder: NSCoder) {
@@ -87,51 +89,32 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate {
     }
     
     public func showMatchmakerViewController() {
-        if let viewController = GKMatchmakerViewController(matchRequest: self.matchRequest) {
-            viewController.matchmakerDelegate = self
-
+        if let viewController = GKMatchOnboarding.shared.createMatchmaker(request: self.matchRequest,
+                                                                     canceled: self.canceled,
+                                                                     failed: self.failed,
+                                                                     started: self.started) {
+            
             if #available(iOS 14, *) {
                 viewController.matchmakingMode = self.matchmakingMode as? GKMatchmakingMode ?? .default
             }
-
+            
             self.add(viewController)
         } else {
             self.canceled()
         }
     }
     
-}
-
-extension MatchmakerViewController: GKMatchmakerViewControllerDelegate {
-
-    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.started(match)
-                viewController.remove()
-        })
+    public func player(_ player: GKPlayer,
+                didAccept invite: GKInvite) {
+        self.removeAll()
+        if let viewController = GKMatchOnboarding.shared.createMatchmaker(invite: invite,
+                                                                     canceled: self.canceled,
+                                                                     failed: self.failed,
+                                                                     started: self.started) {
+            self.add(viewController)
+        } else {
+            self.canceled()
+        }
     }
     
-    func player(_ player: GKPlayer, didAccept invite: GKInvite) {
-        self.showMatchmakerViewController()
-    }
-    
-    public func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.canceled()
-                viewController.remove()
-        })
-    }
-    
-    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.failed(error)
-                viewController.remove()
-        })
-    }
 }
