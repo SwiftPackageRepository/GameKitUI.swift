@@ -15,12 +15,9 @@ struct MatchMakingView: View {
         ZStack {
             Color("BackgroundColor").ignoresSafeArea()
             VStack() {
-                if self.viewModel.showMatch {
-                    ForEach(self.viewModel.match!.players, id: \.self) { player in
-                        Text(player.displayName)
-                            .font(.title)
-                            .padding(8)
-                    }
+                if self.viewModel.showMatch,
+                   let match = self.viewModel.match {
+                     MatchView(match)
                 } else {
                     Text(self.viewModel.currentState)
                         .font(.body)

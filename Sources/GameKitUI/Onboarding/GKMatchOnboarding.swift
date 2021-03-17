@@ -133,7 +133,7 @@ extension GKMatchOnboarding: GKLocalPlayerListener {
 
     public func player(_ player: GKPlayer,
                 didAccept invite: GKInvite) {
-        os_log("Player invited: %{public}@", log: OSLog.invite, type: .info, invite)
         self.invite.send(Invite(gkInvite: invite))
+        os_log("Player invited: %{public}@", log: OSLog.invite, type: .info, invite)
     }
 }
