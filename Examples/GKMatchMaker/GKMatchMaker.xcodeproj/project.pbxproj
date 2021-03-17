@@ -20,6 +20,8 @@
 		151F91EE25E42EC60015DD88 /* PrimaryButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91EC25E42EC60015DD88 /* PrimaryButtonModifier.swift */; };
 		151F91F925E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
 		151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
+		15738BB825ED5DFF00784C97 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15738BB725ED5DFF00784C97 /* ContentViewModel.swift */; };
+		15738BB925ED5DFF00784C97 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15738BB725ED5DFF00784C97 /* ContentViewModel.swift */; };
 		15A6F7D725E39B7D00FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D625E39B7D00FE5387 /* GameKitUI */; };
 		15A6F7D925E39B8300FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D825E39B8300FE5387 /* GameKitUI */; };
 		15A6F7DB25E39B8F00FE5387 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A6F7DA25E39B8F00FE5387 /* GameKit.framework */; };
@@ -45,6 +47,7 @@
 		151CAAD825E399DF002A7FDC /* GameKitUI.swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GameKitUI.swift; path = ../..; sourceTree = "<group>"; };
 		151F91EC25E42EC60015DD88 /* PrimaryButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonModifier.swift; sourceTree = "<group>"; };
 		151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		15738BB725ED5DFF00784C97 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		15A6F7DA25E39B8F00FE5387 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		15A6F7DF25E39BC100FE5387 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMakingViewModel.swift; sourceTree = "<group>"; };
@@ -162,6 +165,7 @@
 		15A6F7E025E39BC100FE5387 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				15738BB725ED5DFF00784C97 /* ContentViewModel.swift */,
 				151F91F725E4EBEE0015DD88 /* Authentication */,
 				15A6F7FA25E39F6200FE5387 /* MultiPlayer */,
 			);
@@ -297,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15738BB825ED5DFF00784C97 /* ContentViewModel.swift in Sources */,
 				1507A0C625E419E5006DDBFC /* AuthenticationView.swift in Sources */,
 				15A6F7F625E39E5300FE5387 /* MatchMakingView.swift in Sources */,
 				151F91F925E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */,
@@ -311,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15738BB925ED5DFF00784C97 /* ContentViewModel.swift in Sources */,
 				1507A0C725E419E5006DDBFC /* AuthenticationView.swift in Sources */,
 				15A6F7F725E39E5300FE5387 /* MatchMakingView.swift in Sources */,
 				151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */,

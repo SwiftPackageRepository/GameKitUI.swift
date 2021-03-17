@@ -23,39 +23,22 @@
 ///
 /// Created by Sascha Müllner on 23.02.21.
 
-import Combine
 import Foundation
 import GameKit
 import SwiftUI
 
-public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLocalPlayerListener {
+public class InviteViewController: UIViewController, GKMatchDelegate, GKLocalPlayerListener {
     
-    private let matchRequest: GKMatchRequest
-    private var matchmakingMode: Any? = nil
+    private let invite: GKInvite
     private let canceled: () -> Void
     private let failed: (Error) -> Void
     private let started: (GKMatch) -> Void
-    private var cancellable: AnyCancellable?
 
-    @available(iOS 14.0, *)
-    public init(matchRequest: GKMatchRequest,
-                matchmakingMode: GKMatchmakingMode,
+    public init(invite: GKInvite,
                 canceled: @escaping () -> Void,
                 failed: @escaping (Error) -> Void,
                 started: @escaping (GKMatch) -> Void) {
-        self.matchRequest = matchRequest
-        self.matchmakingMode = matchmakingMode
-        self.canceled = canceled
-        self.failed = failed
-        self.started = started
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    public init(matchRequest: GKMatchRequest,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
-        self.matchRequest = matchRequest
+        self.invite = invite
         self.canceled = canceled
         self.failed = failed
         self.started = started
@@ -66,20 +49,43 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func subscribe() {
-        self.cancellable = GKMatchOnboarding
-            .shared
-            .invite
-            .sink { (invite) in
-                self.showInvite(invite: invite)
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if GKLocalPlayer.local.isAuthenticated {
+            self.showInviteViewController()
+        } else {
+            self.showAuthenticationViewController()
         }
     }
     
-    public func showInvite(invite: Invite) {
-        
-        guard let invite = invite.gkInvite else { return }
-        
-        // self.removeAll()
+    public override func viewWillDisappear(_ animated: Bool) {
+        self.removeAll()
+    }
+    
+    public func showAuthenticationViewController() {
+        let authenticationViewController = GKAuthenticationViewController { (error) in
+            self.failed(error)
+        } authenticated: { (player) in
+            self.showInviteViewController()
+        }
+        self.add(authenticationViewController)
+    }
+    
+    public func showInviteViewController() {
+        if let viewController = GKMatchOnboarding.shared.createInvite(invite: self.invite,
+                                                                     canceled: self.canceled,
+                                                                     failed: self.failed,
+                                                                     started: self.started) {
+            
+            self.add(viewController)
+        } else {
+            self.canceled()
+        }
+    }
+    
+    public func player(_ player: GKPlayer,
+                didAccept invite: GKInvite) {
+        self.removeAll()
         if let viewController = GKMatchOnboarding.shared.createInvite(invite: invite,
                                                                      canceled: self.canceled,
                                                                      failed: self.failed,
@@ -90,47 +96,4 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
         }
     }
     
-    public func unsubscribe() {
-        self.cancellable?.cancel()
-    }
-    
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if GKLocalPlayer.local.isAuthenticated {
-            self.showMatchmakerViewController()
-        } else {
-            self.showAuthenticationViewController()
-        }
-        self.subscribe()
-    }
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        self.removeAll()
-        self.unsubscribe()
-    }
-    
-    public func showAuthenticationViewController() {
-        let authenticationViewController = GKAuthenticationViewController { (error) in
-            self.failed(error)
-        } authenticated: { (player) in
-            self.showMatchmakerViewController()
-        }
-        self.add(authenticationViewController)
-    }
-    
-    public func showMatchmakerViewController() {
-        if let viewController = GKMatchOnboarding.shared.createMatchmaker(request: self.matchRequest,
-                                                                     canceled: self.canceled,
-                                                                     failed: self.failed,
-                                                                     started: self.started) {
-            
-            if #available(iOS 14, *) {
-                viewController.matchmakingMode = self.matchmakingMode as? GKMatchmakingMode ?? .default
-            }
-            
-            self.add(viewController)
-        } else {
-            self.canceled()
-        }
-    }
 }

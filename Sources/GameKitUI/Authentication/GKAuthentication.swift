@@ -23,6 +23,7 @@
 ///
 /// Created by Sascha Müllner on 23.02.21.
 
+import os.log
 import Foundation
 import GameKit
 import SwiftUI
@@ -78,7 +79,7 @@ public final class GKAuthentication: NSObject, GKLocalPlayerListener {
             }
 
             if let error = error {
-                print(error.localizedDescription)
+                os_log("Authentication failed %{public}@", log: OSLog.authentication, type: .error, error.localizedDescription)
                 self.authenticationError = error
                 failed(error)
                 return

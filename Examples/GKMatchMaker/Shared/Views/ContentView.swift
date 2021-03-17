@@ -9,6 +9,7 @@ import GameKit
 import GameKitUI
 
 struct ContentView: View {
+    @ObservedObject var viewModel = ContentViewModel()
     
     var body: some View {
         NavigationView {
@@ -26,6 +27,15 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle(Text("GameKit"))
+            .sheet(isPresented: self.$viewModel.showInvite) {
+                GKInviteView(
+                    invite: self.viewModel.invite.gkInvite!
+                ) {
+                } failed: { (error) in
+                } started: { (match) in
+                    self.viewModel.match = match
+                }
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

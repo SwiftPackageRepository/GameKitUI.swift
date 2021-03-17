@@ -23,10 +23,11 @@
 ///
 /// Created by Sascha Müllner on 26.02.21.
 
+import os.log
+import Combine
 import Foundation
 import GameKit
 import SwiftUI
-import Combine
 
 public final class GKMatchOnboarding: NSObject {
     
@@ -34,17 +35,17 @@ public final class GKMatchOnboarding: NSObject {
     
     private override init() {
         super.init()
+        GKLocalPlayer.local.register(self)
     }
     
-    @Published private(set) public var match = PassthroughSubject<GKMatch, Never>()
-    @Published private(set) public var invite = PassthroughSubject<GKInvite, Never>()
+    private(set) public var match = CurrentValueSubject<Match, Never>(Match.zero)
+    private(set) public var invite = CurrentValueSubject<Invite, Never>(Invite.zero)
+    
     private var canceled: () -> Void = {}
     private var failed: (Error) -> Void = { _ in }
     private var started: (GKMatch) -> Void = { _ in }
     
-    private var currentMatchmakerViewController: GKMatchmakerViewController?
-    
-    public func createMatchmaker(invite: GKInvite,
+    public func createInvite(invite: GKInvite,
                                  canceled: @escaping () -> Void,
                                  failed: @escaping (Error) -> Void,
                                  started: @escaping (GKMatch) -> Void) -> GKMatchmakerViewController? {
@@ -58,7 +59,6 @@ public final class GKMatchOnboarding: NSObject {
             return nil
         }
         
-        self.currentMatchmakerViewController = matchmakerViewController
         matchmakerViewController.matchmakerDelegate = self
         return matchmakerViewController
     }
@@ -69,7 +69,6 @@ public final class GKMatchOnboarding: NSObject {
             return nil
         }
         
-        self.currentMatchmakerViewController = matchmakerViewController
         matchmakerViewController.matchmakerDelegate = self
         return matchmakerViewController
     }
@@ -88,7 +87,6 @@ public final class GKMatchOnboarding: NSObject {
             return nil
         }
         
-        self.currentMatchmakerViewController = matchmakerViewController
         matchmakerViewController.matchmakerDelegate = self
         return matchmakerViewController
     }
@@ -100,7 +98,7 @@ extension GKMatchOnboarding: GKMatchmakerViewControllerDelegate {
         viewController.dismiss(
             animated: true,
             completion: {
-                self.match.send(match)
+                self.match.send(Match(gkMatch: match))
                 self.started(match)
                 viewController.remove()
         })
@@ -110,8 +108,11 @@ extension GKMatchOnboarding: GKMatchmakerViewControllerDelegate {
         viewController.dismiss(
             animated: true,
             completion: {
+                self.invite.send(Invite.zero)
+                self.match.send(Match.zero)
                 self.canceled()
                 viewController.remove()
+                os_log("Matchmaking cancelled!", log: OSLog.matchmaking, type: .error)
         })
     }
     
@@ -119,8 +120,20 @@ extension GKMatchOnboarding: GKMatchmakerViewControllerDelegate {
         viewController.dismiss(
             animated: true,
             completion: {
+                self.invite.send(Invite.zero)
+                self.match.send(Match.zero)
                 self.failed(error)
                 viewController.remove()
+                os_log("Matchmaking failed: %{public}@", log: OSLog.matchmaking, type: .error, error.localizedDescription)
         })
+    }
+}
+
+extension GKMatchOnboarding: GKLocalPlayerListener {
+
+    public func player(_ player: GKPlayer,
+                didAccept invite: GKInvite) {
+        os_log("Player invited: %{public}@", log: OSLog.invite, type: .info, invite)
+        self.invite.send(Invite(gkInvite: invite))
     }
 }

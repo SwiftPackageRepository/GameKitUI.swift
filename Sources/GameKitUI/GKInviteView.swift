@@ -21,48 +21,45 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 23.02.21.
+/// Created by Sascha Müllner on 22.11.20.
+/// Modfied by Sascha Müllner on 17.12.20.
 
-import os.log
 import Foundation
 import GameKit
 import SwiftUI
 
-public class GKAuthenticationViewController: UIViewController {
+public struct GKInviteView: UIViewControllerRepresentable {
 
-    let failed: (Error) -> Void
-    let authenticated: (GKLocalPlayer) -> Void
-    private let _loadingViewController = LoadingViewController()
+    private let invite: GKInvite
+    private let canceled: () -> Void
+    private let failed: (Error) -> Void
+    private let started: (GKMatch) -> Void
 
-    public init(failed: @escaping (Error) -> Void,
-                authenticated: @escaping (GKLocalPlayer) -> Void) {
+    public init(invite: GKInvite,
+                canceled: @escaping () -> Void,
+                failed: @escaping (Error) -> Void,
+                started: @escaping (GKMatch) -> Void) {
+        self.invite = invite
+        self.canceled = canceled
         self.failed = failed
-        self.authenticated = authenticated
-        super.init(nibName: nil, bundle: nil)
+        self.started = started
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-    }
-
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.add(_loadingViewController)
-        GKAuthentication.shared.authenticate { (authenticationViewController) in
-            self.add(authenticationViewController)
+    public func makeUIViewController(
+        context: UIViewControllerRepresentableContext<GKInviteView>) -> InviteViewController {
+        
+        return InviteViewController(
+            invite: self.invite) {
+            self.canceled()
         } failed: { (error) in
-            os_log("Authentication failed %{public}@", log: OSLog.authentication, type: .error, error.localizedDescription)
             self.failed(error)
-        } authenticated: { (player) in
-            os_log("Player authenticated %{public}@", log: OSLog.authentication, type: .info, player.displayName)
-            self.authenticated(player)
+        } started: { (match) in
+            self.started(match)
         }
     }
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        self.removeAll()
+
+    public func updateUIViewController(
+        _ uiViewController: InviteViewController,
+        context: UIViewControllerRepresentableContext<GKInviteView>) {
     }
 }
