@@ -79,7 +79,6 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
         
         guard let invite = invite.gkInvite else { return }
         
-        // self.removeAll()
         if let viewController = GKMatchManager.shared.createInvite(invite: invite,
                                                                      canceled: self.canceled,
                                                                      failed: self.failed,

@@ -80,6 +80,7 @@ public final class GKMatchManager: NSObject {
         
         guard GKLocalPlayer.local.isAuthenticated,
               let matchmakerViewController = GKMatchmakerViewController(invite: invite) else {
+            GKMatchmaker.shared().cancel()
             canceled()
             return nil
         }
@@ -91,6 +92,7 @@ public final class GKMatchManager: NSObject {
     public func createMatchmaker(invite: GKInvite) -> GKMatchmakerViewController? {
         guard GKLocalPlayer.local.isAuthenticated,
               let matchmakerViewController = GKMatchmakerViewController(invite: invite) else {
+            GKMatchmaker.shared().cancel()
             return nil
         }
         
@@ -105,15 +107,19 @@ public final class GKMatchManager: NSObject {
         self.canceled = canceled
         self.failed = failed
         self.started = started
-        
         guard GKLocalPlayer.local.isAuthenticated,
               let matchmakerViewController = GKMatchmakerViewController(matchRequest: request) else {
+            GKMatchmaker.shared().cancel()
             canceled()
             return nil
         }
         
         matchmakerViewController.matchmakerDelegate = self
         return matchmakerViewController
+    }
+    
+    public func cancel() {
+        GKMatchmaker.shared().cancel()
     }
 }
 
@@ -123,7 +129,7 @@ extension GKMatchManager: GKMatchmakerViewControllerDelegate {
         viewController.dismiss(
             animated: true,
             completion: {
-                os_log("Found match!", log: OSLog.matchmaking, type: .info)
+                os_log("Matchmaking successful!", log: OSLog.matchmaking, type: .info)
                 self.match.send(Match(gkMatch: match))
                 self.started(match)
                 viewController.remove()

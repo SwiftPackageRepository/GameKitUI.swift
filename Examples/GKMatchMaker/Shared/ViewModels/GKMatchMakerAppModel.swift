@@ -19,7 +19,12 @@ class GKMatchMakerAppModel: ObservableObject {
     @Published public var showAuthentication = false
     @Published public var showInvite = false
     @Published public var showMatch = false
-    @Published public var invite: Invite = Invite.zero
+    @Published public var invite: Invite = Invite.zero {
+        didSet {
+            self.showInvite = invite.gkInvite != nil
+            self.showAuthentication = invite.needsToAuthenticate ?? false
+        }
+    }
     @Published public var match: GKMatch? {
         didSet {
             self.showInvite = false
@@ -27,7 +32,8 @@ class GKMatchMakerAppModel: ObservableObject {
         }
     }
 
-    private var cancellable: AnyCancellable?
+    private var cancellableInvite: AnyCancellable?
+    private var cancellableMatch: AnyCancellable?
 
     public init() {
         self.subscribe()
@@ -46,18 +52,23 @@ class GKMatchMakerAppModel: ObservableObject {
     }
 
     func subscribe() {
-        self.cancellable = GKMatchManager
+        self.cancellableInvite = GKMatchManager
             .shared
             .invite
             .sink { (invite) in
                 self.invite = invite
-                self.showInvite = invite.gkInvite != nil
-                self.showAuthentication = invite.needsToAuthenticate ?? false
+        }
+        self.cancellableMatch = GKMatchManager
+            .shared
+            .match
+            .sink { (match) in
+                self.match = match.gkMatch
         }
     }
 
     func unsubscribe() {
-        self.cancellable?.cancel()
+        self.cancellableInvite?.cancel()
+        self.cancellableMatch?.cancel()
     }
 
     public func showAlert(title: String, message: String) {

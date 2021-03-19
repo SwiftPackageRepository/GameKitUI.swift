@@ -15,19 +15,14 @@ struct MatchMakingView: View {
         ZStack {
             Color("BackgroundColor").ignoresSafeArea()
             VStack() {
-                if self.viewModel.showMatch,
-                   let match = self.viewModel.match {
-                     MatchView(match)
-                } else {
-                    Text(self.viewModel.currentState)
-                        .font(.body)
-                        .padding(8)
-                    Button() {
-                        self.viewModel.showMatchMakerModal()
-                    } label: {
-                        Text("Create Match")
-                            .primaryButtonStyle()
-                    }
+                Text(self.viewModel.currentState)
+                    .font(.body)
+                    .padding(8)
+                Button() {
+                    self.viewModel.showMatchMakerModal()
+                } label: {
+                    Text("Create Match")
+                        .primaryButtonStyle()
                 }
             }
             .navigationBarTitle(Text("GameKit Matchmaker"))
@@ -49,7 +44,6 @@ struct MatchMakingView: View {
                 self.viewModel.showAlert(title: "Match Making Failed", message: error.localizedDescription)
             } started: { (match) in
                 self.viewModel.showModal = false
-                self.viewModel.match = match
             }
         }
         .alert(isPresented: self.$viewModel.showAlert) {

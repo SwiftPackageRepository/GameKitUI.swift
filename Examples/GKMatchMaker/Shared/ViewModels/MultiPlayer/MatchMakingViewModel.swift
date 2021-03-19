@@ -13,15 +13,9 @@ class MatchMakingViewModel: ObservableObject {
     
     @Published public var showModal = false
     @Published public var showAlert = false
-    @Published public var showMatch = false
     @Published public var alertTitle: String = ""
     @Published public var alertMessage: String = ""
     @Published public var currentState: String = "Loading GameKit..."
-    @Published public var match: GKMatch? {
-        didSet {
-            self.showMatch = self.match != nil
-        }
-    }
 
     public init() {
     }
