@@ -260,7 +260,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchmaker" */;
+			buildConfigurationList = 151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchMaker" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -549,7 +549,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchmaker" */ = {
+		151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchMaker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				151CAAA425E39837002A7FDC /* Debug */,

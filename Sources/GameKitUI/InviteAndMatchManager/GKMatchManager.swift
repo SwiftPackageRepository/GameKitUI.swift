@@ -29,15 +29,40 @@ import Foundation
 import GameKit
 import SwiftUI
 
-public final class GKMatchOnboarding: NSObject {
+public final class GKMatchManager: NSObject {
     
-    public static let shared = GKMatchOnboarding()
+    public static let shared = GKMatchManager()
     
     private override init() {
         super.init()
+        
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name("GKAcceptedGameInvite"),
+            object: nil,
+            queue: nil)
+        { notification in
+            self.invite.send(Invite.needsToAuthenticate)
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name("GKPlayerAuthenticationDidChangeNotificationName"),
+            object: nil,
+            queue: nil)
+        { notification in
+            self.localPlayer.send(GKLocalPlayer.local)
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name("GKPlayerDidChangeNotificationName"),
+            object: nil,
+            queue: nil)
+        { notification in
+            self.localPlayer.send(GKLocalPlayer.local)
+        }
         GKLocalPlayer.local.register(self)
     }
     
+    private(set) public var localPlayer = CurrentValueSubject<GKLocalPlayer, Never>(GKLocalPlayer.local)
     private(set) public var match = CurrentValueSubject<Match, Never>(Match.zero)
     private(set) public var invite = CurrentValueSubject<Invite, Never>(Invite.zero)
     
@@ -92,12 +117,13 @@ public final class GKMatchOnboarding: NSObject {
     }
 }
 
-extension GKMatchOnboarding: GKMatchmakerViewControllerDelegate {
+extension GKMatchManager: GKMatchmakerViewControllerDelegate {
 
     public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
         viewController.dismiss(
             animated: true,
             completion: {
+                os_log("Found match!", log: OSLog.matchmaking, type: .info)
                 self.match.send(Match(gkMatch: match))
                 self.started(match)
                 viewController.remove()
@@ -108,11 +134,11 @@ extension GKMatchOnboarding: GKMatchmakerViewControllerDelegate {
         viewController.dismiss(
             animated: true,
             completion: {
+                os_log("Matchmaking cancelled!", log: OSLog.matchmaking, type: .error)
                 self.invite.send(Invite.zero)
                 self.match.send(Match.zero)
                 self.canceled()
                 viewController.remove()
-                os_log("Matchmaking cancelled!", log: OSLog.matchmaking, type: .error)
         })
     }
     
@@ -120,20 +146,20 @@ extension GKMatchOnboarding: GKMatchmakerViewControllerDelegate {
         viewController.dismiss(
             animated: true,
             completion: {
+                os_log("Matchmaking failed: %{public}@", log: OSLog.matchmaking, type: .error, error.localizedDescription)
                 self.invite.send(Invite.zero)
                 self.match.send(Match.zero)
                 self.failed(error)
                 viewController.remove()
-                os_log("Matchmaking failed: %{public}@", log: OSLog.matchmaking, type: .error, error.localizedDescription)
         })
     }
 }
 
-extension GKMatchOnboarding: GKLocalPlayerListener {
+extension GKMatchManager: GKLocalPlayerListener {
 
     public func player(_ player: GKPlayer,
                 didAccept invite: GKInvite) {
-        self.invite.send(Invite(gkInvite: invite))
         os_log("Player invited: %{public}@", log: OSLog.invite, type: .info, invite)
+        self.invite.send(Invite(gkInvite: invite))
     }
 }

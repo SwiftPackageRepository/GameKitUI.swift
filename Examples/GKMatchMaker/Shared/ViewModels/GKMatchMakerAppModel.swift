@@ -31,7 +31,14 @@ class GKMatchMakerAppModel: ObservableObject {
 
     public init() {
         self.subscribe()
-        self.showAuthentication = true
+        NotificationCenter.default.addObserver(forName: nil, object: nil, queue: nil) { notification in
+            os_log("Notification found with:\r\n name:%{public}@\r\nobject:%{public}\r\nuserInfo: %{public})",
+                   log: .default,
+                   type: .info,
+                   String(describing: notification.name),
+                   String(describing: notification.object),
+                   String(describing: notification.userInfo))
+        }
     }
 
     deinit {
@@ -39,13 +46,13 @@ class GKMatchMakerAppModel: ObservableObject {
     }
 
     func subscribe() {
-        self.cancellable = GKMatchOnboarding
+        self.cancellable = GKMatchManager
             .shared
             .invite
             .sink { (invite) in
                 self.invite = invite
                 self.showInvite = invite.gkInvite != nil
-              //  os_log("Player Invited %{public}@", log: OSLog.default, type: .info, invite.gkInvite ?? "NONE")
+                self.showAuthentication = invite.needsToAuthenticate ?? false
         }
     }
 

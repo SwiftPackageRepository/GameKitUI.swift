@@ -67,7 +67,7 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
     }
     
     public func subscribe() {
-        self.cancellable = GKMatchOnboarding
+        self.cancellable = GKMatchManager
             .shared
             .invite
             .sink { (invite) in
@@ -80,7 +80,7 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
         guard let invite = invite.gkInvite else { return }
         
         // self.removeAll()
-        if let viewController = GKMatchOnboarding.shared.createInvite(invite: invite,
+        if let viewController = GKMatchManager.shared.createInvite(invite: invite,
                                                                      canceled: self.canceled,
                                                                      failed: self.failed,
                                                                      started: self.started) {
@@ -119,7 +119,7 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
     }
     
     public func showMatchmakerViewController() {
-        if let viewController = GKMatchOnboarding.shared.createMatchmaker(request: self.matchRequest,
+        if let viewController = GKMatchManager.shared.createMatchmaker(request: self.matchRequest,
                                                                      canceled: self.canceled,
                                                                      failed: self.failed,
                                                                      started: self.started) {

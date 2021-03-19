@@ -26,12 +26,17 @@
 import GameKit
 
 public struct Invite {
-    public var gkInvite: GKInvite?
+    public private(set) var needsToAuthenticate: Bool?
+    public private(set) var gkInvite: GKInvite?
 }
 
 extension Invite {
     public static var zero: Invite {
         return Invite()
+    }
+    
+    public static var needsToAuthenticate: Invite {
+        return Invite(needsToAuthenticate: GKLocalPlayer.local.isAuthenticated != true)
     }
 }
 

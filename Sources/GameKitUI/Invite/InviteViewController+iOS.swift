@@ -72,7 +72,7 @@ public class InviteViewController: UIViewController, GKMatchDelegate, GKLocalPla
     }
     
     public func showInviteViewController() {
-        if let viewController = GKMatchOnboarding.shared.createInvite(invite: self.invite,
+        if let viewController = GKMatchManager.shared.createInvite(invite: self.invite,
                                                                      canceled: self.canceled,
                                                                      failed: self.failed,
                                                                      started: self.started) {
@@ -82,18 +82,4 @@ public class InviteViewController: UIViewController, GKMatchDelegate, GKLocalPla
             self.canceled()
         }
     }
-    
-    public func player(_ player: GKPlayer,
-                didAccept invite: GKInvite) {
-        self.removeAll()
-        if let viewController = GKMatchOnboarding.shared.createInvite(invite: invite,
-                                                                     canceled: self.canceled,
-                                                                     failed: self.failed,
-                                                                     started: self.started) {
-            self.add(viewController)
-        } else {
-            self.canceled()
-        }
-    }
-    
 }
