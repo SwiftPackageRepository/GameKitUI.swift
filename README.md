@@ -30,11 +30,14 @@ The latest version of GameKitUI requires:
 ### Swift Package Manager
 Using SPM add the following to your dependencies
 
-``` 'GameKitUI', 'master', 'https://github.com/smuellner/GameKitUI.swift.git' ```
+``` 'GameKitUI', 'main', 'https://github.com/smuellner/GameKitUI.swift.git' ```
 
 ## How to use?
 
-### GameCenter Authentication
+
+### Views
+
+#### GameCenter Authentication
 
 To authenticate the player with GameCenter just show the authentication view **GKAuthenticationView**. 
 
@@ -67,7 +70,29 @@ struct ContentView: View {
 }
 ```
 
-### GameKit MatchMaker
+#### GameKit Invite
+
+Invites created by a  GameKit MatchMaker or TurnBasedMatchmaker can be handled using a  **GKMatchMakerView**. 
+
+```swift
+import SwiftUI
+import GameKitUI
+
+struct ContentView: View {
+    var body: some View {
+        GKInviteView(
+            invite: GKInvite()
+        ) {
+        } failed: { (error) in
+            print("Invitation Failed: \(error.localizedDescription)")
+        } started: { (match) in
+            print("Match Started")
+        }
+    }
+}
+```
+
+#### GameKit MatchMaker
 
 Match making for a live match can be initiated via the **GKMatchMakerView**. 
 
@@ -92,8 +117,7 @@ struct ContentView: View {
 }
 ```
 
-
-### GameKit TurnBasedMatchmaker
+#### GameKit TurnBasedMatchmaker
 
 To start a turn based match use **GKTurnBasedMatchmakerView**. 
 
@@ -117,6 +141,75 @@ struct ContentView: View {
 	}
 }
 ```
+
+### GameKit Manager
+
+#### GKMatchManager
+
+GameKitUI views rely on a manager singelton **GKMatchManager**, which listens to GameKit state changes of the match making process.
+Changes to the local player **GKLocalPlayer**, invites **GKInvite** or matches **GKMatch** can be observed using the provided public subjects **CurrentValueSubject**.
+
+```swift
+import SwiftUI
+import GameKitUI
+
+class ViewModel: ObservableObject {
+
+    @Published public var gkInvite: GKInvite?
+    @Published public var gkMatch: GKMatch?
+
+    private var cancellableInvite: AnyCancellable?
+    private var cancellableMatch: AnyCancellable?
+    private var cancellableLocalPlayer: AnyCancellable?
+
+    public init() {
+        self.cancellableInvite = GKMatchManager
+            .shared
+            .invite
+            .sink { (invite) in
+                self.gkInvite = invite.gkInvite
+        }
+        self.cancellableMatch = GKMatchManager
+            .shared
+            .match
+            .sink { (match) in
+                self.gkMatch = match.gkMatch
+        }
+        self.cancellableLocalPlayer = GKMatchManager
+            .shared
+            .localPlayer
+            .sink { (localPlayer) in
+                // current GKLocalPlayer.local
+        }
+    }
+    
+    deinit() {
+        self.cancellableInvite?.cancel()
+        self.cancellableMatch?.cancel()
+        self.cancellableLocalPlayer?.cancel()
+    }
+}
+```
+
+### Examples
+
+#### GKMatchMaker Example
+
+The provided **GKMatchMaker** example, includes a full working SwiftUI solution for handling GameKit matchmaking.
+Just copy the file **Config.xcconfig-example** to **Config.xcconfig** and add your development team ID for the variable **XCCONFIG_DEVELOPMENT_TEAM** and a valid Bundle ID with GameCenter support for **XCCONFIG_BUNDLE_ID**.
+The **Config.xcconfig** should now look something like this:
+
+```config
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+XCCONFIG_DEVELOPMENT_TEAM = 9988XX7D42 // YOUR DEVELOPMENT TEAM ID
+XCCONFIG_BUNDLE_ID = domain.host.application // A BUNDLE ID WITH SUPPORT FOR THE GAMECENTER CAPABILITY e.g. domain.host.application
+```
+
+
+Then open the **GKMatchMaker.xcodeproj**  and run it on as many **real hardware** devices to test the GameKit match making.
+
 
 ## Documentation
 + [Apple Documentation GameKit](https://developer.apple.com/documentation/gamekit/)
