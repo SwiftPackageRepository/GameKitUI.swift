@@ -204,7 +204,7 @@ The **Config.xcconfig** should now look something like this:
 // https://help.apple.com/xcode/#/dev745c5c974
 
 XCCONFIG_DEVELOPMENT_TEAM = 9988XX7D42 // YOUR DEVELOPMENT TEAM ID
-XCCONFIG_BUNDLE_ID = domain.host.application // A BUNDLE ID WITH SUPPORT FOR THE GAMECENTER CAPABILITY e.g. domain.host.application
+XCCONFIG_BUNDLE_ID = com.yourcompany.ProductName // A BUNDLE ID WITH SUPPORT FOR THE GAMECENTER CAPABILITY
 ```
 
 

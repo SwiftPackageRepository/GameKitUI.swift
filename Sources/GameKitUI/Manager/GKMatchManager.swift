@@ -120,6 +120,8 @@ public final class GKMatchManager: NSObject {
     
     public func cancel() {
         GKMatchmaker.shared().cancel()
+        self.invite.send(Invite.zero)
+        self.match.send(Match.zero)
     }
 }
 
