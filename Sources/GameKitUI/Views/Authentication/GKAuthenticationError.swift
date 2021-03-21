@@ -21,24 +21,18 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.02.21.
-///
+/// Created by Sascha Müllner on 23.02.21.
 
-import SwiftUI
+import Foundation
 
-struct PrimaryButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        return content
-            .font(.title)
-            .padding(32)
-            .background(Color("ButtonColor"))
-            .cornerRadius(32)
-            .foregroundColor(Color("ButtonTextColor"))
+public struct GKAuthenticationError {
+    let message: String
+
+    init(message: String) {
+        self.message = message
     }
 }
 
-extension Text {
-    func primaryButtonStyle() -> some View {
-        self.modifier(PrimaryButtonModifier())
-    }
+extension GKAuthenticationError: LocalizedError {
+    public var errorDescription: String? { return message }
 }

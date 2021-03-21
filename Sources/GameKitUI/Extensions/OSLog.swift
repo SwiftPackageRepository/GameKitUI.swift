@@ -21,24 +21,18 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.02.21.
-///
+/// Created by Sascha Müllner on 23.02.21.
 
-import SwiftUI
+import os.log
+import Foundation
 
-struct PrimaryButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        return content
-            .font(.title)
-            .padding(32)
-            .background(Color("ButtonColor"))
-            .cornerRadius(32)
-            .foregroundColor(Color("ButtonTextColor"))
-    }
-}
-
-extension Text {
-    func primaryButtonStyle() -> some View {
-        self.modifier(PrimaryButtonModifier())
-    }
+extension OSLog {
+    private static var subsystem = "de.webblazer.GameKitUI"
+    
+    /// Logs the game kit authentication
+    static let authentication = OSLog(subsystem: subsystem, category: "authentication")
+    /// Logs the game kit invitiations
+    static let invite = OSLog(subsystem: subsystem, category: "invite")
+    /// Logs the game kit matchmaking
+    static let matchmaking = OSLog(subsystem: subsystem, category: "matchmaking")
 }

@@ -20,25 +20,37 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
-///
-/// Created by Sascha Müllner on 22.02.21.
-///
+/// 
+/// Created by Sascha Müllner on 21.11.20.
+/// Modfied by Sascha Müllner on 17.12.20. 
 
+import Foundation
+import GameKit
 import SwiftUI
 
-struct PrimaryButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        return content
-            .font(.title)
-            .padding(32)
-            .background(Color("ButtonColor"))
-            .cornerRadius(32)
-            .foregroundColor(Color("ButtonTextColor"))
-    }
-}
+public struct GKAuthenticationView: UIViewControllerRepresentable {
 
-extension Text {
-    func primaryButtonStyle() -> some View {
-        self.modifier(PrimaryButtonModifier())
+    private let failed: ((Error) -> Void)
+    private let authenticated: ((GKPlayer) -> Void)
+
+    public init(failed: @escaping ((Error) -> Void),
+                authenticated: @escaping ((GKPlayer) -> Void)) {
+        self.failed = failed
+        self.authenticated = authenticated
+    }
+
+    public func makeUIViewController(
+        context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
+        let authenticationViewController = GKAuthenticationViewController { (failed) in
+            self.failed(failed)
+        } authenticated: { (player) in
+            self.authenticated(player)
+        }
+        return authenticationViewController
+    }
+
+    public func updateUIViewController(
+        _ uiViewController: GKAuthenticationViewController,
+        context: UIViewControllerRepresentableContext<GKAuthenticationView>) {
     }
 }

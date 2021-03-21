@@ -20,7 +20,8 @@ let package = Package(
     targets: [
         .target(
             name: "GameKitUI",
-            dependencies: []),
+            dependencies: [],
+            exclude: ["MetaData", "Examples"]),
         .testTarget(
             name: "GameKitUITests",
             dependencies: ["GameKitUI"])

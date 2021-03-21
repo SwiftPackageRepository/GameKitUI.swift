@@ -21,14 +21,15 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 24.11.20.
+/// Created by smuellner on 22.02.21.
+///
 
 import SwiftUI
 import GameKitUI
 
-struct MatchMakingView: View {
+struct AuthenticationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var viewModel = MatchMakingViewModel()
+    @ObservedObject var viewModel = AuthenticationViewModel()
 
     var body: some View {
         ZStack {
@@ -38,31 +39,25 @@ struct MatchMakingView: View {
                     .font(.body)
                     .padding(8)
                 Button() {
-                    self.viewModel.showMatchMakerModal()
+                    self.viewModel.showAuthenticationModal()
                 } label: {
-                    Text("Create Match")
+                    Text("Login")
                         .primaryButtonStyle()
                 }
             }
-            .navigationBarTitle(Text("GameKit Matchmaker"))
+            .navigationBarTitle(Text("GameKit Authentication"))
         }
         .onAppear() {
             self.viewModel.load()
         }
         .sheet(isPresented: self.$viewModel.showModal) {
-            GKMatchmakerView(
-                minPlayers: 2,
-                maxPlayers: 4,
-                inviteMessage: "Let us play together!"
-            ) {
+            GKAuthenticationView { (error) in
                 self.viewModel.showModal = false
-                self.viewModel.currentState = "Player Canceled"
-            } failed: { (error) in
+                self.viewModel.showAlert(title: "Authentication Failed", message: error.localizedDescription)
+                self.viewModel.currentState = error.localizedDescription
+            } authenticated: { (player) in
                 self.viewModel.showModal = false
-                self.viewModel.currentState = "Match Making Failed"
-                self.viewModel.showAlert(title: "Match Making Failed", message: error.localizedDescription)
-            } started: { (match) in
-                self.viewModel.showModal = false
+                self.viewModel.currentState = "Hello \(player.displayName)"
             }
         }
         .alert(isPresented: self.$viewModel.showAlert) {
@@ -73,8 +68,8 @@ struct MatchMakingView: View {
     }
 }
 
-struct MatchMakingView_Previews: PreviewProvider {
+struct AuthenticationView_Previews: PreviewProvider {
     static var previews: some View {
-        MatchMakingView()
+        AuthenticationView()
     }
 }

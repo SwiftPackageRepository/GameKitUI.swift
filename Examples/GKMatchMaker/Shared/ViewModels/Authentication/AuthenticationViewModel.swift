@@ -21,24 +21,34 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.02.21.
-///
+/// Created by smuellner on 23.02.21.
 
-import SwiftUI
 
-struct PrimaryButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        return content
-            .font(.title)
-            .padding(32)
-            .background(Color("ButtonColor"))
-            .cornerRadius(32)
-            .foregroundColor(Color("ButtonTextColor"))
+import Foundation
+import Combine
+
+class AuthenticationViewModel: ObservableObject {
+
+    @Published public var showModal = false
+    @Published public var showAlert = false
+    @Published public var alertTitle: String = ""
+    @Published public var alertMessage: String = ""
+    @Published public var currentState: String = "Loading GameKit..."
+
+    public init() {
     }
-}
+    
+    public func load() {
+        self.showAuthenticationModal()
+    }
 
-extension Text {
-    func primaryButtonStyle() -> some View {
-        self.modifier(PrimaryButtonModifier())
+    public func showAlert(title: String, message: String) {
+        self.showAlert = true
+        self.alertTitle = title
+        self.alertMessage = message
+    }
+    
+    public func showAuthenticationModal() {
+        self.showModal = true
     }
 }

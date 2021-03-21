@@ -21,24 +21,16 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.02.21.
-///
+/// Created by Sascha Müllner on 26.02.21.
 
-import SwiftUI
+import GameKit
 
-struct PrimaryButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        return content
-            .font(.title)
-            .padding(32)
-            .background(Color("ButtonColor"))
-            .cornerRadius(32)
-            .foregroundColor(Color("ButtonTextColor"))
-    }
+public struct Match {
+    public private(set) var gkMatch: GKMatch?
 }
 
-extension Text {
-    func primaryButtonStyle() -> some View {
-        self.modifier(PrimaryButtonModifier())
+extension Match {
+    public static var zero: Match {
+        return Match()
     }
 }

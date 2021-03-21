@@ -21,24 +21,22 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.02.21.
-///
+/// Created by Sascha Müllner on 26.02.21.
 
-import SwiftUI
+import GameKit
 
-struct PrimaryButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        return content
-            .font(.title)
-            .padding(32)
-            .background(Color("ButtonColor"))
-            .cornerRadius(32)
-            .foregroundColor(Color("ButtonTextColor"))
+public struct Invite {
+    public private(set) var needsToAuthenticate: Bool?
+    public private(set) var gkInvite: GKInvite?
+}
+
+extension Invite {
+    public static var zero: Invite {
+        return Invite()
+    }
+    
+    public static var needsToAuthenticate: Invite {
+        return Invite(needsToAuthenticate: GKLocalPlayer.local.isAuthenticated != true)
     }
 }
 
-extension Text {
-    func primaryButtonStyle() -> some View {
-        self.modifier(PrimaryButtonModifier())
-    }
-}

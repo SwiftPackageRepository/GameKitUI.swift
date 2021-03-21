@@ -21,37 +21,45 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 24.11.20.
+/// Created by Sascha Müllner on 22.11.20.
+/// Modfied by Sascha Müllner on 17.12.20.
 
-import SwiftUI
+import Foundation
 import GameKit
-import GameKitUI
+import SwiftUI
 
-struct ContentView: View {
-    
-    var body: some View {
-        NavigationView {
-            ZStack {
-                Color("BackgroundColor").edgesIgnoringSafeArea(.all)
-                VStack(alignment: .center, spacing: 32) {
-                    NavigationLink(destination: AuthenticationView()) {
-                        Text("Authentication")
-                            .primaryButtonStyle()
-                    }
-                    NavigationLink(destination: MatchMakingView()) {
-                        Text("Match Making")
-                            .primaryButtonStyle()
-                    }
-                }
-            }
-            .navigationBarTitle(Text("GameKit"))
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
+public struct GKInviteView: UIViewControllerRepresentable {
+
+    private let invite: GKInvite
+    private let canceled: () -> Void
+    private let failed: (Error) -> Void
+    private let started: (GKMatch) -> Void
+
+    public init(invite: GKInvite,
+                canceled: @escaping () -> Void,
+                failed: @escaping (Error) -> Void,
+                started: @escaping (GKMatch) -> Void) {
+        self.invite = invite
+        self.canceled = canceled
+        self.failed = failed
+        self.started = started
     }
-}
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    public func makeUIViewController(
+        context: UIViewControllerRepresentableContext<GKInviteView>) -> InviteViewController {
+        
+        return InviteViewController(
+            invite: self.invite) {
+            self.canceled()
+        } failed: { (error) in
+            self.failed(error)
+        } started: { (match) in
+            self.started(match)
+        }
+    }
+
+    public func updateUIViewController(
+        _ uiViewController: InviteViewController,
+        context: UIViewControllerRepresentableContext<GKInviteView>) {
     }
 }
