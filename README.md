@@ -1,3 +1,6 @@
+
+<p align="left"><img src="./MetaData/GameKitUILogo-Rounded.png" height="180"/>&nbsp;<img src="./MetaData/GameKitUILogoDark-Rounded.png" height="180"/></p>
+
 # GameKitUI.swift
 
 ## GameKit (GameCenter) helper for SwiftUI
