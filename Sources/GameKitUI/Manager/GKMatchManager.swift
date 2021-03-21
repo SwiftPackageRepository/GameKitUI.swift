@@ -70,7 +70,7 @@ public final class GKMatchManager: NSObject {
     private var failed: (Error) -> Void = { _ in }
     private var started: (GKMatch) -> Void = { _ in }
     
-    public func createInvite(invite: GKInvite,
+    internal func createInvite(invite: GKInvite,
                                  canceled: @escaping () -> Void,
                                  failed: @escaping (Error) -> Void,
                                  started: @escaping (GKMatch) -> Void) -> GKMatchmakerViewController? {
@@ -89,7 +89,7 @@ public final class GKMatchManager: NSObject {
         return matchmakerViewController
     }
 
-    public func createMatchmaker(invite: GKInvite) -> GKMatchmakerViewController? {
+    internal func createMatchmaker(invite: GKInvite) -> GKMatchmakerViewController? {
         guard GKLocalPlayer.local.isAuthenticated,
               let matchmakerViewController = GKMatchmakerViewController(invite: invite) else {
             GKMatchmaker.shared().cancel()
@@ -100,7 +100,7 @@ public final class GKMatchManager: NSObject {
         return matchmakerViewController
     }
     
-    public func createMatchmaker(request: GKMatchRequest,
+    internal func createMatchmaker(request: GKMatchRequest,
                                  canceled: @escaping () -> Void,
                                  failed: @escaping (Error) -> Void,
                                  started: @escaping (GKMatch) -> Void) -> GKMatchmakerViewController? {

@@ -25,7 +25,7 @@ class GKMatchMakerAppModel: ObservableObject {
             self.showAuthentication = invite.needsToAuthenticate ?? false
         }
     }
-    @Published public var match: GKMatch? {
+    @Published public var gkMatch: GKMatch? {
         didSet {
             self.showInvite = false
             self.showMatch = true
@@ -43,7 +43,8 @@ class GKMatchMakerAppModel: ObservableObject {
                    type: .info,
                    String(describing: notification.name),
                    String(describing: notification.object),
-                   String(describing: notification.userInfo))
+                   String(describing: notification.userInfo)
+            )
         }
     }
 
@@ -62,7 +63,7 @@ class GKMatchMakerAppModel: ObservableObject {
             .shared
             .match
             .sink { (match) in
-                self.match = match.gkMatch
+                self.gkMatch = match.gkMatch
         }
     }
 

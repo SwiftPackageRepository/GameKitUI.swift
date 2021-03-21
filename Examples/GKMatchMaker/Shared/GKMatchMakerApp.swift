@@ -33,13 +33,13 @@ struct GKMatchMakerApp: App {
                     ) {
                     } failed: { (error) in
                         self.viewModel.showAlert(title: "Invitation Failed", message: error.localizedDescription)
-                    } started: { (match) in
+                    } started: { (gkMatch) in
                         self.viewModel.showInvite = false
-                        self.viewModel.match = match
+                        self.viewModel.gkMatch = gkMatch
                     }
                 } else if self.viewModel.showMatch,
-                   let match = self.viewModel.match {
-                    MatchView(match)
+                          let gkMatch = self.viewModel.gkMatch {
+                    MatchView(gkMatch)
                 }
             }
         }
