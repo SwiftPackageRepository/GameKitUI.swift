@@ -10,15 +10,16 @@ GameKitUI is **created and maintaned with ❥** by Sascha Muellner.
 ---
 [![Swift](https://github.com/SwiftPackageRepository/GameKitUI.swift/workflows/Swift/badge.svg)](https://github.com/SwiftPackageRepository/GameKitUI.swift/actions?query=workflow%3ASwift)
 [![codecov](https://codecov.io/gh/SwiftPackageRepository/GameKitUI.swift/branch/main/graph/badge.svg)](https://codecov.io/gh/SwiftPackageRepository/GameKitUI.swift)
-![Platforms](https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS-lightgrey.svg)
 [![License](https://img.shields.io/github/license/SwiftPackageRepository/GameKitUI.swift)](https://github.com/SwiftPackageRepository/GameKitUI.swift/blob/main/LICENSE)
 ![Version](https://img.shields.io/github/v/tag/SwiftPackageRepository/GameKitUI.swift)
-[![Swift Version](https://img.shields.io/badge/swift-5.1-orange.svg?style=flat)](https://developer.apple.com/swift)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FSwiftPackageRepository%2FGameKitUI.swift%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/SwiftPackageRepository/GameKitUI.swift)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FSwiftPackageRepository%2FGameKitUI.swift%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/SwiftPackageRepository/GameKitUI.swift)
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat)](https://github.com/apple/swift-package-manager)
 [![README](https://img.shields.io/badge/-README-lightgrey)](https://SwiftPackageRepository.github.io/GameKitUI.swift)
 
+
 ## What?
-This is a **Swift** package with support for iOS/macOS/tvOS that allows to use GameKit with SwiftUI. 
+This is a **Swift** package with support for iOS that allows to use GameKit with SwiftUI. 
 
 ## Requirements
 
