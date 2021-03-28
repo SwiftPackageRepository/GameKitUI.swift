@@ -34,7 +34,7 @@ The latest version of GameKitUI requires:
 ### Swift Package Manager
 Using SPM add the following to your dependencies
 
-``` 'GameKitUI', 'main', 'https://github.com/smuellner/GameKitUI.swift.git' ```
+``` 'GameKitUI', 'main', 'https://github.com/SwiftPackageRepository/GameKitUI.swift.git' ```
 
 ## How to use?
 
