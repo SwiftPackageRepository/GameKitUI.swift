@@ -23,6 +23,7 @@
 ///
 /// Created by Sascha Müllner on 26.02.21.
 
+
 import os.log
 import Combine
 import Foundation
@@ -125,6 +126,8 @@ public final class GKMatchManager: NSObject {
     }
 }
 
+#if os(iOS)
+
 extension GKMatchManager: GKMatchmakerViewControllerDelegate {
 
     public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
@@ -163,8 +166,38 @@ extension GKMatchManager: GKMatchmakerViewControllerDelegate {
     }
 }
 
-extension GKMatchManager: GKLocalPlayerListener {
+#elseif os(macOS)
 
+extension GKMatchManager: GKMatchmakerViewControllerDelegate {
+
+    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
+        viewController.dismiss(self)
+        os_log("Matchmaking successful!", log: OSLog.matchmaking, type: .info)
+        self.match.send(Match(gkMatch: match))
+        self.started(match)
+    }
+    
+    public func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
+        viewController.dismiss(self)
+        os_log("Matchmaking cancelled!", log: OSLog.matchmaking, type: .error)
+        self.invite.send(Invite.zero)
+        self.match.send(Match.zero)
+        self.canceled()
+    }
+    
+    public func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: Error) {
+        viewController.dismiss(self)
+        os_log("Matchmaking failed: %{public}@", log: OSLog.matchmaking, type: .error, error.localizedDescription)
+        self.invite.send(Invite.zero)
+        self.match.send(Match.zero)
+        self.failed(error)
+    }
+}
+
+#endif
+
+extension GKMatchManager: GKLocalPlayerListener {
+    
     public func player(_ player: GKPlayer,
                 didAccept invite: GKInvite) {
         os_log("Player invited: %{public}@", log: OSLog.invite, type: .info, invite)

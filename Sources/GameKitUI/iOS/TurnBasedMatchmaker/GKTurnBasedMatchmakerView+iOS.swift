@@ -24,32 +24,49 @@
 /// Created by Sascha Müllner on 22.11.20.
 /// Modfied by Sascha Müllner on 17.12.20.
 
+#if os(iOS)
+
 import Foundation
 import GameKit
 import SwiftUI
 
-public struct GKInviteView: UIViewControllerRepresentable {
-
-    private let invite: GKInvite
+public struct GKTurnBasedMatchmakerView: UIViewControllerRepresentable {
+    
+    private let matchRequest: GKMatchRequest
     private let canceled: () -> Void
     private let failed: (Error) -> Void
-    private let started: (GKMatch) -> Void
-
-    public init(invite: GKInvite,
+    private let started: (GKTurnBasedMatch) -> Void
+    
+    public init(matchRequest: GKMatchRequest,
                 canceled: @escaping () -> Void,
                 failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
-        self.invite = invite
+                started: @escaping (GKTurnBasedMatch) -> Void) {
+        self.matchRequest = matchRequest
         self.canceled = canceled
         self.failed = failed
         self.started = started
     }
-
+    
+    public init(minPlayers: Int,
+                maxPlayers: Int,
+                inviteMessage: String,
+                canceled: @escaping () -> Void,
+                failed: @escaping (Error) -> Void,
+                started: @escaping (GKTurnBasedMatch) -> Void) {
+        let matchRequest = GKMatchRequest()
+        matchRequest.minPlayers = minPlayers
+        matchRequest.maxPlayers = maxPlayers
+        matchRequest.inviteMessage = inviteMessage
+        self.matchRequest = matchRequest
+        self.canceled = canceled
+        self.failed = failed
+        self.started = started
+    }
+    
     public func makeUIViewController(
-        context: UIViewControllerRepresentableContext<GKInviteView>) -> InviteViewController {
-        
-        return InviteViewController(
-            invite: self.invite) {
+        context: UIViewControllerRepresentableContext<GKTurnBasedMatchmakerView>) -> TurnBasedMatchmakerViewController {
+        return TurnBasedMatchmakerViewController(
+            matchRequest: self.matchRequest) {
             self.canceled()
         } failed: { (error) in
             self.failed(error)
@@ -57,9 +74,11 @@ public struct GKInviteView: UIViewControllerRepresentable {
             self.started(match)
         }
     }
-
+    
     public func updateUIViewController(
-        _ uiViewController: InviteViewController,
-        context: UIViewControllerRepresentableContext<GKInviteView>) {
+        _ uiViewController: TurnBasedMatchmakerViewController,
+        context: UIViewControllerRepresentableContext<GKTurnBasedMatchmakerView>) {
     }
 }
+
+#endif

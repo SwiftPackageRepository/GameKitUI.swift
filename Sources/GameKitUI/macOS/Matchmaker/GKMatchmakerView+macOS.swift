@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2020 Sascha Müllner
+/// Copyright (c) 2021 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -20,23 +20,24 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
-/// 
-/// Created by Sascha Müllner on 22.11.20.
-/// Modfied by Sascha Müllner on 17.12.20. 
+///
+/// Created by Sascha Müllner on 28.03.21.
+
+#if os(macOS)
 
 import Foundation
 import GameKit
 import SwiftUI
-
-public struct GKMatchmakerView: UIViewControllerRepresentable {
+ 
+public struct GKMatchmakerView: NSViewControllerRepresentable {
 
     private let matchRequest: GKMatchRequest
     private var matchmakingMode: Any? = nil
     private let canceled: () -> Void
     private let failed: (Error) -> Void
     private let started: (GKMatch) -> Void
-
-    @available(iOS 14.0, *)
+    
+    @available(macOS 11.0, *)
     public init(matchRequest: GKMatchRequest,
                 matchmakingMode: GKMatchmakingMode,
                 canceled: @escaping () -> Void,
@@ -48,8 +49,8 @@ public struct GKMatchmakerView: UIViewControllerRepresentable {
         self.failed = failed
         self.started = started
     }
-
-    @available(iOS 14.0, *)
+    
+    @available(macOS 11.0, *)
     public init(minPlayers: Int,
                 maxPlayers: Int,
                 inviteMessage: String,
@@ -94,17 +95,19 @@ public struct GKMatchmakerView: UIViewControllerRepresentable {
         self.started = started
     }
 
-    public func makeUIViewController(
-        context: UIViewControllerRepresentableContext<GKMatchmakerView>) -> MatchmakerViewController {
-        if #available(iOS 14.0, *) {
-            return self.makeMatchmakerViewControllerForiOS14AndHigher()
+    public typealias NSViewControllerType = MatchmakerViewController
+    
+    public func makeNSViewController(
+        context: NSViewControllerRepresentableContext<GKMatchmakerView>) -> MatchmakerViewController {
+        if #available(macOS 11.0, *) {
+            return self.makeMatchmakerViewControllerForMacOS11AndHigher()
         } else {
             return self.makeMatchmakerViewController()
         }
     }
-
-    @available(iOS 14.0, *)
-    internal func makeMatchmakerViewControllerForiOS14AndHigher() -> MatchmakerViewController {
+    
+    @available(macOS 11.0, *)
+    internal func makeMatchmakerViewControllerForMacOS11AndHigher() -> MatchmakerViewController {
         guard let matchmakingMode = self.matchmakingMode as? GKMatchmakingMode else {
             return self.makeMatchmakerViewController()
         }
@@ -130,8 +133,10 @@ public struct GKMatchmakerView: UIViewControllerRepresentable {
         }
     }
 
-    public func updateUIViewController(
-        _ uiViewController: MatchmakerViewController,
-        context: UIViewControllerRepresentableContext<GKMatchmakerView>) {
+    public func updateNSViewController(
+        _ nsViewController: MatchmakerViewController,
+        context: NSViewControllerRepresentableContext<GKMatchmakerView>) {
     }
 }
+
+#endif

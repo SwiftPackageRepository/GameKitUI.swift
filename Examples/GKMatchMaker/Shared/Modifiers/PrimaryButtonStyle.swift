@@ -21,23 +21,18 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 23.02.21.
+/// Created by Sascha Müllner on 22.02.21.
+///
 
 import SwiftUI
 
-class LoadingViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let spinner = UIActivityIndicatorView(style: .medium)
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.startAnimating()
-        view.addSubview(spinner)
-
-        // Center our spinner both horizontally & vertically
-        NSLayoutConstraint.activate([
-            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+struct PrimaryButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.title)
+            .padding(32)
+            .foregroundColor(configuration.isPressed ? Color("ButtonColor") : Color("ButtonTextColor"))
+            .background(configuration.isPressed ? Color("ButtonTextColor") : Color("ButtonColor"))
+            .cornerRadius(32)
     }
 }

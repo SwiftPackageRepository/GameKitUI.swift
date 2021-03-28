@@ -23,22 +23,24 @@
 ///
 /// Created by Sascha Müllner on 23.02.21.
 
+#if os(iOS)
+
 import Foundation
 import GameKit
 import SwiftUI
 
-public class TurnBasedMatchmakerViewController: UIViewController, GKTurnBasedMatchmakerViewControllerDelegate, GKMatchDelegate {
-
-    private let matchRequest: GKMatchRequest
+public class InviteViewController: UIViewController, GKMatchDelegate, GKLocalPlayerListener {
+    
+    private let invite: GKInvite
     private let canceled: () -> Void
     private let failed: (Error) -> Void
-    private let started: (GKTurnBasedMatch) -> Void
-    
-    public init(matchRequest: GKMatchRequest,
+    private let started: (GKMatch) -> Void
+
+    public init(invite: GKInvite,
                 canceled: @escaping () -> Void,
                 failed: @escaping (Error) -> Void,
-                started: @escaping (GKTurnBasedMatch) -> Void) {
-        self.matchRequest = matchRequest
+                started: @escaping (GKMatch) -> Void) {
+        self.invite = invite
         self.canceled = canceled
         self.failed = failed
         self.started = started
@@ -48,38 +50,40 @@ public class TurnBasedMatchmakerViewController: UIViewController, GKTurnBasedMat
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let viewController = GKTurnBasedMatchmakerViewController(matchRequest: self.matchRequest)
-        viewController.turnBasedMatchmakerDelegate = self
-        self.add(viewController)
+        if GKLocalPlayer.local.isAuthenticated {
+            self.showInviteViewController()
+        } else {
+            self.showAuthenticationViewController()
+        }
     }
-
-    public func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.canceled()
-                viewController.remove()
-        })
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        self.removeAll()
     }
-
-    public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: Error) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.failed(error)
-                viewController.remove()
-        })
+    
+    public func showAuthenticationViewController() {
+        let authenticationViewController = GKAuthenticationViewController { (error) in
+            self.failed(error)
+        } authenticated: { (player) in
+            self.showInviteViewController()
+        }
+        self.add(authenticationViewController)
     }
-
-    public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFind match: GKTurnBasedMatch) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.started(match)
-                viewController.remove()
-        })
+    
+    public func showInviteViewController() {
+        if let viewController = GKMatchManager.shared.createInvite(invite: self.invite,
+                                                                     canceled: self.canceled,
+                                                                     failed: self.failed,
+                                                                     started: self.started) {
+            
+            self.add(viewController)
+        } else {
+            self.canceled()
+        }
     }
 }
+
+#endif

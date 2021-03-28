@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2020 Sascha Müllner
+/// Copyright (c) 2021 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 23.02.21.
+/// Created by Sascha Müllner on 28.03.21.
+
+#if os(macOS)
 
 import os.log
 import Foundation
@@ -57,7 +59,7 @@ public final class GKAuthentication: NSObject, GKLocalPlayerListener {
         self.isAuthenticated = GKLocalPlayer.local.isAuthenticated
     }
     
-    public func authenticate(authenticationViewController: @escaping (UIViewController) -> Void,
+    public func authenticate(authenticationViewController: @escaping (NSViewController) -> Void,
                              failed: @escaping (Error) -> Void,
                              authenticated: @escaping (GKLocalPlayer) -> Void) {
         
@@ -88,3 +90,5 @@ public final class GKAuthentication: NSObject, GKLocalPlayerListener {
         }
     }
 }
+
+#endif

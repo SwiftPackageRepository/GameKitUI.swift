@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2020 Sascha Müllner
+/// Copyright (c) 2021 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,48 +21,39 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 23.02.21.
+/// Created by Sascha Müllner on 28.03.21.
 
-import os.log
+#if os(macOS)
+
 import Foundation
 import GameKit
 import SwiftUI
 
-public class GKAuthenticationViewController: UIViewController {
+public struct GKAuthenticationView: NSViewControllerRepresentable {
 
-    let failed: (Error) -> Void
-    let authenticated: (GKLocalPlayer) -> Void
-    private let _loadingViewController = LoadingViewController()
+    private let failed: ((Error) -> Void)
+    private let authenticated: ((GKPlayer) -> Void)
 
-    public init(failed: @escaping (Error) -> Void,
-                authenticated: @escaping (GKLocalPlayer) -> Void) {
+    public init(failed: @escaping ((Error) -> Void),
+                authenticated: @escaping ((GKPlayer) -> Void)) {
         self.failed = failed
         self.authenticated = authenticated
-        super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-    }
-
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.add(_loadingViewController)
-        GKAuthentication.shared.authenticate { (authenticationViewController) in
-            self.add(authenticationViewController)
-        } failed: { (error) in
-            os_log("Authentication failed %{public}@", log: OSLog.authentication, type: .error, error.localizedDescription)
-            self.failed(error)
+    public func makeNSViewController(
+        context: NSViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
+        let authenticationViewController = GKAuthenticationViewController { (failed) in
+            self.failed(failed)
         } authenticated: { (player) in
-            os_log("Player authenticated %{public}@", log: OSLog.authentication, type: .info, player.displayName)
             self.authenticated(player)
         }
+        return authenticationViewController
     }
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        self.removeAll()
+
+    public func updateNSViewController(
+        _ nsViewController: GKAuthenticationViewController,
+        context: NSViewControllerRepresentableContext<GKAuthenticationView>) {
     }
 }
+
+#endif

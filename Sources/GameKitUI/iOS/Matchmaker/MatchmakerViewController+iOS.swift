@@ -23,6 +23,8 @@
 ///
 /// Created by Sascha Müllner on 23.02.21.
 
+#if os(iOS)
+
 import Combine
 import Foundation
 import GameKit
@@ -133,3 +135,5 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
         }
     }
 }
+
+#endif

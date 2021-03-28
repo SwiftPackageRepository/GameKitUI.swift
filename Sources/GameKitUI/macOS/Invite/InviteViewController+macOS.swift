@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2020 Sascha Müllner
+/// Copyright (c) 2021 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,15 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 23.02.21.
+/// Created by Sascha Müllner on 28.03.21.
+
+#if os(macOS)
 
 import Foundation
 import GameKit
 import SwiftUI
 
-public class InviteViewController: UIViewController, GKMatchDelegate, GKLocalPlayerListener {
+public class InviteViewController: NSViewController, GKMatchDelegate, GKLocalPlayerListener {
     
     private let invite: GKInvite
     private let canceled: () -> Void
@@ -49,8 +51,12 @@ public class InviteViewController: UIViewController, GKMatchDelegate, GKLocalPla
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    public override func loadView() {
+        self.view = NSView()
+    }
+    
+    public override func viewWillAppear() {
+        super.viewWillAppear()
         if GKLocalPlayer.local.isAuthenticated {
             self.showInviteViewController()
         } else {
@@ -58,7 +64,8 @@ public class InviteViewController: UIViewController, GKMatchDelegate, GKLocalPla
         }
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear() {
+        super.viewWillDisappear()
         self.removeAll()
     }
     
@@ -83,3 +90,5 @@ public class InviteViewController: UIViewController, GKMatchDelegate, GKLocalPla
         }
     }
 }
+
+#endif

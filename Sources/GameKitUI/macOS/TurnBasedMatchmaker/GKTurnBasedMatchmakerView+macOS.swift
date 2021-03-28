@@ -21,14 +21,15 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.11.20.
-/// Modfied by Sascha Müllner on 17.12.20.
+/// Created by Sascha Müllner on 28.03.21.
+
+#if os(macOS)
 
 import Foundation
 import GameKit
 import SwiftUI
 
-public struct GKTurnBasedMatchmakerView: UIViewControllerRepresentable {
+public struct GKTurnBasedMatchmakerView: NSViewControllerRepresentable {
     
     private let matchRequest: GKMatchRequest
     private let canceled: () -> Void
@@ -61,8 +62,8 @@ public struct GKTurnBasedMatchmakerView: UIViewControllerRepresentable {
         self.started = started
     }
     
-    public func makeUIViewController(
-        context: UIViewControllerRepresentableContext<GKTurnBasedMatchmakerView>) -> TurnBasedMatchmakerViewController {
+    public func makeNSViewController(
+        context: NSViewControllerRepresentableContext<GKTurnBasedMatchmakerView>) -> TurnBasedMatchmakerViewController {
         return TurnBasedMatchmakerViewController(
             matchRequest: self.matchRequest) {
             self.canceled()
@@ -73,8 +74,10 @@ public struct GKTurnBasedMatchmakerView: UIViewControllerRepresentable {
         }
     }
     
-    public func updateUIViewController(
-        _ uiViewController: TurnBasedMatchmakerViewController,
-        context: UIViewControllerRepresentableContext<GKTurnBasedMatchmakerView>) {
+    public func updateNSViewController(
+        _ nsViewController: TurnBasedMatchmakerViewController,
+        context: NSViewControllerRepresentableContext<GKTurnBasedMatchmakerView>) {
     }
 }
+
+#endif

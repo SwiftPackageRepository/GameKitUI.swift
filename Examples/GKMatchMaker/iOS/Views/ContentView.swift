@@ -21,24 +21,36 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.02.21.
-///
+/// Created by Sascha Müllner on 24.11.20.
 
 import SwiftUI
+import GameKit
+import GameKitUI
 
-struct PrimaryButtonModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        return content
-            .font(.title)
-            .padding(32)
-            .background(Color("ButtonColor"))
-            .cornerRadius(32)
-            .foregroundColor(Color("ButtonTextColor"))
+struct ContentView: View {
+    
+    var body: some View {
+        NavigationView {
+            ZStack {
+                Color("BackgroundColor").edgesIgnoringSafeArea(.all)
+                VStack(alignment: .center, spacing: 32) {
+                    NavigationLink(destination: AuthenticationView()) {
+                        Text("Authentication")
+                            .primaryButtonStyle()
+                    }
+                    NavigationLink(destination: MatchMakingView()) {
+                        Text("Match Making")
+                            .primaryButtonStyle()
+                    }
+                }
+            }
+            .navigationTitle(Text("GameKit"))
+        }
     }
 }
 
-extension Text {
-    func primaryButtonStyle() -> some View {
-        self.modifier(PrimaryButtonModifier())
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }

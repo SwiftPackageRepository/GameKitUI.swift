@@ -41,10 +41,10 @@ struct MatchMakingView: View {
                     self.viewModel.showMatchMakerModal()
                 } label: {
                     Text("Create Match")
-                        .primaryButtonStyle()
                 }
+                .buttonStyle(PrimaryButtonStyle())
             }
-            .navigationBarTitle(Text("GameKit Matchmaker"))
+            .navigationTitle(Text("GameKit Matchmaker"))
         }
         .onAppear() {
             self.viewModel.load()

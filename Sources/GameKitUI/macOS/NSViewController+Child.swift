@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2020 Sascha Müllner
+/// Copyright (c) 2021 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -23,17 +23,19 @@
 ///
 /// Created by Sascha Müllner on 23.02.21.
 
-import UIKit
+#if os(macOS)
+
+import SwiftUI
 
 ///
-/// UIViewController helpers to add and remove child view controllers.
+/// NSViewController helpers to add and remove child view controllers.
 ///
-extension UIViewController {
+@nonobjc extension NSViewController {
     
     /// Add child view controller and embed view
     /// - Parameters:
     ///   - viewController: controller to be added as a child controller
-    func add(_ child: UIViewController) {
+    func add(_ child: NSViewController) {
         addChild(child)
         child.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(child.view)
@@ -43,7 +45,6 @@ extension UIViewController {
             child.view.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
             child.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
         ])
-        child.didMove(toParent: self)
     }
     
     /// Remove child view controller from the parent controller.
@@ -52,7 +53,6 @@ extension UIViewController {
             return
         }
 
-        willMove(toParent: nil)
         view.removeFromSuperview()
         removeFromParent()
     }
@@ -64,3 +64,5 @@ extension UIViewController {
         }
     }
 }
+
+#endif

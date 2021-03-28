@@ -42,10 +42,10 @@ struct AuthenticationView: View {
                     self.viewModel.showAuthenticationModal()
                 } label: {
                     Text("Login")
-                        .primaryButtonStyle()
                 }
+                .buttonStyle(PrimaryButtonStyle())
             }
-            .navigationBarTitle(Text("GameKit Authentication"))
+            .navigationTitle(Text("GameKit Authentication"))
         }
         .onAppear() {
             self.viewModel.load()
@@ -59,6 +59,7 @@ struct AuthenticationView: View {
                 self.viewModel.showModal = false
                 self.viewModel.currentState = "Hello \(player.displayName)"
             }
+            .frame(minWidth: 800, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
         }
         .alert(isPresented: self.$viewModel.showAlert) {
             Alert(title: Text(self.viewModel.alertTitle),

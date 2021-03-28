@@ -20,38 +20,41 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
-///
-/// Created by Sascha Müllner on 24.11.20.
+/// 
+/// Created by Sascha Müllner on 21.11.20.
+/// Modfied by Sascha Müllner on 17.12.20.
 
-import SwiftUI
+#if os(iOS)
+
+import Foundation
 import GameKit
-import GameKitUI
+import SwiftUI
 
-struct ContentView: View {
-    
-    var body: some View {
-        NavigationView {
-            ZStack {
-                Color("BackgroundColor").edgesIgnoringSafeArea(.all)
-                VStack(alignment: .center, spacing: 32) {
-                    NavigationLink(destination: AuthenticationView()) {
-                        Text("Authentication")
-                            .primaryButtonStyle()
-                    }
-                    NavigationLink(destination: MatchMakingView()) {
-                        Text("Match Making")
-                            .primaryButtonStyle()
-                    }
-                }
-            }
-            .navigationBarTitle(Text("GameKit"))
+public struct GKAuthenticationView: UIViewControllerRepresentable {
+
+    private let failed: ((Error) -> Void)
+    private let authenticated: ((GKPlayer) -> Void)
+
+    public init(failed: @escaping ((Error) -> Void),
+                authenticated: @escaping ((GKPlayer) -> Void)) {
+        self.failed = failed
+        self.authenticated = authenticated
+    }
+
+    public func makeUIViewController(
+        context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
+        let authenticationViewController = GKAuthenticationViewController { (failed) in
+            self.failed(failed)
+        } authenticated: { (player) in
+            self.authenticated(player)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        return authenticationViewController
+    }
+
+    public func updateUIViewController(
+        _ uiViewController: GKAuthenticationViewController,
+        context: UIViewControllerRepresentableContext<GKAuthenticationView>) {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+#endif
