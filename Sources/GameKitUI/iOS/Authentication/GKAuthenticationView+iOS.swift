@@ -24,7 +24,7 @@
 /// Created by Sascha Müllner on 21.11.20.
 /// Modfied by Sascha Müllner on 17.12.20.
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 
 import Foundation
 import GameKit

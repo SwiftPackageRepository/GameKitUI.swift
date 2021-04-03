@@ -26,17 +26,16 @@
 #if os(macOS)
 
 import os.log
+import Combine
 import Foundation
 import GameKit
-import SwiftUI
 
 public final class GKAuthentication: NSObject, GKLocalPlayerListener {
 
     public static let shared = GKAuthentication()
     
     private override init() {
-        self.isAuthenticated = GKLocalPlayer.local.isAuthenticated
-        self.isFailed = false
+        self.isAuthenticated.value = GKLocalPlayer.local.isAuthenticated
         super.init()
         // Setup internal observer for GameKit authentication changes
         NotificationCenter.default.addObserver(
@@ -50,13 +49,12 @@ public final class GKAuthentication: NSObject, GKLocalPlayerListener {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
-    @Published private(set) var authenticationError: Error?
-    @Published private(set) var isAuthenticated: Bool
-    @Published private(set) var isFailed: Bool = false
+
+    private(set) var authenticationError: Error?
+    private(set) public var isAuthenticated = CurrentValueSubject<Bool, Never>(false)
     
     @objc fileprivate func authenticationChanged() {
-        self.isAuthenticated = GKLocalPlayer.local.isAuthenticated
+        self.isAuthenticated.value = GKLocalPlayer.local.isAuthenticated
     }
     
     public func authenticate(authenticationViewController: @escaping (NSViewController) -> Void,

@@ -1,0 +1,20 @@
+{
+  "layers" : [
+    {
+      "filename" : "GameKitUILogo.imagestacklayer"
+    },
+    {
+      "filename" : "GameKitUILogo1.imagestacklayer"
+    }
+  ],
+  "properties" : {
+    "canvasSize" : {
+      "width" : 400,
+      "height" : 240
+    }
+  },
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
