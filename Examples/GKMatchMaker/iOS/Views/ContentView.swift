@@ -21,55 +21,36 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 17.03.21.
+/// Created by Sascha Müllner on 24.11.20.
 
 import SwiftUI
 import GameKit
 import GameKitUI
 
-struct MatchView: View {
-    var match: GKMatch
-
-    public init(_ match: GKMatch) {
-        self.match = match
-    }
-
+struct ContentView: View {
+    
     var body: some View {
         NavigationView {
             ZStack {
-                Color("BackgroundColor").ignoresSafeArea()
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(self.match.players, id: \.self) { player in
-                        HStack(alignment: .center, spacing: 8) {
-                            Rectangle()
-                                .background(Color.red)
-                                .frame(width: 42, height: 42)
-                            Text(player.displayName)
-                                .font(.title)
-                                .padding(8)
-                        }
+                Color("BackgroundColor").edgesIgnoringSafeArea(.all)
+                VStack(alignment: .center, spacing: 32) {
+                    NavigationLink(destination: AuthenticationView()) {
+                        Text("Authentication")
+                            .primaryButtonStyle()
+                    }
+                    NavigationLink(destination: MatchMakingView()) {
+                        Text("Match Making")
+                            .primaryButtonStyle()
                     }
                 }
             }
-            .navigationTitle(Text("GameKit Match"))
-            .toolbar {
-                ToolbarItemGroup {
-                    Button(action: {
-                        GKMatchManager.shared.cancel()
-                    }) {
-                        HStack(alignment: .center) {
-                            Image(systemName: "xmark.circle").imageScale(.large)
-                            Text("Cancel")
-                        }
-                    }
-                }
-            }
+            .navigationTitle(Text("GameKit"))
         }
     }
 }
 
-struct MatchView_Previews: PreviewProvider {
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MatchView(GKMatch())
+        ContentView()
     }
 }

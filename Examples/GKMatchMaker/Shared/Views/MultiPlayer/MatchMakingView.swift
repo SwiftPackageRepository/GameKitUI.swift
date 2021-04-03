@@ -41,10 +41,10 @@ struct MatchMakingView: View {
                     self.viewModel.showMatchMakerModal()
                 } label: {
                     Text("Create Match")
-                        .primaryButtonStyle()
                 }
+                .buttonStyle(PrimaryButtonStyle())
             }
-            .navigationBarTitle(Text("GameKit Matchmaker"))
+            .navigationTitle(Text("GameKit Matchmaker"))
         }
         .onAppear() {
             self.viewModel.load()
@@ -64,6 +64,7 @@ struct MatchMakingView: View {
             } started: { (match) in
                 self.viewModel.showModal = false
             }
+            .frame(width: 640, height: 480)
         }
         .alert(isPresented: self.$viewModel.showAlert) {
             Alert(title: Text(self.viewModel.alertTitle),

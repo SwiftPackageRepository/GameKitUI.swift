@@ -56,6 +56,7 @@ class GKMatchMakerAppModel: ObservableObject {
 
     public init() {
         self.subscribe()
+        /*
         NotificationCenter.default.addObserver(forName: nil, object: nil, queue: nil) { notification in
             os_log("Notification found with:\r\n name:%{public}@\r\nobject:%{public}\r\nuserInfo: %{public})",
                    log: .default,
@@ -65,6 +66,7 @@ class GKMatchMakerAppModel: ObservableObject {
                    String(describing: notification.userInfo)
             )
         }
+ */
     }
 
     deinit {

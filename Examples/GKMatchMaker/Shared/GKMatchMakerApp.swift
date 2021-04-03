@@ -34,6 +34,7 @@ struct GKMatchMakerApp: App {
     public var body: some Scene {
         WindowGroup {
             ZStack {
+                Color("BackgroundColor").ignoresSafeArea()
                 ContentView()
                     .alert(isPresented: self.$viewModel.showAlert) {
                         Alert(title: Text(self.viewModel.alertTitle),
