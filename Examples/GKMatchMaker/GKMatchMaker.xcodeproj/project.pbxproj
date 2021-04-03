@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		150315F72617E3B100EC5D2E /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315F62617E3B100EC5D2E /* SidebarView.swift */; };
+		150315FC2617E7C900EC5D2E /* SidebarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315FB2617E7C900EC5D2E /* SidebarMenu.swift */; };
+		150316002617E88100EC5D2E /* SidebarRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315FF2617E88100EC5D2E /* SidebarRow.swift */; };
 		1507A0BD25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */; };
 		1507A0BE25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */; };
 		1507A0C625E419E5006DDBFC /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0C525E419E5006DDBFC /* AuthenticationView.swift */; };
@@ -34,6 +37,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		150315F32617DB1E00EC5D2E /* Config.xcconfig-example */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Config.xcconfig-example"; sourceTree = "<group>"; };
+		150315F62617E3B100EC5D2E /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		150315FB2617E7C900EC5D2E /* SidebarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMenu.swift; sourceTree = "<group>"; };
+		150315FF2617E88100EC5D2E /* SidebarRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarRow.swift; sourceTree = "<group>"; };
 		1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GKMatchMakerApp.swift; sourceTree = "<group>"; };
 		1507A0C525E419E5006DDBFC /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		151CAA8D25E39837002A7FDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,9 +85,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		150315FA2617E7B200EC5D2E /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				150315F62617E3B100EC5D2E /* SidebarView.swift */,
+				150315FB2617E7C900EC5D2E /* SidebarMenu.swift */,
+				150315FF2617E88100EC5D2E /* SidebarRow.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
 		151CAA8525E39835002A7FDC = {
 			isa = PBXGroup;
 			children = (
+				150315F32617DB1E00EC5D2E /* Config.xcconfig-example */,
 				151CAAD025E39928002A7FDC /* Config.xcconfig */,
 				151CAAD825E399DF002A7FDC /* GameKitUI.swift */,
 				151CAA8A25E39835002A7FDC /* Shared */,
@@ -203,6 +221,7 @@
 		15D90EAC2610B77E0010E6C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				150315FA2617E7B200EC5D2E /* Sidebar */,
 				15D90EAD2610B77E0010E6C9 /* ContentView.swift */,
 			);
 			path = Views;
@@ -276,7 +295,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchMaker" */;
+			buildConfigurationList = 151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchmaker" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -336,12 +355,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				15F85DE7260272D20009A734 /* GKMatchMakerAppModel.swift in Sources */,
+				150316002617E88100EC5D2E /* SidebarRow.swift in Sources */,
 				1507A0C725E419E5006DDBFC /* AuthenticationView.swift in Sources */,
 				151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */,
 				151D89602602660B00979718 /* MatchView.swift in Sources */,
 				152736882607D07C0068853D /* MatchMakingView.swift in Sources */,
 				15D90EAE2610B7850010E6C9 /* ContentView.swift in Sources */,
 				15D90EB52610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */,
+				150315F72617E3B100EC5D2E /* SidebarView.swift in Sources */,
+				150315FC2617E7C900EC5D2E /* SidebarMenu.swift in Sources */,
 				1507A0BE25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */,
 				15A6F7F225E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */,
 			);
@@ -567,7 +589,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchMaker" */ = {
+		151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchmaker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				151CAAA425E39837002A7FDC /* Debug */,

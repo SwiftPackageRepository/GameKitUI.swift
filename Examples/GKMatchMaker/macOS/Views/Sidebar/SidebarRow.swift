@@ -24,19 +24,38 @@
 /// Created by Sascha Müllner on 03.04.21.
 
 import SwiftUI
-import GameKit
-import GameKitUI
 
-struct ContentView: View {
-    
+struct SidebarRow : View {
+    let item: SidebarMenu
+    @Binding var selectedMenu: SidebarMenu
+
+    var isSelected: Bool {
+        selectedMenu == item
+    }
+
     var body: some View {
-        SidebarView()
-            .frame(minWidth: 800, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
+        HStack {
+            Group {
+                Image(systemName: item.image)
+                    .imageScale(.large)
+                    .foregroundColor(isSelected ? .secondary : .primary)
+            }
+            .frame(width: 40)
+            Text(item.title)
+                .font(.headline)
+                .foregroundColor(isSelected ? .secondary : .primary)
+            }
+            .padding()
+            .onTapGesture {
+                self.selectedMenu = self.item
+            }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+#if DEBUG
+struct SidebarRow_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SidebarRow(item: .matchMaking, selectedMenu: .constant(.matchMaking))
     }
 }
+#endif

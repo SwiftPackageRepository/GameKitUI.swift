@@ -24,19 +24,38 @@
 /// Created by Sascha Müllner on 03.04.21.
 
 import SwiftUI
-import GameKit
-import GameKitUI
 
-struct ContentView: View {
-    
+struct SidebarView: View {
+    @State var selectedMenu: SidebarMenu = .authentication
+
+    @ViewBuilder
     var body: some View {
-        SidebarView()
-            .frame(minWidth: 800, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
+        HStack(spacing: 0) {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading) {
+                    ForEach(SidebarMenu.allCases) { menu in
+                        ZStack(alignment: .leading) {
+                            SidebarRow(item: menu, selectedMenu: self.$selectedMenu)
+                                .frame(height: 50)
+                            if menu == self.selectedMenu {
+                                Rectangle()
+                                    .foregroundColor(Color.secondary.opacity(0.1))
+                                    .frame(height: 50)
+                            }
+                        }
+                    }
+                }
+                .padding(.top, 32)
+                .frame(width: 300)
+            }
+            .background(Color.primary.opacity(0.1))
+            selectedMenu.contentView
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SidebarView()
     }
 }
