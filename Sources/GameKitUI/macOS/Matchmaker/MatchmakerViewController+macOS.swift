@@ -38,7 +38,7 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     private let failed: (Error) -> Void
     private let started: (GKMatch) -> Void
     private var cancellable: AnyCancellable?
-    private let _loadingViewController = LoadingViewController()
+    private let loadingViewController = LoadingViewController()
     
     @available(macOS 11.0, *)
     public init(matchRequest: GKMatchRequest,
@@ -71,8 +71,7 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     
     public override func loadView() {
         self.view = NSView()
-        view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.blue.cgColor
+        self.view.setBoundsSize(NSSize(width: 800, height: 600))
     }
     
     public func subscribe() {
@@ -104,7 +103,7 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     
     public override func viewWillAppear() {
         super.viewWillAppear()
-        self.add(_loadingViewController)
+        self.add(loadingViewController)
         if GKLocalPlayer.local.isAuthenticated {
             self.showMatchmakerViewController()
         } else {

@@ -59,7 +59,7 @@ struct AuthenticationView: View {
                 self.viewModel.showModal = false
                 self.viewModel.currentState = "Hello \(player.displayName)"
             }
-            .frame(minWidth: 800, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
+            .frame(width: 640, height: 480)
         }
         .alert(isPresented: self.$viewModel.showAlert) {
             Alert(title: Text(self.viewModel.alertTitle),
