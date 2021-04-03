@@ -36,3 +36,4 @@ struct PrimaryButtonStyle: ButtonStyle {
             .cornerRadius(32)
     }
 }
+

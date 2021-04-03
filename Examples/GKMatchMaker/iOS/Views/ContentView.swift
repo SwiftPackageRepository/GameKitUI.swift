@@ -36,12 +36,12 @@ struct ContentView: View {
                 VStack(alignment: .center, spacing: 32) {
                     NavigationLink(destination: AuthenticationView()) {
                         Text("Authentication")
-                            .primaryButtonStyle()
                     }
+                    .buttonStyle(PrimaryButtonStyle())
                     NavigationLink(destination: MatchMakingView()) {
                         Text("Match Making")
-                            .primaryButtonStyle()
                     }
+                    .buttonStyle(PrimaryButtonStyle())
                 }
             }
             .navigationTitle(Text("GameKit"))

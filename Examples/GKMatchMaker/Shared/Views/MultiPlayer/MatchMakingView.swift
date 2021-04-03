@@ -64,7 +64,6 @@ struct MatchMakingView: View {
             } started: { (match) in
                 self.viewModel.showModal = false
             }
-            .frame(width: 640, height: 480)
         }
         .alert(isPresented: self.$viewModel.showAlert) {
             Alert(title: Text(self.viewModel.alertTitle),

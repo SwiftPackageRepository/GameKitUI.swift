@@ -126,7 +126,7 @@ public final class GKMatchManager: NSObject {
     }
 }
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 
 extension GKMatchManager: GKMatchmakerViewControllerDelegate {
 

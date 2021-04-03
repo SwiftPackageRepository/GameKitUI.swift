@@ -38,12 +38,17 @@ struct AuthenticationView: View {
                 Text(self.viewModel.currentState)
                     .font(.body)
                     .padding(8)
-                Button() {
-                    self.viewModel.showAuthenticationModal()
-                } label: {
-                    Text("Login")
+                if self.viewModel.isAuthenticated,
+                   let player = self.viewModel.player {
+                    PlayerView(viewModel: PlayerViewModel(player))
+                } else {
+                    Button() {
+                        self.viewModel.showAuthenticationModal()
+                    } label: {
+                        Text("Login")
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
                 }
-                .buttonStyle(PrimaryButtonStyle())
             }
             .navigationTitle(Text("GameKit Authentication"))
         }
@@ -57,7 +62,8 @@ struct AuthenticationView: View {
                 self.viewModel.currentState = error.localizedDescription
             } authenticated: { (player) in
                 self.viewModel.showModal = false
-                self.viewModel.currentState = "Hello \(player.displayName)"
+                self.viewModel.player = player
+                self.viewModel.currentState = "Authenticated"
             }
             .frame(width: 640, height: 480)
         }
