@@ -80,6 +80,7 @@ Invites created by a  GameKit MatchMaker or TurnBasedMatchmaker can be handled u
 
 ```swift
 import SwiftUI
+import GameKit
 import GameKitUI
 
 struct ContentView: View {

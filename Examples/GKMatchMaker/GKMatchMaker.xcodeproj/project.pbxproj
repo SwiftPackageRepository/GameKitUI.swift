@@ -17,7 +17,6 @@
 		150316652618B76700EC5D2E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150316642618B76700EC5D2E /* GameKit.framework */; };
 		150316692618B9B300EC5D2E /* GKMatchMakerAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F85DE3260272CF0009A734 /* GKMatchMakerAppModel.swift */; };
 		1503166D2618B9CE00EC5D2E /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0C525E419E5006DDBFC /* AuthenticationView.swift */; };
-		1503166E2618B9CE00EC5D2E /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151D895E2602660B00979718 /* MatchView.swift */; };
 		150316722618B9D200EC5D2E /* MatchMakingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152736812607D0730068853D /* MatchMakingView.swift */; };
 		150316762618B9DC00EC5D2E /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
 		1503167A2618B9E300EC5D2E /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */; };
@@ -26,7 +25,6 @@
 		1503168F2618C94900EC5D2E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1503168D2618C94900EC5D2E /* PlayerView.swift */; };
 		1503169F2618E03E00EC5D2E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1503169E2618E03E00EC5D2E /* PlayerView.swift */; };
 		150316A62618E2AB00EC5D2E /* MatchMakingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316A52618E2AB00EC5D2E /* MatchMakingView.swift */; };
-		150316B22618E47D00EC5D2E /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316B12618E47D00EC5D2E /* MatchView.swift */; };
 		1507A0BD25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */; };
 		1507A0BE25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */; };
 		1507A0C625E419E5006DDBFC /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0C525E419E5006DDBFC /* AuthenticationView.swift */; };
@@ -34,15 +32,23 @@
 		151CAAA225E39837002A7FDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151CAA8D25E39837002A7FDC /* Assets.xcassets */; };
 		151CAAA325E39837002A7FDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151CAA8D25E39837002A7FDC /* Assets.xcassets */; };
 		151CAAD725E399D6002A7FDC /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CAAD625E399D6002A7FDC /* GameKit.framework */; };
-		151D895F2602660B00979718 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151D895E2602660B00979718 /* MatchView.swift */; };
 		151F91F925E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
 		151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
 		152736842607D0740068853D /* MatchMakingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152736812607D0730068853D /* MatchMakingView.swift */; };
+		154ACFCA261A63F800164077 /* GameKitService in Frameworks */ = {isa = PBXBuildFile; productRef = 154ACFC9261A63F800164077 /* GameKitService */; };
+		154ACFCF261A640800164077 /* GameKitService in Frameworks */ = {isa = PBXBuildFile; productRef = 154ACFCE261A640800164077 /* GameKitService */; };
+		154ACFD1261A640E00164077 /* GameKitService in Frameworks */ = {isa = PBXBuildFile; productRef = 154ACFD0261A640E00164077 /* GameKitService */; };
 		15A6F7D725E39B7D00FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D625E39B7D00FE5387 /* GameKitUI */; };
 		15A6F7D925E39B8300FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D825E39B8300FE5387 /* GameKitUI */; };
 		15A6F7E225E39BC100FE5387 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F7DF25E39BC100FE5387 /* ContentView.swift */; };
 		15A6F7F125E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */; };
 		15A6F7F225E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */; };
+		15CC54B6261940BA00217FF4 /* InMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316C62619408400EC5D2E /* InMatchView.swift */; };
+		15CC54B7261940BA00217FF4 /* InMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316C62619408400EC5D2E /* InMatchView.swift */; };
+		15CC54D0261943D600217FF4 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316B12618E47D00EC5D2E /* MatchView.swift */; };
+		15CC54D4261943D600217FF4 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316B12618E47D00EC5D2E /* MatchView.swift */; };
+		15CC54DC2619445300217FF4 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CC54DB2619445300217FF4 /* MatchView.swift */; };
+		15CC54E02619446B00217FF4 /* InMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316C62619408400EC5D2E /* InMatchView.swift */; };
 		15D90EAA2610B3190010E6C9 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D90EA92610B3190010E6C9 /* GameKit.framework */; };
 		15D90EAE2610B7850010E6C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D90EAD2610B77E0010E6C9 /* ContentView.swift */; };
 		15D90EB42610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */; };
@@ -65,6 +71,7 @@
 		1503169E2618E03E00EC5D2E /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		150316A52618E2AB00EC5D2E /* MatchMakingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMakingView.swift; sourceTree = "<group>"; };
 		150316B12618E47D00EC5D2E /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		150316C62619408400EC5D2E /* InMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InMatchView.swift; path = ../../ViewModels/MultiPlayer/InMatchView.swift; sourceTree = "<group>"; };
 		1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GKMatchMakerApp.swift; sourceTree = "<group>"; };
 		1507A0C525E419E5006DDBFC /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		151CAA8D25E39837002A7FDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -76,11 +83,11 @@
 		151CAAD025E39928002A7FDC /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		151CAAD625E399D6002A7FDC /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
 		151CAAD825E399DF002A7FDC /* GameKitUI.swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GameKitUI.swift; path = ../..; sourceTree = "<group>"; };
-		151D895E2602660B00979718 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 		151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		152736812607D0730068853D /* MatchMakingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchMakingView.swift; sourceTree = "<group>"; };
 		15A6F7DF25E39BC100FE5387 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMakingViewModel.swift; sourceTree = "<group>"; };
+		15CC54DB2619445300217FF4 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 		15D90EA92610B3190010E6C9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		15D90EAD2610B77E0010E6C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -92,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				154ACFD1261A640E00164077 /* GameKitService in Frameworks */,
 				150316632618B76100EC5D2E /* GameKitUI in Frameworks */,
 				150316652618B76700EC5D2E /* GameKit.framework in Frameworks */,
 			);
@@ -101,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				154ACFCA261A63F800164077 /* GameKitService in Frameworks */,
 				151CAAD725E399D6002A7FDC /* GameKit.framework in Frameworks */,
 				15A6F7D725E39B7D00FE5387 /* GameKitUI in Frameworks */,
 			);
@@ -110,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				154ACFCF261A640800164077 /* GameKitService in Frameworks */,
 				15A6F7D925E39B8300FE5387 /* GameKitUI in Frameworks */,
 				15D90EAA2610B3190010E6C9 /* GameKit.framework in Frameworks */,
 			);
@@ -164,8 +174,16 @@
 		150316A32618E2AB00EC5D2E /* MultiPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				150316B12618E47D00EC5D2E /* MatchView.swift */,
+				15CC54DB2619445300217FF4 /* MatchView.swift */,
 				150316A52618E2AB00EC5D2E /* MatchMakingView.swift */,
+			);
+			path = MultiPlayer;
+			sourceTree = "<group>";
+		};
+		150316C42619408300EC5D2E /* MultiPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				150316B12618E47D00EC5D2E /* MatchView.swift */,
 			);
 			path = MultiPlayer;
 			sourceTree = "<group>";
@@ -275,8 +293,8 @@
 		15A6F7FC25E39F7D00FE5387 /* MultiPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				150316C62619408400EC5D2E /* InMatchView.swift */,
 				152736812607D0730068853D /* MatchMakingView.swift */,
-				151D895E2602660B00979718 /* MatchView.swift */,
 			);
 			path = MultiPlayer;
 			sourceTree = "<group>";
@@ -292,6 +310,7 @@
 		15D90EAB2610B76D0010E6C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				150316C42619408300EC5D2E /* MultiPlayer */,
 				1503168C2618C93200EC5D2E /* Authentication */,
 				15A6F7DF25E39BC100FE5387 /* ContentView.swift */,
 			);
@@ -335,6 +354,7 @@
 			name = "GKMatchMaker (tvOS)";
 			packageProductDependencies = (
 				150316622618B76100EC5D2E /* GameKitUI */,
+				154ACFD0261A640E00164077 /* GameKitService */,
 			);
 			productName = GKMatchMaker;
 			productReference = 150316092618B62500EC5D2E /* GKMatchMaker (tvOS).app */;
@@ -355,6 +375,7 @@
 			name = "GKMatchMaker (iOS)";
 			packageProductDependencies = (
 				15A6F7D625E39B7D00FE5387 /* GameKitUI */,
+				154ACFC9261A63F800164077 /* GameKitService */,
 			);
 			productName = "MatchMaking (iOS)";
 			productReference = 151CAA9225E39837002A7FDC /* GKMatchMaker.app */;
@@ -375,6 +396,7 @@
 			name = "GKMatchMaker (macOS)";
 			packageProductDependencies = (
 				15A6F7D825E39B8300FE5387 /* GameKitUI */,
+				154ACFCE261A640800164077 /* GameKitService */,
 			);
 			productName = "MatchMaking (macOS)";
 			productReference = 151CAA9A25E39837002A7FDC /* GKMatchMaker.app */;
@@ -409,6 +431,9 @@
 				Base,
 			);
 			mainGroup = 151CAA8525E39835002A7FDC;
+			packageReferences = (
+				154ACFC8261A63F800164077 /* XCRemoteSwiftPackageReference "GameKitService.swift" */,
+			);
 			productRefGroup = 151CAA9325E39837002A7FDC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -453,13 +478,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1503160E2618B62500EC5D2E /* ContentView.swift in Sources */,
-				1503166E2618B9CE00EC5D2E /* MatchView.swift in Sources */,
 				150316762618B9DC00EC5D2E /* AuthenticationViewModel.swift in Sources */,
 				1503168F2618C94900EC5D2E /* PlayerView.swift in Sources */,
 				150316692618B9B300EC5D2E /* GKMatchMakerAppModel.swift in Sources */,
 				1503167A2618B9E300EC5D2E /* PrimaryButtonStyle.swift in Sources */,
 				1503167E2618B9FA00EC5D2E /* MatchMakingViewModel.swift in Sources */,
 				150316722618B9D200EC5D2E /* MatchMakingView.swift in Sources */,
+				15CC54B6261940BA00217FF4 /* InMatchView.swift in Sources */,
+				15CC54D4261943D600217FF4 /* MatchView.swift in Sources */,
 				1503166D2618B9CE00EC5D2E /* AuthenticationView.swift in Sources */,
 				1503163C2618B65100EC5D2E /* GKMatchMakerApp.swift in Sources */,
 			);
@@ -473,10 +499,11 @@
 				1507A0C625E419E5006DDBFC /* AuthenticationView.swift in Sources */,
 				151F91F925E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */,
 				1503168E2618C94900EC5D2E /* PlayerView.swift in Sources */,
-				151D895F2602660B00979718 /* MatchView.swift in Sources */,
 				15A6F7E225E39BC100FE5387 /* ContentView.swift in Sources */,
 				152736842607D0740068853D /* MatchMakingView.swift in Sources */,
 				15D90EB42610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */,
+				15CC54B7261940BA00217FF4 /* InMatchView.swift in Sources */,
+				15CC54D0261943D600217FF4 /* MatchView.swift in Sources */,
 				1507A0BD25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */,
 				15A6F7F125E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */,
 			);
@@ -487,14 +514,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				15F85DE7260272D20009A734 /* GKMatchMakerAppModel.swift in Sources */,
+				15CC54DC2619445300217FF4 /* MatchView.swift in Sources */,
 				150316002617E88100EC5D2E /* SidebarRow.swift in Sources */,
 				1507A0C725E419E5006DDBFC /* AuthenticationView.swift in Sources */,
 				151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */,
-				150316B22618E47D00EC5D2E /* MatchView.swift in Sources */,
 				15D90EAE2610B7850010E6C9 /* ContentView.swift in Sources */,
 				1503169F2618E03E00EC5D2E /* PlayerView.swift in Sources */,
 				15D90EB52610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */,
 				150315F72617E3B100EC5D2E /* SidebarView.swift in Sources */,
+				15CC54E02619446B00217FF4 /* InMatchView.swift in Sources */,
 				150315FC2617E7C900EC5D2E /* SidebarMenu.swift in Sources */,
 				150316A62618E2AB00EC5D2E /* MatchMakingView.swift in Sources */,
 				1507A0BE25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */,
@@ -807,10 +835,36 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		154ACFC8261A63F800164077 /* XCRemoteSwiftPackageReference "GameKitService.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftPackageRepository/GameKitService.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		150316622618B76100EC5D2E /* GameKitUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GameKitUI;
+		};
+		154ACFC9261A63F800164077 /* GameKitService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 154ACFC8261A63F800164077 /* XCRemoteSwiftPackageReference "GameKitService.swift" */;
+			productName = GameKitService;
+		};
+		154ACFCE261A640800164077 /* GameKitService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 154ACFC8261A63F800164077 /* XCRemoteSwiftPackageReference "GameKitService.swift" */;
+			productName = GameKitService;
+		};
+		154ACFD0261A640E00164077 /* GameKitService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 154ACFC8261A63F800164077 /* XCRemoteSwiftPackageReference "GameKitService.swift" */;
+			productName = GameKitService;
 		};
 		15A6F7D625E39B7D00FE5387 /* GameKitUI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -39,7 +39,9 @@ struct MatchView: View {
 
 
     var body: some View {
-        InMatchView(self.match)
+        NavigationView {
+            InMatchView(self.match)
+        }
     }
 }
 

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "GameKitService.swift",
+        "repositoryURL": "https://github.com/SwiftPackageRepository/GameKitService.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "43fbe7b68c6a4bb0d2373434ce681f80e6062d8e",
+          "version": "0.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

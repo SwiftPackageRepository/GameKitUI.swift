@@ -60,6 +60,7 @@ public final class GKMatchManager: NSObject {
         { notification in
             self.localPlayer.send(GKLocalPlayer.local)
         }
+        
         GKLocalPlayer.local.register(self)
     }
     
