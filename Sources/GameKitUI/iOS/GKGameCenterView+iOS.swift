@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2020 Sascha Müllner
+/// Copyright (c) 2020 Henrik Storch
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,42 +21,47 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 03.04.21.
+/// Created by Henrik Storch on 02.10.21.
+
+#if os(iOS) || os(tvOS)
 
 import Foundation
+import GameKit
 import SwiftUI
-import GameKitUI
 
-enum SidebarMenu: Int, CaseIterable, Identifiable {
+public struct GKGameCenterView: UIViewControllerRepresentable {
 
-    var id: Int {
-        return self.rawValue
+    let viewController: GKGameCenterViewController
+
+    public init(viewController: GKGameCenterViewController = GKGameCenterViewController()) {
+        self.viewController = viewController
     }
 
-    case authentication, gameCenter, matchMaking
-
-    var title: String {
-        switch self {
-            case .authentication:       return "Authentication"
-            case .gameCenter:           return "Game Center"
-            case .matchMaking:          return "Match Making"
-        }
+    public func makeUIViewController(context: Context) -> GKGameCenterViewController {
+        let gkVC = viewController
+        gkVC.gameCenterDelegate = context.coordinator
+        return gkVC
     }
 
-    var image: String {
-        switch self {
-            case .authentication:       return "lock.fill"
-            case .gameCenter:            return "gamecontroller"
-            case .matchMaking:          return "personalhotspot"
-        }
+    public func updateUIViewController(_ uiViewController: GKGameCenterViewController, context: Context) {
+        return
     }
 
-    @ViewBuilder
-    var contentView: some View {
-        switch self {
-            case .authentication:       AuthenticationView()
-            case .gameCenter:           GKGameCenterView()
-            case .matchMaking:          MatchMakingView()
-        }
+    public func makeCoordinator() -> GKCoordinator {
+        return GKCoordinator(self)
     }
 }
+
+public class GKCoordinator: NSObject, GKGameCenterControllerDelegate {
+    var view: GKGameCenterView
+
+    init(_ gkView: GKGameCenterView) {
+        self.view = gkView
+    }
+
+    public func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
+    }
+}
+
+#endif
