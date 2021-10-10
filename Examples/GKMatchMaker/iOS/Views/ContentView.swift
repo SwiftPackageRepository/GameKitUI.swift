@@ -38,6 +38,10 @@ struct ContentView: View {
                         Text("Authentication")
                     }
                     .buttonStyle(PrimaryButtonStyle())
+                    NavigationLink(destination: GKGameCenterView()) {
+                        Text("Game Center")
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
                     NavigationLink(destination: MatchMakingView()) {
                         Text("Match Making")
                     }

@@ -21,6 +21,9 @@ struct ContentView: View {
                     NavigationLink(destination: AuthenticationView()) {
                         Text("Authentication")
                     }
+                    NavigationLink(destination: GKGameCenterView()) {
+                        Text("Game Center")
+                    }
                     NavigationLink(destination: MatchMakingView()) {
                         Text("Match Making")
                     }
