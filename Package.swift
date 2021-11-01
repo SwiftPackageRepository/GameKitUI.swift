@@ -5,10 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "GameKitUI",
-    platforms: [ .iOS(SupportedPlatform.IOSVersion.v13),
-                 .macOS(SupportedPlatform.MacOSVersion.v10_15),
-                 .tvOS(SupportedPlatform.TVOSVersion.v13),
-                 .watchOS(SupportedPlatform.WatchOSVersion.v6)
+    platforms: [ .iOS(.v13),
+                 .macOS(.v10_15),
+                 .tvOS(.v13),
+                 .watchOS(.v6)
     ],
     products: [
         .library(
@@ -21,7 +21,7 @@ let package = Package(
         .target(
             name: "GameKitUI",
             dependencies: [],
-            exclude: ["MetaData", "Examples"]),
+            exclude: ["../../MetaData", "../../Examples"]),
         .testTarget(
             name: "GameKitUITests",
             dependencies: ["GameKitUI"])
