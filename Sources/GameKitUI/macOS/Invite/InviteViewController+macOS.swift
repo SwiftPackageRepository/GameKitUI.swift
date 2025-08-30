@@ -82,12 +82,8 @@ public class InviteViewController: NSViewController, GKMatchDelegate, GKLocalPla
     
     public func showInviteViewController() async {
         if let viewController = GKMatchManager.shared.createInvite(invite: self.invite,
-                                                                     canceled: {
-                                                                         Task { await self.canceled() }
-                                                                     },
-                                                                     failed: { error in
-                                                                         Task { await self.failed(error) }
-                                                                     },
+                                                                     canceled: self.canceled,
+                                                                     failed: self.failed,
                                                                      started: self.started) {
             
             self.add(viewController)

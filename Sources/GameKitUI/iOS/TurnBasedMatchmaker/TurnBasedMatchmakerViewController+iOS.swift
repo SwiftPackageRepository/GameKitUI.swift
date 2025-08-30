@@ -61,25 +61,25 @@ public class TurnBasedMatchmakerViewController: UIViewController, @preconcurrenc
 
     public func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController) {
         Task {
-            await viewController.dismiss(animated: true)
+            viewController.dismiss(animated: true)
             self.canceled()
-            await viewController.remove()
+            viewController.remove()
         }
     }
 
     public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: Error) {
         Task {
-            await viewController.dismiss(animated: true)
+            viewController.dismiss(animated: true)
             self.failed(error)
-            await viewController.remove()
+            viewController.remove()
         }
     }
 
     public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFind match: GKTurnBasedMatch) {
         Task {
-            await viewController.dismiss(animated: true)
+            viewController.dismiss(animated: true)
             self.started(match)
-            await viewController.remove()
+            viewController.remove()
         }
     }
 }

@@ -25,12 +25,18 @@
 
 import GameKit
 
-public struct Match {
-    public private(set) var gkMatch: GKMatch?
-}
+public struct Match: Sendable {
+    public private(set) var gkMatch: SendableMatch?
 
-extension Match {
     public static var zero: Match {
-        return Match()
+        return Match(gkMatch: nil)
+    }
+
+    public init(gkMatch: GKMatch?) {
+        if let gkMatch = gkMatch {
+            self.gkMatch = SendableMatch(match: gkMatch)
+        } else {
+            self.gkMatch = nil
+        }
     }
 }

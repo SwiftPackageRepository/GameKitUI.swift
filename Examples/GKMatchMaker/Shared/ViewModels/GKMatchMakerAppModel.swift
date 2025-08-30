@@ -24,36 +24,32 @@
 /// Created by Sascha Müllner on 24.11.20.
 
 import os.log
-import Combine
 import Foundation
 import GameKit
 import GameKitUI
 
 @MainActor
-class GKMatchMakerAppModel: ObservableObject {
+class GKMatchMakerAppModel {
 
-    @Published public var showAlert = false
-    @Published public var alertTitle: String = ""
-    @Published public var alertMessage: String = ""
+    public var showAlert = false
+    public var alertTitle: String = ""
+    public var alertMessage: String = ""
 
-    @Published public var showAuthentication = false
-    @Published public var showInvite = false
-    @Published public var showMatch = false
-    @Published public var invite: Invite = Invite.zero {
+    public var showAuthentication = false
+    public var showInvite = false
+    public var showMatch = false
+    public var invite: Invite = Invite.zero {
         didSet {
             self.showInvite = invite.gkInvite != nil
             self.showAuthentication = invite.needsToAuthenticate ?? false
         }
     }
-    @Published public var gkMatch: GKMatch? {
+    public var gkMatch: GKMatch? {
         didSet {
             self.showInvite = false
             self.showMatch = true
         }
     }
-
-    private var cancellableInvite: AnyCancellable?
-    private var cancellableMatch: AnyCancellable?
 
     public init() {
         self.subscribe()
@@ -70,23 +66,16 @@ class GKMatchMakerAppModel: ObservableObject {
  */
     }
 
-    deinit {
-        self.cancellableInvite?.cancel()
-        self.cancellableMatch?.cancel()
-    }
-
     @MainActor func subscribe() {
-        self.cancellableInvite = GKMatchManager
-            .shared
-            .invite
-            .sink { (invite) in
+        Task {
+            for await invite in GKMatchManager.shared.invite {
                 self.invite = invite
+            }
         }
-        self.cancellableMatch = GKMatchManager
-            .shared
-            .match
-            .sink { (match) in
-                self.gkMatch = match.gkMatch
+        Task {
+            for await match in GKMatchManager.shared.match {
+                self.gkMatch = match.gkMatch?.match
+            }
         }
     }
 

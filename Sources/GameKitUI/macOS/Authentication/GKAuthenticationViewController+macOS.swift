@@ -32,8 +32,8 @@ import SwiftUI
 
 public class GKAuthenticationViewController: NSViewController {
 
-    let failed: (Error) -> Void
-    let authenticated: (GKLocalPlayer) -> Void
+    private let failed: (Error) -> Void
+    private let authenticated: (GKLocalPlayer) -> Void
     private let _loadingViewController = LoadingViewController()
 
     public init(failed: @escaping (Error) -> Void,
@@ -54,14 +54,23 @@ public class GKAuthenticationViewController: NSViewController {
     public override func viewWillAppear() {
         super.viewWillAppear()
         self.add(_loadingViewController)
-        GKAuthentication.shared.authenticate { (authenticationViewController) in
-            self.add(authenticationViewController)
-        } failed: { (error) in
-            os_log("Authentication failed %{public}@", log: OSLog.authentication, type: .error, error.localizedDescription)
-            self.failed(error)
-        } authenticated: { (player) in
-            os_log("Player authenticated %{public}@", log: OSLog.authentication, type: .info, player.displayName)
-            self.authenticated(player)
+        Task {
+            do {
+                let player = try await GKAuthentication.shared.authenticate()
+                os_log("Player authenticated %{public}@", log: OSLog.authentication, type: .info, player.displayName)
+                self.authenticated(player)
+            } catch let error as AuthenticationError {
+                switch error {
+                case .uiRequired(let viewController):
+                    self.add(viewController)
+                case .gameKitError(let gkError):
+                    os_log("Authentication failed %{public}@", log: OSLog.authentication, type: .error, gkError.localizedDescription)
+                    self.failed(gkError)
+                }
+            } catch {
+                os_log("Authentication failed %{public}@", log: OSLog.authentication, type: .error, error.localizedDescription)
+                self.failed(error)
+            }
         }
     }
     

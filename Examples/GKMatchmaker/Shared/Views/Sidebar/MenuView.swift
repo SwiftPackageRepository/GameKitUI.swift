@@ -25,30 +25,33 @@
 
 import SwiftUI
 
-struct SidebarRow : View {
-    let item: Route
-    var isSelected: Bool
-
+struct MenuView: View {
+    @ViewBuilder
     var body: some View {
-        HStack {
-            Group {
-                Image(systemName: item.image)
-                    .imageScale(.large)
-                    .foregroundColor(isSelected ? .secondary : .primary)
-            }
-            .frame(width: 40)
-            Text(item.title)
-                .font(.headline)
-                .foregroundColor(isSelected ? .secondary : .primary)
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .center) {
+                ForEach(Route.allCases) { route in
+                    NavigationLink(value: route) {
+                        MenuItem(item: route, isSelected: true)
+                            .frame(height: 50)
+                    }
+                    /*
+                     if menu == self.selectedMenu {
+                     Rectangle()
+                     .foregroundColor(Color.secondary.opacity(0.1))
+                     .frame(height: 50)
+                     }*/
+                }
+
             }
             .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
-#if DEBUG
-struct SidebarRow_Previews : PreviewProvider {
+struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarRow(item: .matchMaking, isSelected: true)
+        MenuView()
     }
 }
-#endif

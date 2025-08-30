@@ -33,16 +33,16 @@ public struct GKMatchmakerView: NSViewControllerRepresentable {
 
     private let matchRequest: GKMatchRequest
     private var matchmakingMode: Any? = nil
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKMatch) -> Void
+    private let canceled: @Sendable () async -> Void
+    private let failed: @Sendable (Error) async -> Void
+    private let started: @Sendable (GKMatch) async -> Void
     
     @available(macOS 11.0, *)
     public init(matchRequest: GKMatchRequest,
                 matchmakingMode: GKMatchmakingMode,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () async -> Void,
+                failed: @escaping @Sendable (Error) async -> Void,
+                started: @escaping @Sendable (GKMatch) async -> Void) {
         self.matchRequest = matchRequest
         self.matchmakingMode = matchmakingMode
         self.canceled = canceled
@@ -55,9 +55,9 @@ public struct GKMatchmakerView: NSViewControllerRepresentable {
                 maxPlayers: Int,
                 inviteMessage: String,
                 matchmakingMode: GKMatchmakingMode,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () async -> Void,
+                failed: @escaping @Sendable (Error) async -> Void,
+                started: @escaping @Sendable (GKMatch) async -> Void) {
         let matchRequest = GKMatchRequest()
         matchRequest.minPlayers = minPlayers
         matchRequest.maxPlayers = maxPlayers
@@ -70,9 +70,9 @@ public struct GKMatchmakerView: NSViewControllerRepresentable {
     }
 
     public init(matchRequest: GKMatchRequest,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () async -> Void,
+                failed: @escaping @Sendable (Error) async -> Void,
+                started: @escaping @Sendable (GKMatch) async -> Void) {
         self.matchRequest = matchRequest
         self.canceled = canceled
         self.failed = failed
@@ -82,9 +82,9 @@ public struct GKMatchmakerView: NSViewControllerRepresentable {
     public init(minPlayers: Int,
                 maxPlayers: Int,
                 inviteMessage: String,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () async -> Void,
+                failed: @escaping @Sendable (Error) async -> Void,
+                started: @escaping @Sendable (GKMatch) async -> Void) {
         let matchRequest = GKMatchRequest()
         matchRequest.minPlayers = minPlayers
         matchRequest.maxPlayers = maxPlayers
@@ -114,30 +114,22 @@ public struct GKMatchmakerView: NSViewControllerRepresentable {
         return MatchmakerViewController(
             matchRequest: self.matchRequest,
             matchmakingMode: matchmakingMode) {
-            await MainActor.run {
-                self.canceled()
-            }
+            await self.canceled()
         } failed: { (error) in
-            await MainActor.run {
-                self.failed(error)
-            }
-        } started: { @MainActor match in
-            self.started(match)
+            await self.failed(error)
+        } started: { (match) in
+            await self.started(match)
         }
     }
 
     internal func makeMatchmakerViewController() -> MatchmakerViewController {
         return MatchmakerViewController(
             matchRequest: self.matchRequest) {
-            await MainActor.run {
-                self.canceled()
-            }
+            await self.canceled()
         } failed: { (error) in
-            await MainActor.run {
-                self.failed(error)
-            }
-        } started: { @MainActor match in
-            self.started(match)
+            await self.failed(error)
+        } started: { (match) in
+            await self.started(match)
         }
     }
 

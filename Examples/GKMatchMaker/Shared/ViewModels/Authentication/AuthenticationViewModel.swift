@@ -25,20 +25,19 @@
 
 
 import Foundation
-import Combine
 import GameKit
 import GameKitUI
 
 @MainActor
-class AuthenticationViewModel: ObservableObject {
+class AuthenticationViewModel {
 
-    @Published public var showModal = false
-    @Published public var showAlert = false
-    @Published public var isAuthenticated = false
-    @Published public var alertTitle: String = ""
-    @Published public var alertMessage: String = ""
-    @Published public var currentState: String = "Loading GameKit..."
-    @Published public var player: GKPlayer? {
+    public var showModal = false
+    public var showAlert = false
+    public var isAuthenticated = false
+    public var alertTitle: String = ""
+    public var alertMessage: String = ""
+    public var currentState: String = "Loading GameKit..."
+    public var player: GKPlayer? {
         didSet {
             self.isAuthenticated = self.player != nil
         }

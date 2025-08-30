@@ -25,7 +25,6 @@
 
 
 import os.log
-@preconcurrency import Combine
 import Foundation
 import GameKit
 import SwiftUI
@@ -35,44 +34,58 @@ public final class GKMatchManager: NSObject {
     
     public static let shared = GKMatchManager()
     
+    private var localPlayerContinuation: AsyncStream<GKLocalPlayer>.Continuation?
+    public private(set) lazy var localPlayer: AsyncStream<GKLocalPlayer> = {
+        return AsyncStream { continuation in
+            self.localPlayerContinuation = continuation
+            continuation.yield(GKLocalPlayer.local)
+        }
+    }()
+
+    private var matchContinuation: AsyncStream<Match>.Continuation?
+    public private(set) lazy var match: AsyncStream<Match> = {
+        return AsyncStream { continuation in
+            self.matchContinuation = continuation
+            continuation.yield(Match.zero)
+        }
+    }()
+
+    private var inviteContinuation: AsyncStream<Invite>.Continuation?
+    public private(set) lazy var invite: AsyncStream<Invite> = {
+        return AsyncStream { continuation in
+            self.inviteContinuation = continuation
+            continuation.yield(Invite.zero)
+        }
+    }()
+    
     private override init() {
         super.init()
         
-        NotificationCenter.default.addObserver(
-            forName: Notification.Name("GKAcceptedGameInvite"),
-            object: nil,
-            queue: nil)
-        { [weak self] notification in
-            Task {
-                await self?.invite.send(Invite.needsToAuthenticate)
+        Task {
+            if #available(macOS 12.0, iOS 15, *) {
+                for await _ in NotificationCenter.default.notifications(named: Notification.Name("GKAcceptedGameInvite")).map({ _ in () }) {
+                    self.inviteContinuation?.yield(Invite(needsToAuthenticate: GKLocalPlayer.local.isAuthenticated != true, gkInvite: nil))
+                }
             }
         }
         
-        NotificationCenter.default.addObserver(
-            forName: Notification.Name("GKPlayerAuthenticationDidChangeNotificationName"),
-            object: nil,
-            queue: nil)
-        { [weak self] notification in
-            Task {
-                await self?.localPlayer.send(GKLocalPlayer.local)
+        Task {
+            if #available(macOS 12.0, iOS 15, *) {
+                for await _ in NotificationCenter.default.notifications(named: Notification.Name("GKPlayerAuthenticationDidChangeNotificationName")).map({ _ in () }) {
+                    self.localPlayerContinuation?.yield(GKLocalPlayer.local)
+                }
             }
         }
         
-        NotificationCenter.default.addObserver(
-            forName: Notification.Name("GKPlayerDidChangeNotificationName"),
-            object: nil,
-            queue: nil)
-        { [weak self] notification in
-            Task {
-                await self?.localPlayer.send(GKLocalPlayer.local)
+        Task {
+            if #available(macOS 12.0, iOS 15, *) {
+                for await _ in NotificationCenter.default.notifications(named: Notification.Name("GKPlayerDidChangeNotificationName")).map({ _ in () }) {
+                    self.localPlayerContinuation?.yield(GKLocalPlayer.local)
+                }
             }
         }
         GKLocalPlayer.local.register(self)
     }
-    
-    private(set) public var localPlayer = CurrentValueSubject<GKLocalPlayer, Never>(GKLocalPlayer.local)
-    private(set) public var match = CurrentValueSubject<Match, Never>(Match.zero)
-    private(set) public var invite = CurrentValueSubject<Invite, Never>(Invite.zero)
     
     private var canceled: @Sendable () async -> Void = {}
     private var failed: @Sendable (Error) async -> Void = { _ in }
@@ -128,8 +141,8 @@ public final class GKMatchManager: NSObject {
     
     public func cancel() {
         GKMatchmaker.shared().cancel()
-        self.invite.send(Invite.zero)
-        self.match.send(Match.zero)
+        self.inviteContinuation?.yield(Invite.zero)
+        self.matchContinuation?.yield(Match.zero)
     }
 }
 
@@ -142,7 +155,7 @@ extension GKMatchManager: GKMatchmakerViewControllerDelegate {
         Task { [sendableMatch] in
             await viewController.dismiss(animated: true)
             os_log("Matchmaking successful!", log: OSLog.matchmaking, type: .info)
-            await MainActor.run { self.match.send(Match(gkMatch: sendableMatch.match)) }
+            await MainActor.run { self.matchContinuation?.yield(Match(gkMatch: sendableMatch.match)) }
             await self.started(sendableMatch.match)
             await viewController.remove()
         }
@@ -152,8 +165,8 @@ extension GKMatchManager: GKMatchmakerViewControllerDelegate {
         Task {
             await viewController.dismiss(animated: true)
             os_log("Matchmaking cancelled!", log: OSLog.matchmaking, type: .error)
-            await MainActor.run { self.invite.send(Invite.zero) }
-            await MainActor.run { self.match.send(Match.zero) }
+            await MainActor.run { self.inviteContinuation?.yield(Invite.zero) }
+            await MainActor.run { self.matchContinuation?.yield(Match.zero) }
             await self.canceled()
             await viewController.remove()
         }
@@ -164,8 +177,8 @@ extension GKMatchManager: GKMatchmakerViewControllerDelegate {
             let sendableError = error
             await viewController.dismiss(animated: true)
             os_log("Matchmaking failed: %{public}@", log: OSLog.matchmaking, type: .error, sendableError.localizedDescription)
-            await MainActor.run { self.invite.send(Invite.zero) }
-            await MainActor.run { self.match.send(Match.zero) }
+            await MainActor.run { self.inviteContinuation?.yield(Invite.zero) }
+            await MainActor.run { self.matchContinuation?.yield(Match.zero) }
             await self.failed(sendableError)
             await viewController.remove()
         }
@@ -181,7 +194,7 @@ extension GKMatchManager: GKMatchmakerViewControllerDelegate {
         Task { [sendableMatch] in
             await viewController.dismiss(self)
             os_log("Matchmaking successful!", log: OSLog.matchmaking, type: .info)
-            await MainActor.run { self.match.send(Match(gkMatch: sendableMatch.match)) }
+            await MainActor.run { self.matchContinuation?.yield(Match(gkMatch: sendableMatch.match)) }
             await self.started(sendableMatch.match)
         }
     }
@@ -190,8 +203,8 @@ extension GKMatchManager: GKMatchmakerViewControllerDelegate {
         Task {
             await viewController.dismiss(self)
             os_log("Matchmaking cancelled!", log: OSLog.matchmaking, type: .error)
-            await MainActor.run { self.invite.send(Invite.zero) }
-            await MainActor.run { self.match.send(Match.zero) }
+            await MainActor.run { self.inviteContinuation?.yield(Invite.zero) }
+            await MainActor.run { self.matchContinuation?.yield(Match.zero) }
             await self.canceled()
         }
     }
@@ -201,8 +214,8 @@ extension GKMatchManager: GKMatchmakerViewControllerDelegate {
             let sendableError = error
             await viewController.dismiss(self)
             os_log("Matchmaking failed: %{public}@", log: OSLog.matchmaking, type: .error, sendableError.localizedDescription)
-            await MainActor.run { self.invite.send(Invite.zero) }
-            await MainActor.run { self.match.send(Match.zero) }
+            await MainActor.run { self.inviteContinuation?.yield(Invite.zero) }
+            await MainActor.run { self.matchContinuation?.yield(Match.zero) }
             await self.failed(sendableError)
         }
     }
@@ -217,7 +230,7 @@ extension GKMatchManager: GKLocalPlayerListener {
         let sendableInvite = SendableInvite(invite: invite)
         Task { [sendableInvite] in
             await MainActor.run {
-                self.invite.send(Invite(gkInvite: sendableInvite.invite))
+                self.inviteContinuation?.yield(Invite(needsToAuthenticate: nil, gkInvite: sendableInvite.invite))
             }
         }
     }

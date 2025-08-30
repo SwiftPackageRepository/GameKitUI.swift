@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		150315F72617E3B100EC5D2E /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315F62617E3B100EC5D2E /* SidebarView.swift */; };
 		150315FC2617E7C900EC5D2E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315FB2617E7C900EC5D2E /* Route.swift */; };
-		150316002617E88100EC5D2E /* SidebarRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315FF2617E88100EC5D2E /* SidebarRow.swift */; };
+		150316002617E88100EC5D2E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315FF2617E88100EC5D2E /* MenuItem.swift */; };
 		1503169F2618E03E00EC5D2E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1503169E2618E03E00EC5D2E /* PlayerView.swift */; };
 		150316A62618E2AB00EC5D2E /* MatchMakingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316A52618E2AB00EC5D2E /* MatchMakingView.swift */; };
 		150316B22618E47D00EC5D2E /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316B12618E47D00EC5D2E /* MatchView.swift */; };
@@ -20,6 +19,8 @@
 		151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
 		15A6F7D925E39B8300FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D825E39B8300FE5387 /* GameKitUI */; };
 		15A6F7F225E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */; };
+		15C70A2D2E6362D5000B7FBE /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C70A2C2E6362D5000B7FBE /* MenuView.swift */; };
+		15C70A312E6364D5000B7FBE /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15C70A302E6364A1000B7FBE /* Launch Screen.storyboard */; platformFilters = (ios, tvos, ); };
 		15D90EAA2610B3190010E6C9 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D90EA92610B3190010E6C9 /* GameKit.framework */; };
 		15D90EB52610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */; };
 		15E7E14B2E5D9223009C1F44 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7E14A2E5D9222009C1F44 /* PlayerViewModel.swift */; };
@@ -29,9 +30,8 @@
 
 /* Begin PBXFileReference section */
 		150315F32617DB1E00EC5D2E /* Config.xcconfig-example */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Config.xcconfig-example"; sourceTree = "<group>"; };
-		150315F62617E3B100EC5D2E /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		150315FB2617E7C900EC5D2E /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
-		150315FF2617E88100EC5D2E /* SidebarRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarRow.swift; sourceTree = "<group>"; };
+		150315FF2617E88100EC5D2E /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		150316142618B62600EC5D2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		150316642618B76700EC5D2E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS14.3.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
 		1503168D2618C94900EC5D2E /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
@@ -52,6 +52,8 @@
 		151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		152736812607D0730068853D /* MatchMakingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchMakingView.swift; sourceTree = "<group>"; };
 		15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMakingViewModel.swift; sourceTree = "<group>"; };
+		15C70A2C2E6362D5000B7FBE /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		15C70A302E6364A1000B7FBE /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		15D90EA92610B3190010E6C9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		15E7E14A2E5D9222009C1F44 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
@@ -76,9 +78,9 @@
 		150315FA2617E7B200EC5D2E /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
-				150315F62617E3B100EC5D2E /* SidebarView.swift */,
+				15C70A2C2E6362D5000B7FBE /* MenuView.swift */,
 				150315FB2617E7C900EC5D2E /* Route.swift */,
-				150315FF2617E88100EC5D2E /* SidebarRow.swift */,
+				150315FF2617E88100EC5D2E /* MenuItem.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -143,6 +145,7 @@
 		151CAA8A25E39835002A7FDC /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				15C70A302E6364A1000B7FBE /* Launch Screen.storyboard */,
 				1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */,
 				15E7E14E2E5DBD92009C1F44 /* Extensions */,
 				15D90EB22610BBBD0010E6C9 /* Modifiers */,
@@ -341,6 +344,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15C70A312E6364D5000B7FBE /* Launch Screen.storyboard in Resources */,
 				151CAAA325E39837002A7FDC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,15 +357,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				15F85DE7260272D20009A734 /* GKMatchMakerAppModel.swift in Sources */,
-				150316002617E88100EC5D2E /* SidebarRow.swift in Sources */,
+				150316002617E88100EC5D2E /* MenuItem.swift in Sources */,
 				1507A0C725E419E5006DDBFC /* AuthenticationView.swift in Sources */,
 				151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */,
 				150316B22618E47D00EC5D2E /* MatchView.swift in Sources */,
 				15E7E14B2E5D9223009C1F44 /* PlayerViewModel.swift in Sources */,
 				1503169F2618E03E00EC5D2E /* PlayerView.swift in Sources */,
 				15D90EB52610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */,
-				150315F72617E3B100EC5D2E /* SidebarView.swift in Sources */,
 				150315FC2617E7C900EC5D2E /* Route.swift in Sources */,
+				15C70A2D2E6362D5000B7FBE /* MenuView.swift in Sources */,
 				150316A62618E2AB00EC5D2E /* MatchMakingView.swift in Sources */,
 				1507A0BE25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */,
 				15E7E14D2E5DAE9F009C1F44 /* Image+Sendable.swift in Sources */,

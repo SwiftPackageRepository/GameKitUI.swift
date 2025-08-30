@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2021 Sascha Müllner
+/// Copyright (c) 2020 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,52 +21,49 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 28.03.21.
+/// Created by Sascha Müllner on 22.11.20.
+/// Modfied by Sascha Müllner on 17.12.20.
 
-#if os(macOS)
+#if os(iOS) || os(tvOS)
 
 import Foundation
 import GameKit
 import SwiftUI
 
-public struct GKInviteView: NSViewControllerRepresentable {
+@MainActor
+public struct GKInvitePlatformView: UIViewControllerRepresentable {
 
     private let invite: GKInvite
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKMatch) -> Void
+    private let canceled: @Sendable () -> Void
+    private let failed: @Sendable (Error) -> Void
+    private let started: @Sendable (GKMatch) -> Void
 
     public init(invite: GKInvite,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKMatch) -> Void) {
         self.invite = invite
         self.canceled = canceled
         self.failed = failed
         self.started = started
     }
 
-    public func makeNSViewController(
-        context: NSViewControllerRepresentableContext<GKInviteView>) -> InviteViewController {
-        
+    public func makeUIViewController(
+        context: UIViewControllerRepresentableContext<GKInvitePlatformView>) -> InviteViewController {
+
         return InviteViewController(
             invite: self.invite) {
-            await MainActor.run {
-                self.canceled()
-            }
+            self.canceled()
         } failed: { (error) in
-            await MainActor.run {
-                self.failed(error)
-            }
-        } started: { @MainActor in // Mark closure as MainActor-isolated
-            let match = $0 // Define match as a parameter here
-            self.started(match) // No need for await MainActor.run here
+            self.failed(error)
+        } started: { (match) in
+            self.started(match)
         }
     }
 
-    public func updateNSViewController(
-        _ nsViewController: InviteViewController,
-        context: NSViewControllerRepresentableContext<GKInviteView>) {
+    public func updateUIViewController(
+        _ uiViewController: InviteViewController,
+        context: UIViewControllerRepresentableContext<GKInvitePlatformView>) {
     }
 }
 

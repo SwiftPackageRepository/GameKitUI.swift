@@ -31,7 +31,7 @@ struct MatchMakingView: View {
     @ObservedObject var viewModel = MatchMakingViewModel()
 
     var body: some View {
-        ZStack {
+        HStack {
             Color("BackgroundColor").ignoresSafeArea()
             VStack() {
                 Text(self.viewModel.currentState)
@@ -49,7 +49,7 @@ struct MatchMakingView: View {
         .onAppear() {
             self.viewModel.load()
         }
-        .sheet(isPresented: self.$viewModel.showModal) {
+        .fullScreenCover(isPresented: self.$viewModel.showModal) {
             GKMatchmakerView(
                 minPlayers: 2,
                 maxPlayers: 4,
@@ -73,8 +73,6 @@ struct MatchMakingView: View {
     }
 }
 
-struct MatchMakingView_Previews: PreviewProvider {
-    static var previews: some View {
-        MatchMakingView()
-    }
+#Preview {
+    MatchMakingView()
 }

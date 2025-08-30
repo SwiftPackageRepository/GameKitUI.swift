@@ -26,24 +26,33 @@
 
 import SwiftUI
 import GameKitUI
+import GameKit
 
 struct AuthenticationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var viewModel = AuthenticationViewModel()
+    @State private var showModal = false
+    @State private var showAlert = false
+    @State private var isAuthenticated = false
+    @State private var alertTitle: String = ""
+    @State private var alertMessage: String = ""
+    @State private var currentState: String = "Loading GameKit..."
+    @State private var player: GKPlayer?
+    
+    private let authenticationService = AuthenticationViewModel()
 
     var body: some View {
         ZStack {
             Color("BackgroundColor").ignoresSafeArea()
             VStack() {
-                Text(self.viewModel.currentState)
+                Text(self.currentState)
                     .font(.body)
                     .padding(8)
-                if self.viewModel.isAuthenticated,
-                   let player = self.viewModel.player {
+                if self.isAuthenticated,
+                   let player = self.player {
                     PlayerView(viewModel: PlayerViewModel(player))
                 } else {
                     Button() {
-                        self.viewModel.showAuthenticationModal()
+                        self.showAuthenticationModal()
                     } label: {
                         Text("Login")
                     }
@@ -53,33 +62,50 @@ struct AuthenticationView: View {
             .navigationTitle(Text("GameKit Authentication"))
         }
         .onAppear() {
-            self.viewModel.load()
+            self.load()
         }
-        .sheet(isPresented: self.$viewModel.showModal) {
+        .sheet(isPresented: self.$showModal) {
             GKAuthenticationView { (error) in
                 Task {
                     await MainActor.run {
-                        self.viewModel.showModal = false
-                        self.viewModel.showAlert(title: "Authentication Failed", message: error.localizedDescription)
-                        self.viewModel.currentState = error.localizedDescription
+                        self.showModal = false
+                        self.showAlert(title: "Authentication Failed", message: error.localizedDescription)
+                        self.currentState = error.localizedDescription
                     }
                 }
             } authenticated: { (player) in
                 Task {
                     await MainActor.run {
-                        self.viewModel.showModal = false
-                        self.viewModel.player = player
-                        self.viewModel.currentState = "Authenticated"
+                        self.showModal = false
+                        self.player = player
+                        self.currentState = "Authenticated"
                     }
                 }
             }
             .frame(width: 640, height: 480)
         }
-        .alert(isPresented: self.$viewModel.showAlert) {
-            Alert(title: Text(self.viewModel.alertTitle),
-                  message: Text(self.viewModel.alertMessage),
+        .alert(isPresented: self.$showAlert) {
+            Alert(title: Text(self.alertTitle),
+                  message: Text(self.alertMessage),
                   dismissButton: .default(Text("Ok")))
         }
+    }
+    
+    private func load() {
+        if self.isAuthenticated {
+            return
+        }
+        self.showAuthenticationModal()
+    }
+
+    private func showAlert(title: String, message: String) {
+        self.showAlert = true
+        self.alertTitle = title
+        self.alertMessage = message
+    }
+    
+    private func showAuthenticationModal() {
+        self.showModal = true
     }
 }
 

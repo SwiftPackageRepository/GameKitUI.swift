@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2020 Sascha Müllner
+/// Copyright (c) 2021 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,49 +21,47 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 22.11.20.
-/// Modfied by Sascha Müllner on 17.12.20.
+/// Created by Sascha Müllner on 28.03.21.
 
-#if os(iOS) || os(tvOS)
+#if os(macOS)
 
 import Foundation
 import GameKit
 import SwiftUI
 
-@MainActor
-public struct GKInviteView: UIViewControllerRepresentable {
+public struct GKInvitePlatformView: NSViewControllerRepresentable {
 
     private let invite: GKInvite
-    private let canceled: @Sendable () -> Void
-    private let failed: @Sendable (Error) -> Void
-    private let started: @Sendable (GKMatch) -> Void
+    private let canceled: @Sendable () async -> Void
+    private let failed: @Sendable (Error) async -> Void
+    private let started: @Sendable (GKMatch) async -> Void
 
     public init(invite: GKInvite,
-                canceled: @escaping @Sendable () -> Void,
-                failed: @escaping @Sendable (Error) -> Void,
-                started: @escaping @Sendable (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () async -> Void,
+                failed: @escaping @Sendable (Error) async -> Void,
+                started: @escaping @Sendable (GKMatch) async -> Void) {
         self.invite = invite
         self.canceled = canceled
         self.failed = failed
         self.started = started
     }
 
-    public func makeUIViewController(
-        context: UIViewControllerRepresentableContext<GKInviteView>) -> InviteViewController {
-        
+    public func makeNSViewController(
+        context: NSViewControllerRepresentableContext<GKInvitePlatformView>) -> InviteViewController {
+
         return InviteViewController(
             invite: self.invite) {
-            self.canceled()
+            await self.canceled()
         } failed: { (error) in
-            self.failed(error)
+            await self.failed(error)
         } started: { (match) in
-            self.started(match)
+            await self.started(match)
         }
     }
 
-    public func updateUIViewController(
-        _ uiViewController: InviteViewController,
-        context: UIViewControllerRepresentableContext<GKInviteView>) {
+    public func updateNSViewController(
+        _ nsViewController: InviteViewController,
+        context: NSViewControllerRepresentableContext<GKInvitePlatformView>) {
     }
 }
 

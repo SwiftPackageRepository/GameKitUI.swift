@@ -25,7 +25,6 @@
 
 #if os(macOS)
 
-import Combine
 import Foundation
 import GameKit
 import SwiftUI
@@ -37,7 +36,6 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     private let canceled: @Sendable () async -> Void
     private let failed: @Sendable (Error) async -> Void
     private let started: @Sendable (GKMatch) async -> Void
-    private var cancellable: AnyCancellable?
     private let loadingViewController = LoadingViewController()
     
     @available(macOS 11.0, *)
@@ -74,40 +72,24 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
         self.view.setBoundsSize(NSSize(width: 800, height: 600))
     }
     
-    public func subscribe() {
-        self.cancellable = GKMatchManager
-            .shared
-            .invite
-            .sink { (invite) in
-                Task { await self.showInvite(invite: invite) }
-        }
-    }
-    
-    public func showInvite(invite: Invite) async {
-        
-        guard let invite = invite.gkInvite else { return }
-        
-        if let viewController = GKMatchManager.shared.createInvite(invite: invite,
-                                                                     canceled: {
-                                                                         Task { await self.canceled() }
-                                                                     },
-                                                                     failed: { error in
-                                                                         Task { await self.failed(error) }
-                                                                     },
-                                                                     started: self.started) {
-            self.add(viewController)
-        } else {
-            await self.canceled()
-        }
-    }
-    
-    public func unsubscribe() {
-        self.cancellable?.cancel()
-    }
-    
     public override func viewWillAppear() {
         super.viewWillAppear()
         self.add(loadingViewController)
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            for await invite in GKMatchManager.shared.invite {
+                guard let sendableInvite = invite.gkInvite else { return }
+                let gkInvite = sendableInvite.invite
+                if let viewController = GKMatchManager.shared.createInvite(invite: gkInvite,
+                                                                         canceled: self.canceled,
+                                                                         failed: self.failed,
+                                                                         started: self.started) {
+                self.add(viewController)
+            } else {
+                await self.canceled()
+            }
+            }
+        }
         Task {
             if GKLocalPlayer.local.isAuthenticated {
                 await self.showMatchmakerViewController()
@@ -115,13 +97,11 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
                 await self.showAuthenticationViewController()
             }
         }
-        self.subscribe()
     }
     
     public override func viewWillDisappear() {
         super.viewWillDisappear()
         self.removeAll()
-        self.unsubscribe()
     }
     
     public func showAuthenticationViewController() async {
@@ -135,12 +115,8 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     
     public func showMatchmakerViewController() async {
         if let viewController = GKMatchManager.shared.createMatchmaker(request: self.matchRequest,
-                                                                     canceled: {
-                                                                         Task { await self.canceled() }
-                                                                     },
-                                                                     failed: { error in
-                                                                         Task { await self.failed(error) }
-                                                                     },
+                                                                     canceled: self.canceled,
+                                                                     failed: self.failed,
                                                                      started: self.started) {
             
             if #available(macOS 11.0, *) {

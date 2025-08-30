@@ -25,7 +25,6 @@
 
 #if os(iOS) || os(tvOS)
 
-import Combine
 import Foundation
 import GameKit
 import SwiftUI
@@ -38,7 +37,6 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
     private let canceled: @Sendable () -> Void
     private let failed: @Sendable (Error) -> Void
     private let started: @Sendable (GKMatch) -> Void
-    private var cancellable: AnyCancellable?
 
     @available(iOS 14.0, *)
     public init(matchRequest: GKMatchRequest,
@@ -69,46 +67,32 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func subscribe() {
-        self.cancellable = GKMatchManager
-            .shared
-            .invite
-            .sink { (invite) in
-                self.showInvite(invite: invite)
-        }
-    }
-    
-    public func showInvite(invite: Invite) {
-        
-        guard let invite = invite.gkInvite else { return }
-        
-        if let viewController = GKMatchManager.shared.createInvite(invite: invite,
-                                                                     canceled: self.canceled,
-                                                                     failed: self.failed,
-                                                                     started: self.started) {
-            self.add(viewController)
-        } else {
-            self.canceled()
-        }
-    }
-    
-    public func unsubscribe() {
-        self.cancellable?.cancel()
-    }
-    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        Task { @MainActor [weak self] in
+            guard let self = self else { return }
+            for await invite in GKMatchManager.shared.invite {
+                guard let sendableInvite = invite.gkInvite else { return }
+                let gkInvite = sendableInvite.invite
+                if let viewController = GKMatchManager.shared.createInvite(invite: gkInvite,
+                                                                             canceled: self.canceled,
+                                                                             failed: self.failed,
+                                                                             started: self.started) {
+                    self.add(viewController)
+                } else {
+                    await self.canceled()
+                }
+            }
+        }
         if GKLocalPlayer.local.isAuthenticated {
             self.showMatchmakerViewController()
         } else {
             self.showAuthenticationViewController()
         }
-        self.subscribe()
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
-        self.removeAll()
-        self.unsubscribe()
+        // No unsubscribe needed with AsyncStream
     }
     
     public func showAuthenticationViewController() {
@@ -130,7 +114,8 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
                 viewController.matchmakingMode = self.matchmakingMode as? GKMatchmakingMode ?? .default
             }
             
-            self.add(viewController)
+            viewController.modalPresentationStyle = .fullScreen
+            self.present(viewController, animated: true, completion: nil)
         } else {
             self.canceled()
         }

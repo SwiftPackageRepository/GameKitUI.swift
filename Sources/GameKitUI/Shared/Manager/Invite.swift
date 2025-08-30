@@ -25,18 +25,23 @@
 
 import GameKit
 
-public struct Invite {
+public struct Invite: Sendable {
     public private(set) var needsToAuthenticate: Bool?
-    public private(set) var gkInvite: GKInvite?
+    public private(set) var gkInvite: SendableInvite?
+
+    public static var zero: Invite {
+        return Invite(needsToAuthenticate: nil, gkInvite: nil)
+    }
+
+    public init(needsToAuthenticate: Bool?, gkInvite: GKInvite?) {
+        self.needsToAuthenticate = needsToAuthenticate
+        if let gkInvite = gkInvite {
+            self.gkInvite = SendableInvite(invite: gkInvite)
+        } else {
+            self.gkInvite = nil
+        }
+    }
 }
 
-extension Invite {
-    public static var zero: Invite {
-        return Invite()
-    }
-    
-    public static var needsToAuthenticate: Invite {
-        return Invite(needsToAuthenticate: GKLocalPlayer.local.isAuthenticated != true)
-    }
-}
+
 
