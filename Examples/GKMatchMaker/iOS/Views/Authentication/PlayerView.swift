@@ -32,8 +32,8 @@ struct PlayerView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
             if self.viewModel.imageLoaded,
-               let uiImage = self.viewModel.uiImage {
-                Image(uiImage: uiImage)
+               let sendableImage = self.viewModel.image {
+                Image(uiImage: sendableImage.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 128, height: 128)
@@ -64,13 +64,14 @@ struct PlayerView: View {
     }
 }
 
+@MainActor
 class PlayerViewModel: ObservableObject {
 
     let player: GKPlayer
 
     @Published var displayName: String
     @Published var imageLoaded = false
-    @Published var uiImage: UIImage?
+    @Published var image: SendableImage?
 
     public init(_ player: GKPlayer) {
         self.player = player
@@ -78,16 +79,14 @@ class PlayerViewModel: ObservableObject {
     }
 
     public func load() {
-        DispatchQueue.global().async { [self] in
-            self.player.loadPhoto(for: GKPlayer.PhotoSize.normal, withCompletionHandler: { (image, error) in
-                guard let image = image else {
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.uiImage = image
-                    self.imageLoaded = true
-                }
-            })
+        Task {
+            do {
+                let photo = try await self.player.loadPhoto(for: .normal)
+                self.image = SendableImage(image: photo)
+                self.imageLoaded = true
+            } catch {
+                // Handle error
+            }
         }
     }
 }

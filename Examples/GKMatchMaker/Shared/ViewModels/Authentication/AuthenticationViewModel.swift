@@ -29,6 +29,7 @@ import Combine
 import GameKit
 import GameKitUI
 
+@MainActor
 class AuthenticationViewModel: ObservableObject {
 
     @Published public var showModal = false

@@ -30,6 +30,7 @@ import Combine
 import Foundation
 import GameKit
 
+@MainActor
 public final class GKAuthentication: NSObject, GKLocalPlayerListener {
 
     public static let shared = GKAuthentication()

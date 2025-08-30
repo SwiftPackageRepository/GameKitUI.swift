@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/smuellner/Development/OpenSource/GameKitUI.swift/Examples/GKMatchMaker/GKMatchMaker.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

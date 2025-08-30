@@ -26,16 +26,16 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @State var selectedMenu: SidebarMenu = .authentication
+    @State var selectedMenu: Route
 
     @ViewBuilder
     var body: some View {
         HStack(spacing: 0) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    ForEach(SidebarMenu.allCases) { menu in
+                    ForEach(Route.allCases) { menu in
                         ZStack(alignment: .leading) {
-                            SidebarRow(item: menu, selectedMenu: self.$selectedMenu)
+                            SidebarRow(item: menu, isSelected: true)
                                 .frame(height: 50)
                             if menu == self.selectedMenu {
                                 Rectangle()
@@ -45,17 +45,14 @@ struct SidebarView: View {
                         }
                     }
                 }
-                .padding(.top, 32)
-                .frame(width: 300)
             }
-            .background(Color.primary.opacity(0.1))
-            selectedMenu.contentView
+            .background(Color("BackgroundColor").ignoresSafeArea())
         }
     }
 }
 
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView()
+        SidebarView(selectedMenu: .authentication)
     }
 }

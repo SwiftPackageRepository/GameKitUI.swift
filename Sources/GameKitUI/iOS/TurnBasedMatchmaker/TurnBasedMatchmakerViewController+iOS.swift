@@ -29,17 +29,18 @@ import Foundation
 import GameKit
 import SwiftUI
 
-public class TurnBasedMatchmakerViewController: UIViewController, GKTurnBasedMatchmakerViewControllerDelegate, GKMatchDelegate {
+@MainActor
+public class TurnBasedMatchmakerViewController: UIViewController, @preconcurrency GKTurnBasedMatchmakerViewControllerDelegate, GKMatchDelegate {
 
     private let matchRequest: GKMatchRequest
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKTurnBasedMatch) -> Void
+    private let canceled: @Sendable () -> Void
+    private let failed: @Sendable (Error) -> Void
+    private let started: @Sendable (GKTurnBasedMatch) -> Void
     
     public init(matchRequest: GKMatchRequest,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKTurnBasedMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKTurnBasedMatch) -> Void) {
         self.matchRequest = matchRequest
         self.canceled = canceled
         self.failed = failed
@@ -59,30 +60,27 @@ public class TurnBasedMatchmakerViewController: UIViewController, GKTurnBasedMat
     }
 
     public func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.canceled()
-                viewController.remove()
-        })
+        Task {
+            await viewController.dismiss(animated: true)
+            self.canceled()
+            await viewController.remove()
+        }
     }
 
     public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: Error) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.failed(error)
-                viewController.remove()
-        })
+        Task {
+            await viewController.dismiss(animated: true)
+            self.failed(error)
+            await viewController.remove()
+        }
     }
 
     public func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFind match: GKTurnBasedMatch) {
-        viewController.dismiss(
-            animated: true,
-            completion: {
-                self.started(match)
-                viewController.remove()
-        })
+        Task {
+            await viewController.dismiss(animated: true)
+            self.started(match)
+            await viewController.remove()
+        }
     }
 }
 

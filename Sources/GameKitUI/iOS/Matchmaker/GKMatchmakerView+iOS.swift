@@ -30,20 +30,21 @@ import Foundation
 import GameKit
 import SwiftUI
  
+@MainActor
 public struct GKMatchmakerView: UIViewControllerRepresentable {
 
     private let matchRequest: GKMatchRequest
     private var matchmakingMode: Any? = nil
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKMatch) -> Void
+    private let canceled: @Sendable () -> Void
+    private let failed: @Sendable (Error) -> Void
+    private let started: @Sendable (GKMatch) -> Void
 
     @available(iOS 14.0, *)
     public init(matchRequest: GKMatchRequest,
                 matchmakingMode: GKMatchmakingMode,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKMatch) -> Void) {
         self.matchRequest = matchRequest
         self.matchmakingMode = matchmakingMode
         self.canceled = canceled
@@ -56,9 +57,9 @@ public struct GKMatchmakerView: UIViewControllerRepresentable {
                 maxPlayers: Int,
                 inviteMessage: String,
                 matchmakingMode: GKMatchmakingMode,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKMatch) -> Void) {
         let matchRequest = GKMatchRequest()
         matchRequest.minPlayers = minPlayers
         matchRequest.maxPlayers = maxPlayers
@@ -71,9 +72,9 @@ public struct GKMatchmakerView: UIViewControllerRepresentable {
     }
 
     public init(matchRequest: GKMatchRequest,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKMatch) -> Void) {
         self.matchRequest = matchRequest
         self.canceled = canceled
         self.failed = failed
@@ -83,9 +84,9 @@ public struct GKMatchmakerView: UIViewControllerRepresentable {
     public init(minPlayers: Int,
                 maxPlayers: Int,
                 inviteMessage: String,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKMatch) -> Void) {
         let matchRequest = GKMatchRequest()
         matchRequest.minPlayers = minPlayers
         matchRequest.maxPlayers = maxPlayers

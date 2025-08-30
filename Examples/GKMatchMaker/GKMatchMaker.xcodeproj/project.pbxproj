@@ -3,61 +3,35 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		150315F72617E3B100EC5D2E /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315F62617E3B100EC5D2E /* SidebarView.swift */; };
-		150315FC2617E7C900EC5D2E /* SidebarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315FB2617E7C900EC5D2E /* SidebarMenu.swift */; };
+		150315FC2617E7C900EC5D2E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315FB2617E7C900EC5D2E /* Route.swift */; };
 		150316002617E88100EC5D2E /* SidebarRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150315FF2617E88100EC5D2E /* SidebarRow.swift */; };
-		1503160E2618B62500EC5D2E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1503160D2618B62500EC5D2E /* ContentView.swift */; };
-		1503163C2618B65100EC5D2E /* GKMatchMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */; };
-		150316552618B70B00EC5D2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151CAA8D25E39837002A7FDC /* Assets.xcassets */; };
-		150316632618B76100EC5D2E /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 150316622618B76100EC5D2E /* GameKitUI */; };
-		150316652618B76700EC5D2E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150316642618B76700EC5D2E /* GameKit.framework */; };
-		150316692618B9B300EC5D2E /* GKMatchMakerAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F85DE3260272CF0009A734 /* GKMatchMakerAppModel.swift */; };
-		1503166D2618B9CE00EC5D2E /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0C525E419E5006DDBFC /* AuthenticationView.swift */; };
-		1503166E2618B9CE00EC5D2E /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151D895E2602660B00979718 /* MatchView.swift */; };
-		150316722618B9D200EC5D2E /* MatchMakingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152736812607D0730068853D /* MatchMakingView.swift */; };
-		150316762618B9DC00EC5D2E /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
-		1503167A2618B9E300EC5D2E /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */; };
-		1503167E2618B9FA00EC5D2E /* MatchMakingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */; };
-		1503168E2618C94900EC5D2E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1503168D2618C94900EC5D2E /* PlayerView.swift */; };
-		1503168F2618C94900EC5D2E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1503168D2618C94900EC5D2E /* PlayerView.swift */; };
 		1503169F2618E03E00EC5D2E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1503169E2618E03E00EC5D2E /* PlayerView.swift */; };
 		150316A62618E2AB00EC5D2E /* MatchMakingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316A52618E2AB00EC5D2E /* MatchMakingView.swift */; };
 		150316B22618E47D00EC5D2E /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150316B12618E47D00EC5D2E /* MatchView.swift */; };
-		1507A0BD25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */; };
 		1507A0BE25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */; };
-		1507A0C625E419E5006DDBFC /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0C525E419E5006DDBFC /* AuthenticationView.swift */; };
 		1507A0C725E419E5006DDBFC /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507A0C525E419E5006DDBFC /* AuthenticationView.swift */; };
-		151CAAA225E39837002A7FDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151CAA8D25E39837002A7FDC /* Assets.xcassets */; };
+		150EBBB32E5C65A4000E3E03 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 150EBBB22E5C65A4000E3E03 /* GameKitUI */; };
 		151CAAA325E39837002A7FDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151CAA8D25E39837002A7FDC /* Assets.xcassets */; };
-		151CAAD725E399D6002A7FDC /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CAAD625E399D6002A7FDC /* GameKit.framework */; };
-		151D895F2602660B00979718 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151D895E2602660B00979718 /* MatchView.swift */; };
-		151F91F925E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
 		151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */; };
-		152736842607D0740068853D /* MatchMakingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152736812607D0730068853D /* MatchMakingView.swift */; };
-		15A6F7D725E39B7D00FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D625E39B7D00FE5387 /* GameKitUI */; };
 		15A6F7D925E39B8300FE5387 /* GameKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 15A6F7D825E39B8300FE5387 /* GameKitUI */; };
-		15A6F7E225E39BC100FE5387 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F7DF25E39BC100FE5387 /* ContentView.swift */; };
-		15A6F7F125E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */; };
 		15A6F7F225E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */; };
 		15D90EAA2610B3190010E6C9 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D90EA92610B3190010E6C9 /* GameKit.framework */; };
-		15D90EAE2610B7850010E6C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D90EAD2610B77E0010E6C9 /* ContentView.swift */; };
-		15D90EB42610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */; };
 		15D90EB52610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */; };
-		15F85DE4260272CF0009A734 /* GKMatchMakerAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F85DE3260272CF0009A734 /* GKMatchMakerAppModel.swift */; };
+		15E7E14B2E5D9223009C1F44 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7E14A2E5D9222009C1F44 /* PlayerViewModel.swift */; };
+		15E7E14D2E5DAE9F009C1F44 /* Image+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7E14C2E5DAE9F009C1F44 /* Image+Sendable.swift */; };
 		15F85DE7260272D20009A734 /* GKMatchMakerAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F85DE3260272CF0009A734 /* GKMatchMakerAppModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		150315F32617DB1E00EC5D2E /* Config.xcconfig-example */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Config.xcconfig-example"; sourceTree = "<group>"; };
 		150315F62617E3B100EC5D2E /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		150315FB2617E7C900EC5D2E /* SidebarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMenu.swift; sourceTree = "<group>"; };
+		150315FB2617E7C900EC5D2E /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		150315FF2617E88100EC5D2E /* SidebarRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarRow.swift; sourceTree = "<group>"; };
-		150316092618B62500EC5D2E /* GKMatchMaker (tvOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GKMatchMaker (tvOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1503160D2618B62500EC5D2E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		150316142618B62600EC5D2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		150316642618B76700EC5D2E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS14.3.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
 		1503168D2618C94900EC5D2E /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
@@ -68,50 +42,31 @@
 		1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GKMatchMakerApp.swift; sourceTree = "<group>"; };
 		1507A0C525E419E5006DDBFC /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		151CAA8D25E39837002A7FDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		151CAA9225E39837002A7FDC /* GKMatchMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKMatchMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		151CAA9525E39837002A7FDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		151CAA9A25E39837002A7FDC /* GKMatchMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKMatchMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		151CAA9C25E39837002A7FDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		151CAA9D25E39837002A7FDC /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		151CAAD025E39928002A7FDC /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		151CAAD625E399D6002A7FDC /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.4.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
-		151CAAD825E399DF002A7FDC /* GameKitUI.swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GameKitUI.swift; path = ../..; sourceTree = "<group>"; };
 		151D895E2602660B00979718 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 		151F91F825E4EC070015DD88 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		152736812607D0730068853D /* MatchMakingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchMakingView.swift; sourceTree = "<group>"; };
-		15A6F7DF25E39BC100FE5387 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		15A6F7F025E39E0500FE5387 /* MatchMakingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchMakingViewModel.swift; sourceTree = "<group>"; };
 		15D90EA92610B3190010E6C9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		15D90EAD2610B77E0010E6C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		15D90EB32610BBBD0010E6C9 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
+		15E7E14A2E5D9222009C1F44 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
+		15E7E14C2E5DAE9F009C1F44 /* Image+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Sendable.swift"; sourceTree = "<group>"; };
 		15F85DE3260272CF0009A734 /* GKMatchMakerAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GKMatchMakerAppModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		150316062618B62500EC5D2E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				150316632618B76100EC5D2E /* GameKitUI in Frameworks */,
-				150316652618B76700EC5D2E /* GameKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		151CAA8F25E39837002A7FDC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				151CAAD725E399D6002A7FDC /* GameKit.framework in Frameworks */,
-				15A6F7D725E39B7D00FE5387 /* GameKitUI in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		151CAA9725E39837002A7FDC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				15A6F7D925E39B8300FE5387 /* GameKitUI in Frameworks */,
 				15D90EAA2610B3190010E6C9 /* GameKit.framework in Frameworks */,
+				150EBBB32E5C65A4000E3E03 /* GameKitUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				150315F62617E3B100EC5D2E /* SidebarView.swift */,
-				150315FB2617E7C900EC5D2E /* SidebarMenu.swift */,
+				150315FB2617E7C900EC5D2E /* Route.swift */,
 				150315FF2617E88100EC5D2E /* SidebarRow.swift */,
 			);
 			path = Sidebar;
@@ -140,7 +95,6 @@
 		150316882618C7CF00EC5D2E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1503160D2618B62500EC5D2E /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -156,6 +110,7 @@
 		1503169D2618E03E00EC5D2E /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				15E7E14A2E5D9222009C1F44 /* PlayerViewModel.swift */,
 				1503169E2618E03E00EC5D2E /* PlayerView.swift */,
 			);
 			path = Authentication;
@@ -176,7 +131,6 @@
 				150316962618D0E800EC5D2E /* GKMatchMakerDebug.entitlements */,
 				150315F32617DB1E00EC5D2E /* Config.xcconfig-example */,
 				151CAAD025E39928002A7FDC /* Config.xcconfig */,
-				151CAAD825E399DF002A7FDC /* GameKitUI.swift */,
 				151CAA8A25E39835002A7FDC /* Shared */,
 				151CAA9425E39837002A7FDC /* iOS */,
 				151CAA9B25E39837002A7FDC /* macOS */,
@@ -190,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				1507A0BC25E410CA006DDBFC /* GKMatchMakerApp.swift */,
+				15E7E14E2E5DBD92009C1F44 /* Extensions */,
 				15D90EB22610BBBD0010E6C9 /* Modifiers */,
 				15A6F7E025E39BC100FE5387 /* ViewModels */,
 				15A6F7DE25E39BC100FE5387 /* Views */,
@@ -201,9 +156,7 @@
 		151CAA9325E39837002A7FDC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				151CAA9225E39837002A7FDC /* GKMatchMaker.app */,
 				151CAA9A25E39837002A7FDC /* GKMatchMaker.app */,
-				150316092618B62500EC5D2E /* GKMatchMaker (tvOS).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -250,6 +203,7 @@
 			children = (
 				15A6F7FD25E39F8700FE5387 /* Authentication */,
 				15A6F7FC25E39F7D00FE5387 /* MultiPlayer */,
+				150315FA2617E7B200EC5D2E /* Sidebar */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -293,7 +247,6 @@
 			isa = PBXGroup;
 			children = (
 				1503168C2618C93200EC5D2E /* Authentication */,
-				15A6F7DF25E39BC100FE5387 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -303,8 +256,6 @@
 			children = (
 				150316A32618E2AB00EC5D2E /* MultiPlayer */,
 				1503169D2618E03E00EC5D2E /* Authentication */,
-				150315FA2617E7B200EC5D2E /* Sidebar */,
-				15D90EAD2610B77E0010E6C9 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -317,52 +268,20 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
+		15E7E14E2E5DBD92009C1F44 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				15E7E14C2E5DAE9F009C1F44 /* Image+Sendable.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		150316082618B62500EC5D2E /* GKMatchMaker (tvOS) */ = {
+		151CAA9925E39837002A7FDC /* GKMatchMaker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1503162B2618B62600EC5D2E /* Build configuration list for PBXNativeTarget "GKMatchMaker (tvOS)" */;
-			buildPhases = (
-				150316052618B62500EC5D2E /* Sources */,
-				150316062618B62500EC5D2E /* Frameworks */,
-				150316072618B62500EC5D2E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "GKMatchMaker (tvOS)";
-			packageProductDependencies = (
-				150316622618B76100EC5D2E /* GameKitUI */,
-			);
-			productName = GKMatchMaker;
-			productReference = 150316092618B62500EC5D2E /* GKMatchMaker (tvOS).app */;
-			productType = "com.apple.product-type.application";
-		};
-		151CAA9125E39837002A7FDC /* GKMatchMaker (iOS) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 151CAAA625E39837002A7FDC /* Build configuration list for PBXNativeTarget "GKMatchMaker (iOS)" */;
-			buildPhases = (
-				151CAA8E25E39837002A7FDC /* Sources */,
-				151CAA8F25E39837002A7FDC /* Frameworks */,
-				151CAA9025E39837002A7FDC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "GKMatchMaker (iOS)";
-			packageProductDependencies = (
-				15A6F7D625E39B7D00FE5387 /* GameKitUI */,
-			);
-			productName = "MatchMaking (iOS)";
-			productReference = 151CAA9225E39837002A7FDC /* GKMatchMaker.app */;
-			productType = "com.apple.product-type.application";
-		};
-		151CAA9925E39837002A7FDC /* GKMatchMaker (macOS) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 151CAAA925E39837002A7FDC /* Build configuration list for PBXNativeTarget "GKMatchMaker (macOS)" */;
+			buildConfigurationList = 151CAAA925E39837002A7FDC /* Build configuration list for PBXNativeTarget "GKMatchMaker" */;
 			buildPhases = (
 				151CAA9625E39837002A7FDC /* Sources */,
 				151CAA9725E39837002A7FDC /* Frameworks */,
@@ -372,9 +291,10 @@
 			);
 			dependencies = (
 			);
-			name = "GKMatchMaker (macOS)";
+			name = GKMatchMaker;
 			packageProductDependencies = (
 				15A6F7D825E39B8300FE5387 /* GameKitUI */,
+				150EBBB22E5C65A4000E3E03 /* GameKitUI */,
 			);
 			productName = "MatchMaking (macOS)";
 			productReference = 151CAA9A25E39837002A7FDC /* GKMatchMaker.app */;
@@ -386,15 +306,10 @@
 		151CAA8625E39835002A7FDC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
-					150316082618B62500EC5D2E = {
-						CreatedOnToolsVersion = 12.4;
-					};
-					151CAA9125E39837002A7FDC = {
-						CreatedOnToolsVersion = 12.4;
-					};
 					151CAA9925E39837002A7FDC = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -409,34 +324,19 @@
 				Base,
 			);
 			mainGroup = 151CAA8525E39835002A7FDC;
+			packageReferences = (
+				150EBBB12E5C65A4000E3E03 /* XCLocalSwiftPackageReference "../../../GameKitUI.swift" */,
+			);
 			productRefGroup = 151CAA9325E39837002A7FDC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				151CAA9125E39837002A7FDC /* GKMatchMaker (iOS) */,
-				151CAA9925E39837002A7FDC /* GKMatchMaker (macOS) */,
-				150316082618B62500EC5D2E /* GKMatchMaker (tvOS) */,
+				151CAA9925E39837002A7FDC /* GKMatchMaker */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		150316072618B62500EC5D2E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				150316552618B70B00EC5D2E /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		151CAA9025E39837002A7FDC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				151CAAA225E39837002A7FDC /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		151CAA9825E39837002A7FDC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -448,40 +348,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		150316052618B62500EC5D2E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1503160E2618B62500EC5D2E /* ContentView.swift in Sources */,
-				1503166E2618B9CE00EC5D2E /* MatchView.swift in Sources */,
-				150316762618B9DC00EC5D2E /* AuthenticationViewModel.swift in Sources */,
-				1503168F2618C94900EC5D2E /* PlayerView.swift in Sources */,
-				150316692618B9B300EC5D2E /* GKMatchMakerAppModel.swift in Sources */,
-				1503167A2618B9E300EC5D2E /* PrimaryButtonStyle.swift in Sources */,
-				1503167E2618B9FA00EC5D2E /* MatchMakingViewModel.swift in Sources */,
-				150316722618B9D200EC5D2E /* MatchMakingView.swift in Sources */,
-				1503166D2618B9CE00EC5D2E /* AuthenticationView.swift in Sources */,
-				1503163C2618B65100EC5D2E /* GKMatchMakerApp.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		151CAA8E25E39837002A7FDC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				15F85DE4260272CF0009A734 /* GKMatchMakerAppModel.swift in Sources */,
-				1507A0C625E419E5006DDBFC /* AuthenticationView.swift in Sources */,
-				151F91F925E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */,
-				1503168E2618C94900EC5D2E /* PlayerView.swift in Sources */,
-				151D895F2602660B00979718 /* MatchView.swift in Sources */,
-				15A6F7E225E39BC100FE5387 /* ContentView.swift in Sources */,
-				152736842607D0740068853D /* MatchMakingView.swift in Sources */,
-				15D90EB42610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */,
-				1507A0BD25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */,
-				15A6F7F125E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		151CAA9625E39837002A7FDC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -491,13 +357,14 @@
 				1507A0C725E419E5006DDBFC /* AuthenticationView.swift in Sources */,
 				151F91FA25E4EC070015DD88 /* AuthenticationViewModel.swift in Sources */,
 				150316B22618E47D00EC5D2E /* MatchView.swift in Sources */,
-				15D90EAE2610B7850010E6C9 /* ContentView.swift in Sources */,
+				15E7E14B2E5D9223009C1F44 /* PlayerViewModel.swift in Sources */,
 				1503169F2618E03E00EC5D2E /* PlayerView.swift in Sources */,
 				15D90EB52610BBC60010E6C9 /* PrimaryButtonStyle.swift in Sources */,
 				150315F72617E3B100EC5D2E /* SidebarView.swift in Sources */,
-				150315FC2617E7C900EC5D2E /* SidebarMenu.swift in Sources */,
+				150315FC2617E7C900EC5D2E /* Route.swift in Sources */,
 				150316A62618E2AB00EC5D2E /* MatchMakingView.swift in Sources */,
 				1507A0BE25E410CA006DDBFC /* GKMatchMakerApp.swift in Sources */,
+				15E7E14D2E5DAE9F009C1F44 /* Image+Sendable.swift in Sources */,
 				15A6F7F225E39E0500FE5387 /* MatchMakingViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,58 +372,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1503162C2618B62600EC5D2E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "$(XCCONFIG_DEVELOPMENT_TEAM)";
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = tvOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(XCCONFIG_BUNDLE_ID)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 14.3;
-			};
-			name = Debug;
-		};
-		1503162D2618B62600EC5D2E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "$(XCCONFIG_DEVELOPMENT_TEAM)";
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = tvOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(XCCONFIG_BUNDLE_ID)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 14.3;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		151CAAA425E39837002A7FDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 151CAAD025E39928002A7FDC /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -587,7 +408,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5866MB3Q46;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -617,6 +440,7 @@
 			baseConfigurationReference = 151CAAD025E39928002A7FDC /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -647,7 +471,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5866MB3Q46;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -665,53 +491,6 @@
 			};
 			name = Release;
 		};
-		151CAAA725E39837002A7FDC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 151CAAD025E39928002A7FDC /* Config.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "$(XCCONFIG_DEVELOPMENT_TEAM)";
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(XCCONFIG_BUNDLE_ID)";
-				PRODUCT_NAME = GKMatchMaker;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		151CAAA825E39837002A7FDC /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 151CAAD025E39928002A7FDC /* Config.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "$(XCCONFIG_DEVELOPMENT_TEAM)";
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(XCCONFIG_BUNDLE_ID)";
-				PRODUCT_NAME = GKMatchMaker;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		151CAAAA25E39837002A7FDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 151CAAD025E39928002A7FDC /* Config.xcconfig */;
@@ -722,7 +501,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "$(XCCONFIG_DEVELOPMENT_TEAM)";
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -730,12 +509,15 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(XCCONFIG_BUNDLE_ID)";
 				PRODUCT_NAME = GKMatchMaker;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
 			};
 			name = Debug;
 		};
@@ -749,7 +531,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "$(XCCONFIG_DEVELOPMENT_TEAM)";
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -757,27 +539,21 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(XCCONFIG_BUNDLE_ID)";
 				PRODUCT_NAME = GKMatchMaker;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1503162B2618B62600EC5D2E /* Build configuration list for PBXNativeTarget "GKMatchMaker (tvOS)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1503162C2618B62600EC5D2E /* Debug */,
-				1503162D2618B62600EC5D2E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		151CAA8925E39835002A7FDC /* Build configuration list for PBXProject "GKMatchmaker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -787,16 +563,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		151CAAA625E39837002A7FDC /* Build configuration list for PBXNativeTarget "GKMatchMaker (iOS)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				151CAAA725E39837002A7FDC /* Debug */,
-				151CAAA825E39837002A7FDC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		151CAAA925E39837002A7FDC /* Build configuration list for PBXNativeTarget "GKMatchMaker (macOS)" */ = {
+		151CAAA925E39837002A7FDC /* Build configuration list for PBXNativeTarget "GKMatchMaker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				151CAAAA25E39837002A7FDC /* Debug */,
@@ -807,12 +574,15 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCSwiftPackageProductDependency section */
-		150316622618B76100EC5D2E /* GameKitUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GameKitUI;
+/* Begin XCLocalSwiftPackageReference section */
+		150EBBB12E5C65A4000E3E03 /* XCLocalSwiftPackageReference "../../../GameKitUI.swift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../GameKitUI.swift;
 		};
-		15A6F7D625E39B7D00FE5387 /* GameKitUI */ = {
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		150EBBB22E5C65A4000E3E03 /* GameKitUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GameKitUI;
 		};

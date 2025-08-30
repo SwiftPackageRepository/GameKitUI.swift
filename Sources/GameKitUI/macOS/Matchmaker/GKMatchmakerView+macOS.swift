@@ -114,10 +114,14 @@ public struct GKMatchmakerView: NSViewControllerRepresentable {
         return MatchmakerViewController(
             matchRequest: self.matchRequest,
             matchmakingMode: matchmakingMode) {
-            self.canceled()
+            await MainActor.run {
+                self.canceled()
+            }
         } failed: { (error) in
-            self.failed(error)
-        } started: { (match) in
+            await MainActor.run {
+                self.failed(error)
+            }
+        } started: { @MainActor match in
             self.started(match)
         }
     }
@@ -125,10 +129,14 @@ public struct GKMatchmakerView: NSViewControllerRepresentable {
     internal func makeMatchmakerViewController() -> MatchmakerViewController {
         return MatchmakerViewController(
             matchRequest: self.matchRequest) {
-            self.canceled()
+            await MainActor.run {
+                self.canceled()
+            }
         } failed: { (error) in
-            self.failed(error)
-        } started: { (match) in
+            await MainActor.run {
+                self.failed(error)
+            }
+        } started: { @MainActor match in
             self.started(match)
         }
     }

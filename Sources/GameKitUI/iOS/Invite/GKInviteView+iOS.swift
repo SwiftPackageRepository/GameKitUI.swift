@@ -30,17 +30,18 @@ import Foundation
 import GameKit
 import SwiftUI
 
+@MainActor
 public struct GKInviteView: UIViewControllerRepresentable {
 
     private let invite: GKInvite
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKMatch) -> Void
+    private let canceled: @Sendable () -> Void
+    private let failed: @Sendable (Error) -> Void
+    private let started: @Sendable (GKMatch) -> Void
 
     public init(invite: GKInvite,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKMatch) -> Void) {
         self.invite = invite
         self.canceled = canceled
         self.failed = failed

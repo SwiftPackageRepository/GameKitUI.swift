@@ -29,6 +29,7 @@ import Foundation
 import GameKit
 import GameKitUI
 
+@MainActor
 class GKMatchMakerAppModel: ObservableObject {
 
     @Published public var showAlert = false
@@ -70,10 +71,11 @@ class GKMatchMakerAppModel: ObservableObject {
     }
 
     deinit {
-        self.unsubscribe()
+        self.cancellableInvite?.cancel()
+        self.cancellableMatch?.cancel()
     }
 
-    func subscribe() {
+    @MainActor func subscribe() {
         self.cancellableInvite = GKMatchManager
             .shared
             .invite
@@ -86,11 +88,6 @@ class GKMatchMakerAppModel: ObservableObject {
             .sink { (match) in
                 self.gkMatch = match.gkMatch
         }
-    }
-
-    func unsubscribe() {
-        self.cancellableInvite?.cancel()
-        self.cancellableMatch?.cancel()
     }
 
     public func showAlert(title: String, message: String) {

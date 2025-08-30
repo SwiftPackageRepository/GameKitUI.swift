@@ -33,14 +33,14 @@ import SwiftUI
 public struct GKTurnBasedMatchmakerView: UIViewControllerRepresentable {
     
     private let matchRequest: GKMatchRequest
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKTurnBasedMatch) -> Void
+    private let canceled: @Sendable () -> Void
+    private let failed: @Sendable (Error) -> Void
+    private let started: @Sendable (GKTurnBasedMatch) -> Void
     
     public init(matchRequest: GKMatchRequest,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKTurnBasedMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKTurnBasedMatch) -> Void) {
         self.matchRequest = matchRequest
         self.canceled = canceled
         self.failed = failed
@@ -50,9 +50,9 @@ public struct GKTurnBasedMatchmakerView: UIViewControllerRepresentable {
     public init(minPlayers: Int,
                 maxPlayers: Int,
                 inviteMessage: String,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKTurnBasedMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKTurnBasedMatch) -> Void) {
         let matchRequest = GKMatchRequest()
         matchRequest.minPlayers = minPlayers
         matchRequest.maxPlayers = maxPlayers

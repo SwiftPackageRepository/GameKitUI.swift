@@ -30,21 +30,22 @@ import Foundation
 import GameKit
 import SwiftUI
 
+@MainActor
 public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLocalPlayerListener {
     
     private let matchRequest: GKMatchRequest
     private var matchmakingMode: Any? = nil
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKMatch) -> Void
+    private let canceled: @Sendable () -> Void
+    private let failed: @Sendable (Error) -> Void
+    private let started: @Sendable (GKMatch) -> Void
     private var cancellable: AnyCancellable?
 
     @available(iOS 14.0, *)
     public init(matchRequest: GKMatchRequest,
                 matchmakingMode: GKMatchmakingMode,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKMatch) -> Void) {
         self.matchRequest = matchRequest
         self.matchmakingMode = matchmakingMode
         self.canceled = canceled
@@ -54,9 +55,9 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
     }
 
     public init(matchRequest: GKMatchRequest,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () -> Void,
+                failed: @escaping @Sendable (Error) -> Void,
+                started: @escaping @Sendable (GKMatch) -> Void) {
         self.matchRequest = matchRequest
         self.canceled = canceled
         self.failed = failed

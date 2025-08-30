@@ -57,13 +57,21 @@ struct AuthenticationView: View {
         }
         .sheet(isPresented: self.$viewModel.showModal) {
             GKAuthenticationView { (error) in
-                self.viewModel.showModal = false
-                self.viewModel.showAlert(title: "Authentication Failed", message: error.localizedDescription)
-                self.viewModel.currentState = error.localizedDescription
+                Task {
+                    await MainActor.run {
+                        self.viewModel.showModal = false
+                        self.viewModel.showAlert(title: "Authentication Failed", message: error.localizedDescription)
+                        self.viewModel.currentState = error.localizedDescription
+                    }
+                }
             } authenticated: { (player) in
-                self.viewModel.showModal = false
-                self.viewModel.player = player
-                self.viewModel.currentState = "Authenticated"
+                Task {
+                    await MainActor.run {
+                        self.viewModel.showModal = false
+                        self.viewModel.player = player
+                        self.viewModel.currentState = "Authenticated"
+                    }
+                }
             }
             .frame(width: 640, height: 480)
         }

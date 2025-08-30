@@ -55,14 +55,26 @@ struct MatchMakingView: View {
                 maxPlayers: 4,
                 inviteMessage: "Let us play together!"
             ) {
-                self.viewModel.showModal = false
-                self.viewModel.currentState = "Player Canceled"
+                Task {
+                    await MainActor.run {
+                        self.viewModel.showModal = false
+                        self.viewModel.currentState = "Player Canceled"
+                    }
+                }
             } failed: { (error) in
-                self.viewModel.showModal = false
-                self.viewModel.currentState = "Match Making Failed"
-                self.viewModel.showAlert(title: "Match Making Failed", message: error.localizedDescription)
+                Task {
+                    await MainActor.run {
+                        self.viewModel.showModal = false
+                        self.viewModel.currentState = "Match Making Failed"
+                        self.viewModel.showAlert(title: "Match Making Failed", message: error.localizedDescription)
+                    }
+                }
             } started: { (match) in
-                self.viewModel.showModal = false
+                Task {
+                    await MainActor.run {
+                        self.viewModel.showModal = false
+                    }
+                }
             }
             .frame(width: 640, height: 480)
         }

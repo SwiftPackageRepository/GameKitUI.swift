@@ -28,6 +28,7 @@ import Foundation
 import SwiftUI
 import GameKit
 
+@MainActor
 class MatchMakingViewModel: ObservableObject {
     
     @Published public var showModal = false

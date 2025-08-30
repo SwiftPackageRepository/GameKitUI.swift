@@ -52,14 +52,14 @@ public struct GKGameCenterView: UIViewControllerRepresentable {
     }
 }
 
-public class GKCoordinator: NSObject, GKGameCenterControllerDelegate {
+public class GKCoordinator: NSObject, @preconcurrency GKGameCenterControllerDelegate {
     var view: GKGameCenterView
 
     init(_ gkView: GKGameCenterView) {
         self.view = gkView
     }
 
-    public func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+    @MainActor public func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }

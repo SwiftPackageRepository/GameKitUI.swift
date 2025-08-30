@@ -32,18 +32,18 @@ import SwiftUI
 public class InviteViewController: NSViewController, GKMatchDelegate, GKLocalPlayerListener {
     
     private let invite: GKInvite
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKMatch) -> Void
+    private let canceled: @Sendable () async -> Void
+    private let failed: @Sendable (Error) async -> Void
+    private let started: @Sendable (GKMatch) async -> Void
 
     public init(invite: GKInvite,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () async -> Void,
+                failed: @escaping @Sendable (Error) async -> Void,
+                started: @escaping @Sendable (GKMatch) async -> Void) {
         self.invite = invite
-        self.canceled = canceled
-        self.failed = failed
-        self.started = started
+        self.canceled = { await canceled() }
+        self.failed = { await failed($0) }
+        self.started = { await started($0) }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,10 +57,12 @@ public class InviteViewController: NSViewController, GKMatchDelegate, GKLocalPla
     
     public override func viewWillAppear() {
         super.viewWillAppear()
-        if GKLocalPlayer.local.isAuthenticated {
-            self.showInviteViewController()
-        } else {
-            self.showAuthenticationViewController()
+        Task {
+            if GKLocalPlayer.local.isAuthenticated {
+                await self.showInviteViewController()
+            } else {
+                await self.showAuthenticationViewController()
+            }
         }
     }
     
@@ -69,24 +71,28 @@ public class InviteViewController: NSViewController, GKMatchDelegate, GKLocalPla
         self.removeAll()
     }
     
-    public func showAuthenticationViewController() {
+    public func showAuthenticationViewController() async {
         let authenticationViewController = GKAuthenticationViewController { (error) in
-            self.failed(error)
+            Task { await self.failed(error) }
         } authenticated: { (player) in
-            self.showInviteViewController()
+            Task { await self.showInviteViewController() }
         }
         self.add(authenticationViewController)
     }
     
-    public func showInviteViewController() {
+    public func showInviteViewController() async {
         if let viewController = GKMatchManager.shared.createInvite(invite: self.invite,
-                                                                     canceled: self.canceled,
-                                                                     failed: self.failed,
+                                                                     canceled: {
+                                                                         Task { await self.canceled() }
+                                                                     },
+                                                                     failed: { error in
+                                                                         Task { await self.failed(error) }
+                                                                     },
                                                                      started: self.started) {
             
             self.add(viewController)
         } else {
-            self.canceled()
+            await self.canceled()
         }
     }
 }

@@ -29,44 +29,43 @@ import GameKitUI
 
 struct MatchView: View {
     var match: GKMatch
-
+    
     public init(_ match: GKMatch) {
         self.match = match
     }
-
+    
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color("BackgroundColor").ignoresSafeArea()
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(self.match.players, id: \.self) { player in
-                        HStack(alignment: .center, spacing: 8) {
-                            Rectangle()
-                                .background(Color.red)
-                                .frame(width: 42, height: 42)
-                            Text(player.displayName)
-                                .font(.title)
-                                .padding(8)
-                        }
+        ZStack {
+            Color("BackgroundColor").ignoresSafeArea()
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(self.match.players, id: \.self) { player in
+                    HStack(alignment: .center, spacing: 8) {
+                        Rectangle()
+                            .background(Color.red)
+                            .frame(width: 42, height: 42)
+                        Text(player.displayName)
+                            .font(.title)
+                            .padding(8)
                     }
                 }
             }
-            .navigationTitle(Text("GameKit Match"))
-            .toolbar {
-                ToolbarItemGroup {
-                    Button(action: {
-                        GKMatchManager.shared.cancel()
-                    }) {
-                        HStack(alignment: .center) {
-                            Image(systemName: "xmark.circle").imageScale(.large)
-                            Text("Cancel")
-                        }
+        }
+        .navigationTitle(Text("GameKit Match"))
+        .toolbar {
+            ToolbarItemGroup {
+                Button(action: {
+                    GKMatchManager.shared.cancel()
+                }) {
+                    HStack(alignment: .center) {
+                        Image(systemName: "xmark.circle").imageScale(.large)
+                        Text("Cancel")
                     }
                 }
             }
         }
     }
 }
+
 
 struct MatchView_Previews: PreviewProvider {
     static var previews: some View {

@@ -51,11 +51,16 @@ public struct GKInviteView: NSViewControllerRepresentable {
         
         return InviteViewController(
             invite: self.invite) {
-            self.canceled()
+            await MainActor.run {
+                self.canceled()
+            }
         } failed: { (error) in
-            self.failed(error)
-        } started: { (match) in
-            self.started(match)
+            await MainActor.run {
+                self.failed(error)
+            }
+        } started: { @MainActor in // Mark closure as MainActor-isolated
+            let match = $0 // Define match as a parameter here
+            self.started(match) // No need for await MainActor.run here
         }
     }
 

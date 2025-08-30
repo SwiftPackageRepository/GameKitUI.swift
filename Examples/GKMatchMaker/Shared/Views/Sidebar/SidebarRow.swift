@@ -26,12 +26,8 @@
 import SwiftUI
 
 struct SidebarRow : View {
-    let item: SidebarMenu
-    @Binding var selectedMenu: SidebarMenu
-
-    var isSelected: Bool {
-        selectedMenu == item
-    }
+    let item: Route
+    var isSelected: Bool
 
     var body: some View {
         HStack {
@@ -46,16 +42,13 @@ struct SidebarRow : View {
                 .foregroundColor(isSelected ? .secondary : .primary)
             }
             .padding()
-            .onTapGesture {
-                self.selectedMenu = self.item
-            }
     }
 }
 
 #if DEBUG
 struct SidebarRow_Previews : PreviewProvider {
     static var previews: some View {
-        SidebarRow(item: .matchMaking, selectedMenu: .constant(.matchMaking))
+        SidebarRow(item: .matchMaking, isSelected: true)
     }
 }
 #endif

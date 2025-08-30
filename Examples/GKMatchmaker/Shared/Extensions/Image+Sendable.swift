@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2020 Sascha Müllner
+/// Copyright (c) 2025 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,42 +21,24 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 03.04.21.
+/// Created by Sascha Müllner on 22.02.25
+///
+///
 
-import Foundation
-import SwiftUI
-import GameKitUI
+#if canImport(AppKit)
+import AppKit
+public typealias PlatformImage = NSImage
+#elseif canImport(UIKit)
+import UIKit
+public typealias PlatformImage = UIImage
+#endif
 
-enum SidebarMenu: Int, CaseIterable, Identifiable {
-
-    var id: Int {
-        return self.rawValue
-    }
-
-    case authentication, gameCenter, matchMaking
-
-    var title: String {
-        switch self {
-            case .authentication:       return "Authentication"
-            case .gameCenter:           return "Game Center"
-            case .matchMaking:          return "Match Making"
-        }
-    }
-
-    var image: String {
-        switch self {
-            case .authentication:       return "lock.fill"
-            case .gameCenter:            return "gamecontroller"
-            case .matchMaking:          return "personalhotspot"
-        }
-    }
-
-    @ViewBuilder
-    var contentView: some View {
-        switch self {
-            case .authentication:       AuthenticationView()
-            case .gameCenter:           GKGameCenterView()
-            case .matchMaking:          MatchMakingView()
-        }
+#if canImport(AppKit) || canImport(UIKit)
+public struct SendableImage: @unchecked Sendable {
+    public let image: PlatformImage
+    
+    public init(image: PlatformImage) {
+        self.image = image
     }
 }
+#endif

@@ -21,40 +21,40 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 24.11.20.
+/// Created by Sascha Müllner on 03.04.21.
 
 import SwiftUI
 import GameKit
-import GameKitUI
 
-struct ContentView: View {
-    
-    var body: some View {
-        NavigationView {
-            ZStack {
-                Color("BackgroundColor").edgesIgnoringSafeArea(.all)
-                VStack(alignment: .center, spacing: 32) {
-                    NavigationLink(destination: AuthenticationView()) {
-                        Text("Authentication")
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                    NavigationLink(destination: GKGameCenterView()) {
-                        Text("Game Center")
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                    NavigationLink(destination: MatchMakingView()) {
-                        Text("Match Making")
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                }
+@MainActor
+class PlayerViewModel: ObservableObject {
+
+    let player: GKPlayer
+
+    @Published var displayName: String
+    @Published var imageLoaded = false
+    @Published var image: SendableImage?
+
+    public init(_ player: GKPlayer) {
+        self.player = player
+        self.displayName = self.player.displayName
+    }
+
+    public func load() {
+        Task {
+            if let image = await loadImage() {
+                self.image = image
+                self.imageLoaded = true
             }
-            .navigationTitle(Text("GameKit"))
         }
     }
-}
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    public nonisolated func loadImage() async -> SendableImage? {
+        do {
+            let photo = try await self.player.loadPhoto(for: .normal)
+            return SendableImage(image: photo)
+        } catch {
+            return nil
+        }
     }
 }

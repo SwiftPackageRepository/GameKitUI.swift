@@ -29,7 +29,8 @@ import Foundation
 import GameKit
 import SwiftUI
 
-public class TurnBasedMatchmakerViewController: NSViewController, GKTurnBasedMatchmakerViewControllerDelegate, GKMatchDelegate {
+@MainActor
+public class TurnBasedMatchmakerViewController: NSViewController, @preconcurrency GKTurnBasedMatchmakerViewControllerDelegate, GKMatchDelegate {
 
     private let matchRequest: GKMatchRequest
     private let canceled: () -> Void

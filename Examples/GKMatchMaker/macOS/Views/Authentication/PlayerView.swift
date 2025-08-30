@@ -32,13 +32,22 @@ struct PlayerView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
             if self.viewModel.imageLoaded,
-               let nsImage = self.viewModel.nsImage {
-                Image(nsImage: nsImage)
+               let sendableImage = self.viewModel.image {
+                #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+                Image(uiImage: sendableImage.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 128, height: 128)
                     .clipShape(Circle())
                     .shadow(radius: 10)
+                #else
+                Image(nsImage: sendableImage.image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 128, height: 128)
+                    .clipShape(Circle())
+                    .shadow(radius: 10)
+                #endif
             } else {
                 Image(systemName: "person.fill")
                     .font(Font.custom("System", size: 64))
@@ -60,34 +69,6 @@ struct PlayerView: View {
         }
         .onAppear() {
             self.viewModel.load()
-        }
-    }
-}
-
-class PlayerViewModel: ObservableObject {
-
-    let player: GKPlayer
-
-    @Published var displayName: String
-    @Published var imageLoaded = false
-    @Published var nsImage: NSImage?
-
-    public init(_ player: GKPlayer) {
-        self.player = player
-        self.displayName = self.player.displayName
-    }
-
-    public func load() {
-        DispatchQueue.global().async { [self] in
-            self.player.loadPhoto(for: GKPlayer.PhotoSize.normal, withCompletionHandler: { (image, error) in
-                guard let image = image else {
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.nsImage = image
-                    self.imageLoaded = true
-                }
-            })
         }
     }
 }

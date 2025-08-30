@@ -34,34 +34,34 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     
     private let matchRequest: GKMatchRequest
     private var matchmakingMode: Any? = nil
-    private let canceled: () -> Void
-    private let failed: (Error) -> Void
-    private let started: (GKMatch) -> Void
+    private let canceled: @Sendable () async -> Void
+    private let failed: @Sendable (Error) async -> Void
+    private let started: @Sendable (GKMatch) async -> Void
     private var cancellable: AnyCancellable?
     private let loadingViewController = LoadingViewController()
     
     @available(macOS 11.0, *)
     public init(matchRequest: GKMatchRequest,
                 matchmakingMode: GKMatchmakingMode,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () async -> Void,
+                failed: @escaping @Sendable (Error) async -> Void,
+                started: @escaping @Sendable (GKMatch) async -> Void) {
         self.matchRequest = matchRequest
         self.matchmakingMode = matchmakingMode
-        self.canceled = canceled
-        self.failed = failed
-        self.started = started
+        self.canceled = { await canceled() }
+        self.failed = { await failed($0) }
+        self.started = { await started($0) }
         super.init(nibName: nil, bundle: nil)
     }
 
     public init(matchRequest: GKMatchRequest,
-                canceled: @escaping () -> Void,
-                failed: @escaping (Error) -> Void,
-                started: @escaping (GKMatch) -> Void) {
+                canceled: @escaping @Sendable () async -> Void,
+                failed: @escaping @Sendable (Error) async -> Void,
+                started: @escaping @Sendable (GKMatch) async -> Void) {
         self.matchRequest = matchRequest
-        self.canceled = canceled
-        self.failed = failed
-        self.started = started
+        self.canceled = { await canceled() }
+        self.failed = { await failed($0) }
+        self.started = { await started($0) }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -79,21 +79,25 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
             .shared
             .invite
             .sink { (invite) in
-                self.showInvite(invite: invite)
+                Task { await self.showInvite(invite: invite) }
         }
     }
     
-    public func showInvite(invite: Invite) {
+    public func showInvite(invite: Invite) async {
         
         guard let invite = invite.gkInvite else { return }
         
         if let viewController = GKMatchManager.shared.createInvite(invite: invite,
-                                                                     canceled: self.canceled,
-                                                                     failed: self.failed,
+                                                                     canceled: {
+                                                                         Task { await self.canceled() }
+                                                                     },
+                                                                     failed: { error in
+                                                                         Task { await self.failed(error) }
+                                                                     },
                                                                      started: self.started) {
             self.add(viewController)
         } else {
-            self.canceled()
+            await self.canceled()
         }
     }
     
@@ -104,10 +108,12 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     public override func viewWillAppear() {
         super.viewWillAppear()
         self.add(loadingViewController)
-        if GKLocalPlayer.local.isAuthenticated {
-            self.showMatchmakerViewController()
-        } else {
-            self.showAuthenticationViewController()
+        Task {
+            if GKLocalPlayer.local.isAuthenticated {
+                await self.showMatchmakerViewController()
+            } else {
+                await self.showAuthenticationViewController()
+            }
         }
         self.subscribe()
     }
@@ -118,19 +124,23 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
         self.unsubscribe()
     }
     
-    public func showAuthenticationViewController() {
+    public func showAuthenticationViewController() async {
         let authenticationViewController = GKAuthenticationViewController { (error) in
-            self.failed(error)
+            Task { await self.failed(error) }
         } authenticated: { (player) in
-            self.showMatchmakerViewController()
+            Task { await self.showMatchmakerViewController() }
         }
         self.add(authenticationViewController)
     }
     
-    public func showMatchmakerViewController() {
+    public func showMatchmakerViewController() async {
         if let viewController = GKMatchManager.shared.createMatchmaker(request: self.matchRequest,
-                                                                     canceled: self.canceled,
-                                                                     failed: self.failed,
+                                                                     canceled: {
+                                                                         Task { await self.canceled() }
+                                                                     },
+                                                                     failed: { error in
+                                                                         Task { await self.failed(error) }
+                                                                     },
                                                                      started: self.started) {
             
             if #available(macOS 11.0, *) {
@@ -139,7 +149,7 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
             
             self.add(viewController)
         } else {
-            self.canceled()
+            await self.canceled()
         }
     }
 }

@@ -23,20 +23,31 @@
 ///
 /// Created by Sascha Müllner on 03.04.21.
 
+import Foundation
 import SwiftUI
-import GameKit
 import GameKitUI
 
-struct ContentView: View {
-    
-    var body: some View {
-        SidebarView()
-            .frame(minWidth: 800, maxWidth: .infinity, minHeight: 600, maxHeight: .infinity)
-    }
-}
+enum Route: Int, CaseIterable, Identifiable {
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    var id: Int {
+        return self.rawValue
+    }
+
+    case authentication, gameCenter, matchMaking
+
+    var title: String {
+        switch self {
+            case .authentication:       return "Authentication"
+            case .gameCenter:           return "Game Center"
+            case .matchMaking:          return "Match Making"
+        }
+    }
+
+    var image: String {
+        switch self {
+            case .authentication:       return "lock.fill"
+            case .gameCenter:           return "gamecontroller"
+            case .matchMaking:          return "personalhotspot"
+        }
     }
 }

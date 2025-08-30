@@ -28,26 +28,30 @@ import GameKit
 import GameKitUI
 
 struct MatchView: View {
-    var match: GKMatch
+    var match: GKMatch?
 
-    public init(_ match: GKMatch) {
+    public init(_ match: GKMatch?) {
         self.match = match
     }
 
     var body: some View {
         ZStack {
             Color("BackgroundColor").ignoresSafeArea()
-            VStack(alignment: .leading, spacing: 8) {
-                ForEach(self.match.players, id: \.self) { player in
-                    HStack(alignment: .center, spacing: 8) {
-                        Rectangle()
-                            .background(Color.red)
-                            .frame(width: 42, height: 42)
-                        Text(player.displayName)
-                            .font(.title)
-                            .padding(8)
+            if let match = self.match {
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(match.players, id: \.self) { player in
+                        HStack(alignment: .center, spacing: 8) {
+                            Rectangle()
+                                .background(Color.red)
+                                .frame(width: 42, height: 42)
+                            Text(player.displayName)
+                                .font(.title)
+                                .padding(8)
+                        }
                     }
                 }
+            } else {
+                Text("No Match")
             }
         }
         .navigationTitle(Text("GameKit Match"))

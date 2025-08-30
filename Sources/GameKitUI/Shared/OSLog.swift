@@ -27,7 +27,7 @@ import os.log
 import Foundation
 
 extension OSLog {
-    private static var subsystem = "de.webblazer.GameKitUI"
+    private static let subsystem = "de.webblazer.GameKitUI"
     
     /// Logs the game kit authentication
     static let authentication = OSLog(subsystem: subsystem, category: "authentication")
