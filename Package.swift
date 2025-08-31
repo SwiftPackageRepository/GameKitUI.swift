@@ -5,9 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "GameKitUI",
-    platforms: [ .iOS(.v13),
-                 .macOS(.v10_15),
-                 .tvOS(.v13),
+    platforms: [ .iOS(.v16),
+                 .macOS(.v13),
+                 .tvOS(.v16),
                  .watchOS(.v6)
     ],
     products: [

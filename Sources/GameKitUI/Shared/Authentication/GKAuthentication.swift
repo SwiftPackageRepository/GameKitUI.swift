@@ -49,23 +49,27 @@ public final class GKAuthentication: NSObject, GKLocalPlayerListener {
     }
 
     public func authenticate() async throws -> GKLocalPlayer {
-        return try await withCheckedThrowingContinuation { continuation in
-            GKLocalPlayer.local.authenticateHandler = { viewController, error in
-                if GKLocalPlayer.local.isAuthenticated {
-                    continuation.resume(returning: GKLocalPlayer.local)
-                    return
-                }
+        if GKLocalPlayer.local.isAuthenticated {
+            return GKLocalPlayer.local
+        }
+        for try await isAuthenticated in authentications() {
+            if isAuthenticated {
+                return GKLocalPlayer.local
+            }
+        }
+        throw authenticationError ?? NSError(domain: "GKAuthentication", code: 1, userInfo: nil)
+    }
 
-                if let error = error {
-                    os_log("Authentication failed %{public}@", log: OSLog.authentication, type: .error, error.localizedDescription)
-                    self.authenticationError = error
-                    continuation.resume(throwing: AuthenticationError.gameKitError(error))
-                    return
-                }
-                
-                if let vc = viewController {
-                    continuation.resume(throwing: AuthenticationError.uiRequired(vc))
-                    return
+    func authentications() -> AsyncThrowingStream<Bool, Error> {
+        AsyncThrowingStream { continuation in
+            GKLocalPlayer.local.authenticateHandler = { viewController, error in
+                if let error {
+                    continuation.finish(throwing: AuthenticationError.gameKitError(error))
+                } else if let viewController {
+                    continuation.finish(throwing: AuthenticationError.uiRequired(GKAuthenticationResultView(viewController)))
+                } else {
+                    GKAccessPoint.shared.isActive = GKLocalPlayer.local.isAuthenticated
+                    continuation.yield(GKLocalPlayer.local.isAuthenticated)
                 }
             }
         }

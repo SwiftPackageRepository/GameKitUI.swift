@@ -77,12 +77,14 @@ struct GKMatchMakerApp: App {
                                         }
                                     }
                                 } started: { (gkMatch) in
+                                    /*
                                     Task {
                                         await MainActor.run {
                                             self.showInvite = false
                                             self.gkMatch = gkMatch
                                         }
                                     }
+                                     */
                                 }
                             case .matchMaking:
                                 MatchMakingView()

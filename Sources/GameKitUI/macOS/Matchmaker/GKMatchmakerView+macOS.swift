@@ -36,7 +36,8 @@ public struct GKMatchmakerView: NSViewControllerRepresentable {
     private let canceled: @Sendable () async -> Void
     private let failed: @Sendable (Error) async -> Void
     private let started: @Sendable (GKMatch) async -> Void
-    
+    private let loadingViewController = LoadingViewController()
+
     @available(macOS 11.0, *)
     public init(matchRequest: GKMatchRequest,
                 matchmakingMode: GKMatchmakingMode,

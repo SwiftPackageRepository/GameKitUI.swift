@@ -37,7 +37,7 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     private let failed: @Sendable (Error) async -> Void
     private let started: @Sendable (GKMatch) async -> Void
     private let loadingViewController = LoadingViewController()
-    
+
     @available(macOS 11.0, *)
     public init(matchRequest: GKMatchRequest,
                 matchmakingMode: GKMatchmakingMode,
@@ -105,12 +105,15 @@ public class MatchmakerViewController: NSViewController, GKMatchDelegate, GKLoca
     }
     
     public func showAuthenticationViewController() async {
+        /*
         let authenticationViewController = GKAuthenticationViewController { (error) in
             Task { await self.failed(error) }
         } authenticated: { (player) in
             Task { await self.showMatchmakerViewController() }
         }
+
         self.add(authenticationViewController)
+         */
     }
     
     public func showMatchmakerViewController() async {

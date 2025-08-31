@@ -1,7 +1,7 @@
 ///
 /// MIT License
 ///
-/// Copyright (c) 2021 Sascha Müllner
+/// Copyright (c) 2025 Sascha Müllner
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,39 +21,24 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 ///
-/// Created by Sascha Müllner on 28.03.21.
+/// Created by Sascha Müllner on 22.02.25
+///
+///
 
-#if os(macOS)
+#if canImport(AppKit)
+import AppKit
+public typealias PlatformImage = NSImage
+#elseif canImport(UIKit)
+import UIKit
+public typealias PlatformImage = UIImage
+#endif
 
-import Foundation
-import GameKit
-import SwiftUI
-
-public struct GKAuthenticationView: NSViewControllerRepresentable {
-
-    private let failed: ((Error) -> Void)
-    private let authenticated: ((GKPlayer) -> Void)
-
-    public init(failed: @escaping ((Error) -> Void),
-                authenticated: @escaping ((GKPlayer) -> Void)) {
-        self.failed = failed
-        self.authenticated = authenticated
-    }
-
-    public func makeNSViewController(
-        context: NSViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
-        let authenticationViewController = GKAuthenticationViewController { (failed) in
-            self.failed(failed)
-        } authenticated: { (player) in
-            self.authenticated(player)
-        }
-        return authenticationViewController
-    }
-
-    public func updateNSViewController(
-        _ nsViewController: GKAuthenticationViewController,
-        context: NSViewControllerRepresentableContext<GKAuthenticationView>) {
+#if canImport(AppKit) || canImport(UIKit)
+public struct SendableImage: @unchecked Sendable {
+    public let image: PlatformImage
+    
+    public init(image: PlatformImage) {
+        self.image = image
     }
 }
-
 #endif

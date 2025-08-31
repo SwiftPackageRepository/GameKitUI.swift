@@ -20,41 +20,41 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
-/// 
-/// Created by Sascha Müllner on 21.11.20.
-/// Modfied by Sascha Müllner on 17.12.20.
+///
+/// Created by Sascha Müllner on 03.04.21.
 
-#if os(iOS) || os(tvOS)
-
-import Foundation
-import GameKit
 import SwiftUI
+@preconcurrency import GameKit
 
-public struct GKAuthenticationView: UIViewControllerRepresentable {
+@MainActor
+class PlayerViewModel: ObservableObject {
 
-    private let failed: ((Error) -> Void)
-    private let authenticated: ((GKPlayer) -> Void)
+    let player: GKPlayer
 
-    public init(failed: @escaping ((Error) -> Void),
-                authenticated: @escaping ((GKPlayer) -> Void)) {
-        self.failed = failed
-        self.authenticated = authenticated
+    @Published var displayName: String
+    @Published var imageLoaded = false
+    @Published var image: SendableImage?
+
+    public init(_ player: GKPlayer) {
+        self.player = player
+        self.displayName = self.player.displayName
     }
 
-    public func makeUIViewController(
-        context: UIViewControllerRepresentableContext<GKAuthenticationView>) -> GKAuthenticationViewController {
-        let authenticationViewController = GKAuthenticationViewController { (failed) in
-            self.failed(failed)
-        } authenticated: { (player) in
-            self.authenticated(player)
+    public func load() {
+        Task {
+            if let image = await loadImage() {
+                self.image = image
+                self.imageLoaded = true
+            }
         }
-        return authenticationViewController
     }
 
-    public func updateUIViewController(
-        _ uiViewController: GKAuthenticationViewController,
-        context: UIViewControllerRepresentableContext<GKAuthenticationView>) {
+    public nonisolated func loadImage() async -> SendableImage? {
+        do {
+            let photo = try await self.player.loadPhoto(for: .normal)
+            return SendableImage(image: photo)
+        } catch {
+            return nil
+        }
     }
 }
-
-#endif

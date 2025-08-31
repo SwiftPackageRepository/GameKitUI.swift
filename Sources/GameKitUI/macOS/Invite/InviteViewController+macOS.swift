@@ -72,12 +72,14 @@ public class InviteViewController: NSViewController, GKMatchDelegate, GKLocalPla
     }
     
     public func showAuthenticationViewController() async {
+        /*
         let authenticationViewController = GKAuthenticationViewController { (error) in
             Task { await self.failed(error) }
         } authenticated: { (player) in
             Task { await self.showInviteViewController() }
         }
         self.add(authenticationViewController)
+         */
     }
     
     public func showInviteViewController() async {

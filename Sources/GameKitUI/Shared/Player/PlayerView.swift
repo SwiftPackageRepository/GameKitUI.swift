@@ -26,28 +26,48 @@
 import SwiftUI
 import GameKit
 
-struct PlayerView: View {
-    @ObservedObject var viewModel: PlayerViewModel
+public struct PlayerView: View {
+    @StateObject var viewModel: PlayerViewModel
+    @State var showDeveloperInformation = false
+    
+    public init(_ player: GKPlayer) {
+        _viewModel = StateObject(wrappedValue: PlayerViewModel(player))
+    }
 
-    var body: some View {
+    public var body: some View {
+        ZStack {
+            playerIcon
+            if showDeveloperInformation {
+                developerInformation
+            }
+        }
+        .onTapGesture { tapGesture in
+            showDeveloperInformation.toggle()
+        }
+        .onAppear() {
+            self.viewModel.load()
+        }
+    }
+
+    var playerIcon: some View {
         VStack(alignment: .center, spacing: 16) {
             if self.viewModel.imageLoaded,
                let sendableImage = self.viewModel.image {
-                #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+#if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
                 Image(uiImage: sendableImage.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 128, height: 128)
                     .clipShape(Circle())
                     .shadow(radius: 10)
-                #else
+#else
                 Image(nsImage: sendableImage.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 128, height: 128)
                     .clipShape(Circle())
                     .shadow(radius: 10)
-                #endif
+#endif
             } else {
                 Image(systemName: "person.fill")
                     .font(Font.custom("System", size: 64))
@@ -58,17 +78,22 @@ struct PlayerView: View {
                     .shadow(radius: 10)
             }
             Text(self.viewModel.player.displayName)
-            VStack(alignment: .center, spacing: 4) {
-                Text("Alias: \(self.viewModel.player.alias)")
-                    .font(.footnote)
-                Text(self.viewModel.player.gamePlayerID)
-                    .font(.footnote)
-                Text(self.viewModel.player.teamPlayerID)
-                    .font(.footnote)
-            }
         }
-        .onAppear() {
-            self.viewModel.load()
+    }
+
+    var developerInformation: some View {
+#if DEBUG
+        VStack(alignment: .center, spacing: 4) {
+            Text("Alias: \(self.viewModel.player.alias)")
+                .font(.footnote)
+            Text(self.viewModel.player.gamePlayerID)
+                .font(.footnote)
+            Text(self.viewModel.player.teamPlayerID)
+                .font(.footnote)
         }
+        .padding()
+        .background(.background)
+        .cornerRadius(8)
+#endif
     }
 }

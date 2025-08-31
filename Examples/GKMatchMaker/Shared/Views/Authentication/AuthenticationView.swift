@@ -26,7 +26,7 @@
 
 import SwiftUI
 import GameKitUI
-import GameKit
+import GameKit // Added GameKit import for GKPlayer
 
 struct AuthenticationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -38,8 +38,6 @@ struct AuthenticationView: View {
     @State private var currentState: String = "Loading GameKit..."
     @State private var player: GKPlayer?
     
-    private let authenticationService = AuthenticationViewModel()
-
     var body: some View {
         ZStack {
             Color("BackgroundColor").ignoresSafeArea()
@@ -49,10 +47,10 @@ struct AuthenticationView: View {
                     .padding(8)
                 if self.isAuthenticated,
                    let player = self.player {
-                    PlayerView(viewModel: PlayerViewModel(player))
+                    PlayerView(player)
                 } else {
                     Button() {
-                        self.showAuthenticationModal()
+                        self.showModal = true
                     } label: {
                         Text("Login")
                     }
@@ -62,27 +60,46 @@ struct AuthenticationView: View {
             .navigationTitle(Text("GameKit Authentication"))
         }
         .onAppear() {
-            self.load()
-        }
-        .sheet(isPresented: self.$showModal) {
-            GKAuthenticationView { (error) in
-                Task {
-                    await MainActor.run {
-                        self.showModal = false
-                        self.showAlert(title: "Authentication Failed", message: error.localizedDescription)
-                        self.currentState = error.localizedDescription
+            // Trigger authentication when the view appears
+            Task {
+                do {
+                    let authenticatedPlayer = try await GKAuthentication.shared.authenticate()
+                    self.player = authenticatedPlayer
+                    self.isAuthenticated = true
+                    self.currentState = "Authenticated"
+                } catch let error as AuthenticationError {
+                    switch error {
+                    case .uiRequired(let viewController):
+                        // Present the system authentication UI
+                        // This will be handled by the UnifiedAuthenticationView
+                        // We just need to make sure the sheet is presented
+                        self.showModal = true
+                    case .gameKitError(let gkError):
+                        self.showAlert(title: "Authentication Failed", message: gkError.localizedDescription)
+                        self.currentState = gkError.localizedDescription
                     }
-                }
-            } authenticated: { (player) in
-                Task {
-                    await MainActor.run {
-                        self.showModal = false
-                        self.player = player
-                        self.currentState = "Authenticated"
-                    }
+                } catch {
+                    self.showAlert(title: "Authentication Failed", message: error.localizedDescription)
+                    self.currentState = error.localizedDescription
                 }
             }
-            .frame(width: 640, height: 480)
+        }
+        .sheet(isPresented: self.$showModal) {
+           GKAuthenticationView { (error) in
+                Task { @MainActor in
+                    self.showModal = false
+                    self.showAlert(title: "Authentication Failed", message: error.localizedDescription)
+                    self.currentState = error.localizedDescription
+                }
+            } authenticated: { (player) in
+                Task { @MainActor in
+                    self.showModal = false
+                    self.player = player
+                    self.isAuthenticated = true
+                    self.currentState = "Authenticated"
+                }
+            }
+            .frame(width: 640, height: 480) // Keep the frame for modal presentation
         }
         .alert(isPresented: self.$showAlert) {
             Alert(title: Text(self.alertTitle),
@@ -91,21 +108,10 @@ struct AuthenticationView: View {
         }
     }
     
-    private func load() {
-        if self.isAuthenticated {
-            return
-        }
-        self.showAuthenticationModal()
-    }
-
     private func showAlert(title: String, message: String) {
         self.showAlert = true
         self.alertTitle = title
         self.alertMessage = message
-    }
-    
-    private func showAuthenticationModal() {
-        self.showModal = true
     }
 }
 

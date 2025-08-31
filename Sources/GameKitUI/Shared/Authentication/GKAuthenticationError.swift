@@ -23,30 +23,15 @@
 ///
 /// Created by Sascha Müllner on 23.02.21.
 
-import Foundation
-#if canImport(UIKit)
-import UIKit // For UIViewController
-#elseif canImport(AppKit)
-import AppKit // For NSViewController
-#endif
 
 public enum AuthenticationError: Error {
-    #if canImport(UIKit)
-    case uiRequired(UIViewController)
-    #elseif canImport(AppKit)
-    case uiRequired(NSViewController)
-    #endif
+    case uiRequired(GKAuthenticationResultView)
     case gameKitError(Error)
 
     public var errorDescription: String? {
         switch self {
-        #if canImport(UIKit)
-        case .uiRequired(let viewController):
-            return "GameKit authentication requires UI presentation: \(viewController.description)"
-        #elseif canImport(AppKit)
-        case .uiRequired(let viewController):
-            return "GameKit authentication requires UI presentation: \(viewController.description)"
-        #endif
+        case .uiRequired(let view):
+            return "GameKit authentication requires UI presentation"
         case .gameKitError(let error):
             return "GameKit authentication failed: \(error.localizedDescription)"
         }
