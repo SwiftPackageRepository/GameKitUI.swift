@@ -39,7 +39,7 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
     private let started: (GKMatch) -> Void
     private var cancellable: AnyCancellable?
 
-    @available(iOS 14.0, *)
+    @available(iOS 14.0, tvOS 14.0,*)
     public init(matchRequest: GKMatchRequest,
                 matchmakingMode: GKMatchmakingMode,
                 canceled: @escaping () -> Void,
