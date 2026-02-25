@@ -98,7 +98,7 @@ public struct GKMatchmakerView: UIViewControllerRepresentable {
 
     public func makeUIViewController(
         context: UIViewControllerRepresentableContext<GKMatchmakerView>) -> MatchmakerViewController {
-        if #available(iOS 14.0, *) {
+        if #available(iOS 14.0, tvOS 14.0, *) {
             return self.makeMatchmakerViewControllerForiOS14AndHigher()
         } else {
             return self.makeMatchmakerViewController()
