@@ -125,7 +125,7 @@ public class MatchmakerViewController: UIViewController, GKMatchDelegate, GKLoca
                                                                      failed: self.failed,
                                                                      started: self.started) {
             
-            if #available(iOS 14, *) {
+            if #available(iOS 14, tvOS 14.0, *) {
                 viewController.matchmakingMode = self.matchmakingMode as? GKMatchmakingMode ?? .default
             }
             
