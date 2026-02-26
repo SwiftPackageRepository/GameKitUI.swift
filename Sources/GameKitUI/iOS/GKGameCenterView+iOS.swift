@@ -23,7 +23,7 @@
 ///
 /// Created by Henrik Storch on 02.10.21.
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 
 import Foundation
 import GameKit
