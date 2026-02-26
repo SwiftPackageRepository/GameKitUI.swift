@@ -23,7 +23,7 @@
 ///
 /// Created by Sascha Müllner on 23.02.21.
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 
 import os.log
 import Combine
